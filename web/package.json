@@ -1,0 +1,24 @@
+{
+  "name": "hot100-cpp-learning-web",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "generate:data": "python ../tools/gen_site.py --json --data-only",
+    "dev": "npm run generate:data && astro dev",
+    "build": "npm run generate:data && astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/svelte": "latest",
+    "@tailwindcss/vite": "latest",
+    "astro": "latest",
+    "svelte": "latest",
+    "tailwindcss": "latest",
+    "typescript": "latest"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10"
+  }
+}

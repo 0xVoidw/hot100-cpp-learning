@@ -1,12 +1,21 @@
 @echo off
 rem 一键生成图解网站（Windows 双击即可）
 cd /d "%~dp0"
-echo 正在生成 LeetCode Hot 100 讲解网站...
+echo 正在生成 Astro + Svelte + Tailwind 讲解网站...
 python tools\gen_animations.py
-python tools\gen_site.py
 if errorlevel 1 (
   echo.
-  echo [失败] 生成出错。请确认已安装 Python，并检查上方报错。
+  echo [失败] 动画数据生成出错。请检查上方报错。
+  pause
+  exit /b 1
+)
+pushd web
+call npm run build
+set BUILD_ERR=%errorlevel%
+popd
+if not "%BUILD_ERR%"=="0" (
+  echo.
+  echo [失败] 前端构建出错。请确认已安装 Node.js 和 npm，并检查上方报错。
   pause
   exit /b 1
 )

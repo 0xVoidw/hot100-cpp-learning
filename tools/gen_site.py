@@ -6,7 +6,8 @@ gen_site.py — 把 LeetCode Hot 100 学习库（src/*.cpp + README 索引）生
 
 用法：
     python tools/gen_site.py            # 生成 site/
-    python tools/gen_site.py --json     # 额外输出 build/problems.json 供排查
+    python tools/gen_site.py --json     # 导出构建数据（build/ 与 web/src/data/）
+    python tools/gen_site.py --json --data-only  # 只导出数据，不生成旧版页面
 """
 import re, os, sys, json, glob, html, collections
 from math import inf
@@ -527,6 +528,7 @@ def main():
     os.makedirs(PROBLEMS, exist_ok=True)
     os.makedirs(ASSETS, exist_ok=True)
     use_json = '--json' in sys.argv
+    data_only = '--data-only' in sys.argv
 
     # 1) 读 README 索引表 -> num -> (title,diff,套路,slug,url)
     readme = open(os.path.join(ROOT, 'README.md'), encoding='utf-8').read()
@@ -600,9 +602,30 @@ def main():
     problems.sort(key=lambda p: p['num'])
 
     if use_json:
-        with open(os.path.join(ROOT, 'build', 'problems.json'), 'w', encoding='utf-8') as f:
-            json.dump(problems, f, ensure_ascii=False, indent=2)
-        print(f"[json] build/problems.json  (#problems={len(problems)})")
+        # 前端复用解析后的源码/测试/描述/动画数据；图解预渲染为可信的本地 SVG/HTML。
+        frontend_problems = []
+        for problem in problems:
+            item = dict(problem)
+            # 力扣 HTML 偶尔在行尾带空格；导出前标准化，减少静态产物无意义 diff。
+            desc = dict(problem['desc']) if isinstance(problem['desc'], dict) else {}
+            for key, value in desc.items():
+                if isinstance(value, str):
+                    desc[key] = re.sub(r'(?m) +$', '', value)
+            item['desc'] = desc
+            item['diagramHtml'] = diagram_html(problem['diagram']) + hand_diagram(problem['num'])
+            frontend_problems.append(item)
+        targets = [
+            os.path.join(ROOT, 'build', 'problems.json'),
+            os.path.join(ROOT, 'web', 'src', 'data', 'problems.json'),
+        ]
+        for target in targets:
+            os.makedirs(os.path.dirname(target), exist_ok=True)
+            with open(target, 'w', encoding='utf-8', newline='\n') as f:
+                json.dump(frontend_problems, f, ensure_ascii=False, indent=2)
+        print(f"[json] 导出 {len(problems)} 题 -> build/problems.json, web/src/data/problems.json")
+
+    if data_only:
+        return
 
     # 3) 渲染页面
     write_assets()

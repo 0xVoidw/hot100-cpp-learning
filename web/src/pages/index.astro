@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProblemExplorer from '../components/ProblemExplorer.svelte';
+import problemsData from '../data/problems.json';
+import type { Problem, ProblemSummary } from '../lib/types';
+
+const problems = problemsData as unknown as Problem[];
+const summaries: ProblemSummary[] = problems.map(({ num, title, diff, tag, category, anim }) => ({ num, title, diff, tag, category, anim }));
+const counts = {
+  easy: problems.filter((p) => p.diff === 'Easy').length,
+  medium: problems.filter((p) => p.diff === 'Medium').length,
+  hard: problems.filter((p) => p.diff === 'Hard').length,
+  animated: problems.filter((p) => p.anim).length,
+};
+---
+<BaseLayout title="LeetCode Hot 100 · C++ 图解学习站" description="100 道 LeetCode Hot 100 C++17 题解：中文讲解、真实测试、结构图和算法动画。">
+  <section class="container pt-13 pb-10 sm:pt-20">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">C++17 · 100 problems · offline first</p>
+        <h1>把算法题<br /><span>学成自己的能力</span></h1>
+        <p class="hero-copy">不是只有答案：每道题都有中文题意、可运行的 C++、真实测试、结构图和逐帧算法动画。先理解不变量，再写出代码。</p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a class="cta" href="#problems">开始学习 <span>↓</span></a>
+          <a class="secondary" href="https://github.com/0xVoidw/hot100-cpp-learning" target="_blank" rel="noreferrer">查看 C++ 源码 ↗</a>
+        </div>
+        <div class="mt-9 flex flex-wrap gap-x-7 gap-y-3 text-sm text-[var(--muted)]"><span>✓ 99/99 C++ 测试通过</span><span>✓ 浏览器离线可打开</span><span>✓ 无 CDN 依赖</span></div>
+      </div>
+      <div class="hero-orbit glass">
+        <div class="orbit-glow"></div>
+        <div class="orbit-core"><span>Hot</span><strong>100</strong><small>C++17</small></div>
+        <div class="float-card card-a"><b>双指针</b><span>L → ← R</span></div>
+        <div class="float-card card-b"><b>动态规划</b><span>状态 · 转移</span></div>
+        <div class="float-card card-c"><b>78 道动图</b><span>0.5× 慢放</span></div>
+      </div>
+    </div>
+
+    <div class="stats-grid mt-12">
+      <div class="stat glass"><span>题库规模</span><strong>100</strong><small>LeetCode Hot 100</small></div>
+      <div class="stat glass"><span>算法动图</span><strong>{counts.animated}</strong><small>数组 · 链表 · 树 · 网格</small></div>
+      <div class="stat glass"><span>难度分布</span><strong>{counts.easy}<i> / {counts.medium} / {counts.hard}</i></strong><small>Easy · Medium · Hard</small></div>
+      <div class="stat glass"><span>代码语言</span><strong>C++17</strong><small>标准库 · 单元测试</small></div>
+    </div>
+  </section>
+
+  <section class="container pb-10">
+    <div class="learn-path glass">
+      <div><p class="eyebrow">建议学习路径</p><h2>先识别套路，再看动画，最后独立写出 C++。</h2></div>
+      <ol><li><b>01</b><span>按分类理解共同不变量</span></li><li><b>02</b><span>用动图观察状态如何变化</span></li><li><b>03</b><span>关闭答案，自己完成测试</span></li></ol>
+    </div>
+  </section>
+
+  <div class="container"><ProblemExplorer client:load problems={summaries} /></div>
+</BaseLayout>
+
+<style>
+  .hero-grid { display:grid; grid-template-columns:1.14fr .86fr; align-items:center; gap:3rem; }
+  h1 { margin:.55rem 0 0; font-size:clamp(2.65rem,6.4vw,5.3rem); line-height:1.02; letter-spacing:-.07em; font-weight:950; }
+  h1 span { background:linear-gradient(115deg,#6657ff,#c026d3 70%,#f97316); -webkit-background-clip:text; color:transparent; }
+  .hero-copy { max-width:40rem; margin-top:1.5rem; color:var(--muted); font-size:1.05rem; line-height:1.9; }
+  .cta,.secondary { display:inline-flex; align-items:center; gap:.55rem; border-radius:.85rem; padding:.8rem 1.05rem; font-weight:800; transition:transform .2s ease; }
+  .cta { background:linear-gradient(120deg,var(--brand),var(--brand-2)); color:white; box-shadow:0 14px 28px rgba(105,80,255,.25); }.secondary{border:1px solid var(--line);background:var(--surface);}.cta:hover,.secondary:hover{transform:translateY(-2px)}
+  .hero-orbit { position:relative; min-height:330px; overflow:hidden; border-radius:2rem; }.orbit-glow{position:absolute;inset:15%;border-radius:50%;background:radial-gradient(circle,rgba(139,92,246,.45),transparent 65%);filter:blur(4px)}
+  .orbit-core{position:absolute;inset:0;margin:auto;display:flex;height:132px;width:132px;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.55);border-radius:50%;background:linear-gradient(145deg,#7468ff,#4c38d4);color:#fff;box-shadow:0 0 0 17px rgba(116,104,255,.10),0 0 0 36px rgba(116,104,255,.06),0 18px 50px rgba(73,55,211,.45)}.orbit-core span,.orbit-core small{font-size:.68rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;opacity:.83}.orbit-core strong{font-size:3rem;line-height:1;letter-spacing:-.08em}
+  .float-card{position:absolute;display:flex;flex-direction:column;gap:.25rem;border:1px solid var(--line);border-radius:.85rem;background:var(--surface-solid);padding:.7rem .85rem;box-shadow:var(--shadow);font-size:.78rem}.float-card span{color:var(--muted);font-family:var(--font-mono);font-size:.68rem}.card-a{top:15%;left:6%}.card-b{right:5%;top:31%}.card-c{bottom:11%;left:17%}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem}.stat{border-radius:1rem;padding:1rem}.stat span,.stat small{display:block;color:var(--muted);font-size:.75rem}.stat strong{display:block;margin:.42rem 0;font-size:1.5rem;letter-spacing:-.04em}.stat strong i{font-size:.88rem;font-style:normal;color:var(--muted)}
+  .learn-path{display:flex;align-items:center;justify-content:space-between;gap:2rem;border-radius:1.25rem;padding:1.25rem 1.4rem}.learn-path h2{max-width:38rem;margin:.35rem 0 0;font-size:1.05rem}.learn-path ol{display:flex;gap:1rem;margin:0;padding:0;list-style:none}.learn-path li{display:flex;max-width:9rem;gap:.45rem;color:var(--muted);font-size:.78rem;line-height:1.45}.learn-path b{color:var(--brand);font-family:var(--font-mono)}
+  @media(max-width:850px){.hero-grid{grid-template-columns:1fr;gap:2rem}.hero-orbit{min-height:260px}.stats-grid{grid-template-columns:repeat(2,1fr)}.learn-path{align-items:flex-start;flex-direction:column}.learn-path ol{flex-wrap:wrap}}@media(max-width:480px){.stats-grid{gap:.55rem}.stat{padding:.8rem}.stat strong{font-size:1.2rem}.learn-path ol{gap:.55rem}}
+</style>

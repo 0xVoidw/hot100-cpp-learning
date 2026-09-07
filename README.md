@@ -10,22 +10,31 @@
 
 ## 图解网站（一题一页，图文并茂）
 
-仓库自带一个**纯静态、可离线双击打开**的讲解网站：
+仓库自带一个**静态生成、可部署到 GitHub Pages** 的讲解网站：
 
-```
-site/
-├── index.html         # 首页：100 题分类列表，支持搜索 / 难度筛选 / 学习进度
-├── assets/            # 样式 + 脚本
-└── problems/q1.html … # 每题一页：核心套路 / 讲解 / 结构图解 / 带注释代码 / 测试用例
+```text
+web/                    # Astro + TypeScript + Svelte + Tailwind CSS v4 源码
+├── src/pages/          # 首页 + 100 个静态题目页
+├── src/components/     # Svelte：筛选、主题、进度、动画、复制代码
+├── src/data/           # Python 从 C++ 注释导出的题目数据
+└── astro.config.mjs
+site/                   # Astro 构建产物，也是 GitHub Pages 发布内容
 ```
 
-如何打开 / 重新生成：
+前端采用 **Astro + TypeScript + Svelte + Tailwind CSS v4**：
+- Astro 在构建时生成完整的 HTML；100 题都可被直接访问和索引。
+- 只有搜索、进度、主题和动画播放器等交互区使用 Svelte。
+- 所有样式和脚本均在构建时打包，运行时不依赖 CDN。
+
+如何开发 / 重新生成：
 
 | 操作 | 命令 |
 |---|---|
-| 打开 | 双击 `site/index.html`（推荐浏览器里打开）|
-| 重新生成 | Windows 双击 `build_site.bat`；或 `bash build_site.sh` |
-| 从源码生成 | `python tools/gen_site.py`（自动读 `src/*.cpp` 的注释与 `README` 索引）|
+| 首次安装前端依赖 | `cd web && npm install` |
+| 本地开发预览 | `cd web && npm run dev` |
+| 重新生成生产网站 | Windows 双击 `build_site.bat`；或 `bash build_site.sh` |
+| 只校验前端类型 | `cd web && npm run check` |
+| 从 C++ 注释导出前端数据 | `cd web && npm run generate:data` |
 
 每页的「结构图解」**直接取自本仓库的真实测试数据**（链表、二叉树、矩阵、数组/字符串），
 所以图里的数字和你刷题时看到的一致；少数难画结构的题（DP 表、双指针走位、N 皇后等）
@@ -43,7 +52,7 @@ site/
 python tools/fetch_descriptions.py   # 或 --force 全量重抓
 ```
 
-> 该网站无任何外部依赖（不联网、无需服务器）。
+> 网站部署后无需后端或运行时 CDN；推荐通过 GitHub Pages 或 `npm run dev` / `npm run preview` 访问。
 
 ---
 

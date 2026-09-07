@@ -1,0 +1,43 @@
+---
+import '../styles/global.css';
+import ThemeToggle from '../components/ThemeToggle.svelte';
+
+interface Props {
+  title: string;
+  description?: string;
+  homeHref?: string;
+}
+const { title, description = 'LeetCode Hot 100 · C++17 图解学习站', homeHref = import.meta.env.BASE_URL } = Astro.props;
+---
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#6557ff" />
+    <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='0.9em' font-size='88'&gt;∞&lt;/text&gt;&lt;/svg&gt;" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="sticky top-0 z-30 border-b border-[var(--line)] bg-[color:var(--bg)]/75 backdrop-blur-xl">
+        <div class="container flex h-16 items-center justify-between gap-4">
+          <a href={homeHref} class="flex items-center gap-2.5 font-extrabold tracking-tight">
+            <span class="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 text-lg text-white shadow-lg shadow-violet-500/25">∞</span>
+            <span>Hot 100 <span class="hidden text-[var(--muted)] sm:inline">· C++ 学习站</span></span>
+          </a>
+          <nav class="flex items-center gap-2 text-sm font-semibold text-[var(--muted)]">
+            <a class="hidden rounded-lg px-3 py-2 hover:bg-[var(--surface)] hover:text-[var(--ink)] sm:block" href={homeHref}>题库</a>
+            <a class="hidden rounded-lg px-3 py-2 hover:bg-[var(--surface)] hover:text-[var(--ink)] sm:block" href="https://github.com/0xVoidw/hot100-cpp-learning" target="_blank" rel="noreferrer">源码 ↗</a>
+            <ThemeToggle client:load />
+          </nav>
+        </div>
+      </header>
+      <main><slot /></main>
+      <footer class="mt-18 border-t border-[var(--line)] py-9 text-center text-sm text-[var(--muted)]">
+        <div class="container">100 道 Hot 100 · C++17 · 离线可用 · 静态部署</div>
+      </footer>
+    </div>
+  </body>
+</html>

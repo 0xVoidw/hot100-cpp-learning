@@ -16,6 +16,11 @@ compile_commands.json
 __pycache__/
 *.pyc
 
+# 前端构建缓存与依赖
+web/node_modules/
+web/.astro/
+web/dist/
+
 # 本地 AI 工具与浏览器自动化 / 截图临时产物
 .agents/
 .playwright-cli/

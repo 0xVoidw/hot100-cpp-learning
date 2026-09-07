@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL;
+---
+<BaseLayout title="页面未找到 · Hot 100">
+  <section class="container grid min-h-[65vh] place-items-center py-16 text-center">
+    <div><p class="eyebrow">404</p><h1 class="mt-3 text-4xl font-black tracking-tight">这道题还没找到。</h1><p class="mt-4 text-[var(--muted)]">回到题库继续你的学习路径吧。</p><a class="mt-7 inline-flex rounded-xl bg-[var(--brand)] px-5 py-3 font-bold text-white" href={base}>返回题库</a></div>
+  </section>
+</BaseLayout>

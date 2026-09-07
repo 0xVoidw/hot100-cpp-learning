@@ -3,8 +3,11 @@
 set -e
 cd "$(dirname "$0")"
 if command -v python3 >/dev/null 2>&1; then PY=python3; else PY=python; fi
-echo "正在生成图解网站..."
+echo "正在生成 Astro + Svelte + Tailwind 静态网站..."
 "$PY" tools/gen_animations.py
-"$PY" tools/gen_site.py
+(
+  cd web
+  npm run build
+)
 echo
 echo "[完成] 已生成到 site/，打开 site/index.html 即可浏览。"
