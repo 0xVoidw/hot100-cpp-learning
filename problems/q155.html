@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q155 最小栈 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-stack">栈</a> / Q155</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q155</span> 最小栈</h1>
+  <span class="badge Medium">Medium</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="155"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 栈 · 难度 Medium · 原题 <a href="https://leetcode.cn/problems/min-stack/" target="_blank" rel="noopener">min-stack</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>设计一个支持 <code>push</code> ，<code>pop</code> ，<code>top</code> 操作，并能在常数时间内检索到最小元素的栈。</p>
+<p>实现 <code>MinStack</code> 类:</p>
+<ul>
+	<li><code>MinStack()</code> 初始化堆栈对象。</li>
+	<li><code>void push(int value)</code> 将元素 <code>value</code> 推入堆栈。</li>
+	<li><code>void pop()</code> 删除堆栈顶部的元素。</li>
+	<li><code>int top()</code> 获取堆栈顶部的元素。</li>
+	<li><code>int getMin()</code> 获取堆栈中的最小元素。</li>
+</ul>
+<p><strong>示例 1:</strong></p>
+<pre>
+<strong>输入：</strong>
+["MinStack","push","push","push","getMin","pop","top","getMin"]
+[[],[-2],[0],[-3],[],[],[],[]]
+<strong>输出：</strong>
+[null,null,null,null,-3,null,0,-2]
+<strong>解释：</strong>
+MinStack minStack = new MinStack();
+minStack.push(-2);
+minStack.push(0);
+minStack.push(-3);
+minStack.getMin();   --&gt; 返回 -3.
+minStack.pop();
+minStack.top();      --&gt; 返回 0.
+minStack.getMin();   --&gt; 返回 -2.
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>-2<sup>31</sup>&nbsp;&lt;= val &lt;= 2<sup>31</sup>&nbsp;- 1</code></li>
+	<li><code>pop</code>、<code>top</code> 和 <code>getMin</code> 操作总是在 <strong>非空栈</strong> 上调用</li>
+	<li><code>push</code>,&nbsp;<code>pop</code>,&nbsp;<code>top</code>, and&nbsp;<code>getMin</code>最多被调用&nbsp;<code>3 * 10<sup>4</sup></code>&nbsp;次</li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>辅助最小栈同步压入/弹出</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p>要求 getMin 也是 O(1)。做法：再开一个「最小值栈」，</p>
+<p>每次 push 时把「压入后的当前最小值」同步压进去，pop 时一起弹。</p>
+<p>两栈高度始终相同，所以不必比较值是否相等（最小值重复出现也正确）。</p>
+<p><span class="lab">空间优化：</span>辅助栈只在 x &lt;= 当前最小值时才压入，pop 时同步弹出。</p>
+<p><span class="lab">复杂度：</span>所有操作 O(1)，空间 O(n)</p>
+<p>/</p></div></div></div>
+<div class="sect"><h2>动画演示</h2><div class="anim-host" id="anim-155"></div></div>
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><div class="twocol"><svg viewBox="0 0 226 152" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="226" height="152" fill="#fbfbfd"/>
+<rect x="30" y="30" width="50" height="52" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="55" y="62" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">-2</text>
+<text x="55" y="97" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="88" y="30" width="50" height="52" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="113" y="62" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">0</text>
+<text x="113" y="97" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="146" y="30" width="50" height="52" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="171" y="62" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">-3</text>
+<text x="171" y="97" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+</svg><svg viewBox="0 0 226 152" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="226" height="152" fill="#fbfbfd"/>
+<rect x="30" y="30" width="50" height="52" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="55" y="62" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">-2</text>
+<text x="55" y="97" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="88" y="30" width="50" height="52" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="113" y="62" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">0</text>
+<text x="113" y="97" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="146" y="30" width="50" height="52" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="171" y="62" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">-3</text>
+<text x="171" y="97" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+</svg></div><div class="fig-cap">左边是正常栈，右边是「辅助最小栈」：每次压栈时，若新值 ≤ 当前最小值则同步压入。出栈时若弹出的值等于最小栈顶，则最小栈也弹。存过的「当时最小值」随时可查。</div></div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0155 {
+<span class="tok-k">class</span> MinStack {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">void</span> push(<span class="tok-k">int</span> val) {
+    st_.push(val);
+    <span class="tok-c">// 关键：压的是「val 与当前最小值里的较小者」，min_ 栈顶永远是 st_ 全体的最小值</span>
+    min_.push(min_.empty() ? val : min(val, min_.top()));
+  }
+
+  <span class="tok-k">void</span> pop() {
+    st_.pop();
+    min_.pop();
+  }
+
+  <span class="tok-k">int</span> top() <span class="tok-k">const</span> { <span class="tok-k">return</span> st_.top(); }
+  <span class="tok-k">int</span> getMin() <span class="tok-k">const</span> { <span class="tok-k">return</span> min_.top(); }
+
+ <span class="tok-k">private</span>:
+  <span class="tok-k">stack</span>&lt;<span class="tok-k">int</span>&gt; st_;
+  <span class="tok-k">stack</span>&lt;<span class="tok-k">int</span>&gt; min_;
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0155::MinStack st;
+  st.push(-2);
+  st.push(0);
+  st.push(-3);
+  CHECK_EQ(st.getMin(), -3);
+  st.pop();
+  CHECK_EQ(st.top(), 0);
+  CHECK_EQ(st.getMin(), -2);
+  // 重复最小值：弹掉一个 2 之后，最小值仍是 2
+  lc0155::MinStack d;
+  d.push(2);
+  d.push(2);
+  d.push(1);
+  d.pop();
+  CHECK_EQ(d.getMin(), 2);
+  d.pop();
+  CHECK_EQ(d.getMin(), 2);</pre></div>
+<div class="sect"><h2>同类题（栈）</h2><div class="taglist"><a href="q20.html">Q20 有效的括号</a><a href="q84.html">Q84 柱状图中最大的矩形</a><a href="q394.html">Q394 字符串解码</a><a href="q739.html">Q739 每日温度</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/anim.js"></script>
+<script src="../assets/animations.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){{var s=window.LC_ANIMS&&window.LC_ANIMS["155"];var h=document.getElementById("anim-155");if(s&&h&&window.LCAnim)LCAnim.run(h,s);}});</script></body></html>

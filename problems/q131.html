@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q131 分割回文串 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-backtracking">回溯</a> / Q131</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q131</span> 分割回文串</h1>
+  <span class="badge Medium">Medium</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="131"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 回溯 · 难度 Medium · 原题 <a href="https://leetcode.cn/problems/palindrome-partitioning/" target="_blank" rel="noopener">palindrome-partitioning</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给你一个字符串 <code>s</code>，请你将<em> </em><code>s</code><em> </em>分割成一些 <span data-keyword="substring-nonempty">子串</span>，使每个子串都是 <strong><span data-keyword="palindrome-string">回文串</span></strong> 。返回 <code>s</code> 所有可能的分割方案。</p>
+<p><strong>示例 1：</strong></p>
+<pre>
+<strong>输入：</strong>s = "aab"
+<strong>输出：</strong>[["a","a","b"],["aa","b"]]
+</pre>
+<p><strong>示例 2：</strong></p>
+<pre>
+<strong>输入：</strong>s = "a"
+<strong>输出：</strong>[["a"]]
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>1 &lt;= s.length &lt;= 16</code></li>
+	<li><code>s</code> 仅由小写英文字母组成</li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>区间 DP 预处理回文表 + 切分回溯</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>把「回文切分」看成回溯：每一层枚举下一段的结束位置，是回文才递归下去。</p>
+<p><span class="lab">优化：</span>isPal[i][j] 用区间 DP 预处理（Q132 是它的「只计数」版本），</p>
+<p>把每次 O(n) 的回文判定降为 O(1)。</p>
+<p><span class="lab">复杂度：</span>预处理回文表 O(n^2) 时间 / O(n^2) 空间；输出规模最坏 O(n·2^n)</p>
+<p>/</p></div></div></div>
+
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 214 132" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="214" height="132" fill="#fbfbfd"/>
+<rect x="30" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="53" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">a</text>
+<text x="53" y="96" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="84" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="107" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">a</text>
+<text x="107" y="96" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="138" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="161" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">b</text>
+<text x="161" y="96" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+</svg></div><div class="fig-cap">字符串 `<aab>`（来自本仓库测试数据，下标从 0 开始）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0131 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">string</span>&gt;&gt; partition(<span class="tok-k">const</span> <span class="tok-k">string</span>&amp; s) {
+    <span class="tok-k">const</span> <span class="tok-k">int</span> n = (<span class="tok-k">int</span>)s.size();
+    <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">bool</span>&gt;&gt; pal(n, <span class="tok-k">vector</span>&lt;<span class="tok-k">bool</span>&gt;(n, false));
+    <span class="tok-k">for</span> (<span class="tok-k">int</span> i = n - <span class="tok-n">1</span>; i &gt;= <span class="tok-n">0</span>; --i)  <span class="tok-c">// 区间 DP：先算短区间</span>
+      <span class="tok-k">for</span> (<span class="tok-k">int</span> j = i; j &lt; n; ++j)
+        pal[i][j] = s[i] == s[j] &amp;&amp; (j - i &lt; <span class="tok-n">2</span> || pal[i + <span class="tok-n">1</span>][j - <span class="tok-n">1</span>]);
+    <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">string</span>&gt;&gt; ans;
+    <span class="tok-k">vector</span>&lt;<span class="tok-k">string</span>&gt; path;
+    dfs(s, <span class="tok-n">0</span>, pal, path, ans);
+    <span class="tok-k">return</span> ans;
+  }
+
+ <span class="tok-k">private</span>:
+  <span class="tok-k">static</span> <span class="tok-k">void</span> dfs(<span class="tok-k">const</span> <span class="tok-k">string</span>&amp; s, <span class="tok-k">int</span> start, <span class="tok-k">const</span> <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">bool</span>&gt;&gt;&amp; pal, <span class="tok-k">vector</span>&lt;<span class="tok-k">string</span>&gt;&amp; path,
+                  <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">string</span>&gt;&gt;&amp; ans) {
+    <span class="tok-k">if</span> (start == (<span class="tok-k">int</span>)s.size()) {
+      ans.push_back(path);
+      <span class="tok-k">return</span>;
+    }
+    <span class="tok-k">for</span> (<span class="tok-k">int</span> end = start; end &lt; (<span class="tok-k">int</span>)s.size(); ++end) {
+      <span class="tok-k">if</span> (!pal[start][end]) <span class="tok-k">continue</span>;  <span class="tok-c">// 切出来的这段必须回文</span>
+      path.push_back(s.substr(start, end - start + <span class="tok-n">1</span>));
+      dfs(s, end + <span class="tok-n">1</span>, pal, path, ans);
+      path.pop_back();
+    }
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0131::Solution s;
+  vector&lt;vector&lt;string&gt;&gt; want{{&quot;a&quot;, &quot;a&quot;, &quot;b&quot;}, {&quot;aa&quot;, &quot;b&quot;}};
+  auto got = s.partition(&quot;aab&quot;);
+  sort(got.begin(), got.end());
+  sort(want.begin(), want.end());
+  CHECK_EQ(got, want);
+  auto single = s.partition(&quot;a&quot;);
+  CHECK_EQ(single, vector&lt;vector&lt;string&gt;&gt;({{&quot;a&quot;}}));
+  auto all = s.partition(&quot;aaa&quot;);
+  CHECK_EQ(all.size(), (size_t)4);  // a|a|a, a|aa, aa|a, aaa</pre></div>
+<div class="sect"><h2>同类题（回溯）</h2><div class="taglist"><a href="q17.html">Q17 电话号码的字母组合</a><a href="q22.html">Q22 括号生成</a><a href="q39.html">Q39 组合总和</a><a href="q46.html">Q46 全排列</a><a href="q51.html">Q51 N 皇后</a><a href="q78.html">Q78 子集</a><a href="q79.html">Q79 单词搜索</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+</body></html>

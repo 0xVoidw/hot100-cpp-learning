@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q56 合并区间 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-array">数组</a> / Q56</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q56</span> 合并区间</h1>
+  <span class="badge Medium">Medium</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="56"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 数组 · 难度 Medium · 原题 <a href="https://leetcode.cn/problems/merge-intervals/" target="_blank" rel="noopener">merge-intervals</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>以数组 <code>intervals</code> 表示若干个区间的集合，其中单个区间为 <code>intervals[i] = [start<sub>i</sub>, end<sub>i</sub>]</code> 。请你合并所有重叠的区间，并返回&nbsp;<em>一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间</em>&nbsp;。</p>
+<p><strong>示例 1：</strong></p>
+<pre>
+<strong>输入：</strong>intervals = [[1,3],[2,6],[8,10],[15,18]]
+<strong>输出：</strong>[[1,6],[8,10],[15,18]]
+<strong>解释：</strong>区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].
+</pre>
+<p><strong>示例&nbsp;2：</strong></p>
+<pre>
+<strong>输入：</strong>intervals = [[1,4],[4,5]]
+<strong>输出：</strong>[[1,5]]
+<strong>解释：</strong>区间 [1,4] 和 [4,5] 可被视为重叠区间。</pre>
+<p><strong class="example">示例 3：</strong></p>
+<pre>
+<b>输入：</b>intervals = [[4,7],[1,4]]
+<b>输出：</b>[[1,7]]
+<b>解释：</b>区间 [1,4] 和 [4,7] 可被视为重叠区间。
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>1 &lt;= intervals.length &lt;= 10<sup>4</sup></code></li>
+	<li><code>intervals[i].length == 2</code></li>
+	<li><code>0 &lt;= start<sub>i</sub> &lt;= end<sub>i</sub> &lt;= 10<sup>4</sup></code></li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>按左端排序 + 合并相交区间</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>按左端点排序后，只需要和「结果里最后一个区间」比：</p>
+<p>新区间左端 &gt; 上一个的右端 -&gt; 开新段；否则取 max 扩右端。</p>
+<p><span class="lab">复杂度：</span>时间 O(n log n)，空间 O(log n)</p>
+<p><span class="lab">易错：</span>合并时必须用 max(r, itv[1])，因为存在 [1,10],[2,3] 这种被包含的情况。</p>
+<p>/</p></div></div></div>
+
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 160 224" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="160" height="224" fill="#fbfbfd"/>
+<rect x="26" y="26" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="52" y="51" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="52" y="82" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
+<rect x="82" y="26" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="108" y="51" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
+<text x="108" y="82" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
+<text x="32" y="18" fill="#8893b8" font-size="11">i0</text>
+<rect x="26" y="70" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="52" y="95" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="52" y="126" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
+<rect x="82" y="70" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="108" y="95" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">6</text>
+<text x="108" y="126" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
+<text x="32" y="62" fill="#8893b8" font-size="11">i1</text>
+<rect x="26" y="114" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="52" y="139" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">8</text>
+<text x="52" y="170" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
+<rect x="82" y="114" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="108" y="139" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">10</text>
+<text x="108" y="170" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
+<text x="32" y="106" fill="#8893b8" font-size="11">i2</text>
+<rect x="26" y="158" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="52" y="183" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">15</text>
+<text x="52" y="214" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
+<rect x="82" y="158" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="108" y="183" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">18</text>
+<text x="108" y="214" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
+<text x="32" y="150" fill="#8893b8" font-size="11">i3</text>
+</svg></div><div class="fig-cap">矩阵（来自本仓库测试数据，红色格子 = 0）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0056 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&gt; merge(<span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&gt;&amp; intervals) {
+    sort(intervals.begin(), intervals.end(),
+         [](<span class="tok-k">const</span> <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; a, <span class="tok-k">const</span> <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; b) { <span class="tok-k">return</span> a[<span class="tok-n">0</span>] &lt; b[<span class="tok-n">0</span>]; });
+    <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&gt; ans;
+    <span class="tok-k">for</span> (<span class="tok-k">const</span> <span class="tok-k">auto</span>&amp; itv : intervals) {
+      <span class="tok-k">if</span> (!ans.empty() &amp;&amp; itv[<span class="tok-n">0</span>] &lt;= ans.back()[<span class="tok-n">1</span>])
+        ans.back()[<span class="tok-n">1</span>] = max(ans.back()[<span class="tok-n">1</span>], itv[<span class="tok-n">1</span>]);
+      <span class="tok-k">else</span>
+        ans.push_back(itv);
+    }
+    <span class="tok-k">return</span> ans;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0056::Solution s;
+  vector&lt;vector&lt;int&gt;&gt; a{{1, 3}, {2, 6}, {8, 10}, {15, 18}};
+  CHECK_EQ(s.merge(a), vector&lt;vector&lt;int&gt;&gt;({{1, 6}, {8, 10}, {15, 18}}));
+  vector&lt;vector&lt;int&gt;&gt; b{{1, 4}, {4, 5}};  // 端点相接也要合并
+  CHECK_EQ(s.merge(b), vector&lt;vector&lt;int&gt;&gt;({{1, 5}}));
+  vector&lt;vector&lt;int&gt;&gt; c{{1, 10}, {2, 3}};  // 包含关系，考验 max
+  CHECK_EQ(s.merge(c), vector&lt;vector&lt;int&gt;&gt;({{1, 10}}));</pre></div>
+<div class="sect"><h2>同类题（数组）</h2><div class="taglist"><a href="q41.html">Q41 缺失的第一个正数</a><a href="q53.html">Q53 最大子数组和</a><a href="q189.html">Q189 轮转数组</a><a href="q238.html">Q238 除自身以外数组的乘积</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+</body></html>

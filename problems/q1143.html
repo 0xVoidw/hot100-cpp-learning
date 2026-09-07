@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q1143 最长公共子序列 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-dp_multidim">二维 DP</a> / Q1143</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q1143</span> 最长公共子序列</h1>
+  <span class="badge Medium">Medium</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="1143"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 二维 DP · 难度 Medium · 原题 <a href="https://leetcode.cn/problems/longest-common-subsequence/" target="_blank" rel="noopener">longest-common-subsequence</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给定两个字符串 <code>text1</code> 和 <code>text2</code>，返回这两个字符串的最长 <strong>公共子序列</strong> 的长度。如果不存在 <strong>公共子序列</strong> ，返回 <code>0</code> 。</p>
+<p>一个字符串的 <strong>子序列</strong><em> </em>是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。</p>
+<ul>
+	<li>例如，<code>"ace"</code> 是 <code>"abcde"</code> 的子序列，但 <code>"aec"</code> 不是 <code>"abcde"</code> 的子序列。</li>
+</ul>
+<p>两个字符串的 <strong>公共子序列</strong> 是这两个字符串所共同拥有的子序列。</p>
+<p> </p>
+<p><strong>示例 1：</strong></p>
+<pre>
+<strong>输入：</strong>text1 = "abcde", text2 = "ace"
+<strong>输出：</strong>3
+<strong>解释：</strong>最长公共子序列是 "ace" ，它的长度为 3 。
+</pre>
+<p><strong>示例 2：</strong></p>
+<pre>
+<strong>输入：</strong>text1 = "abc", text2 = "abc"
+<strong>输出：</strong>3
+<strong>解释：</strong>最长公共子序列是 "abc" ，它的长度为 3 。
+</pre>
+<p><strong>示例 3：</strong></p>
+<pre>
+<strong>输入：</strong>text1 = "abc", text2 = "def"
+<strong>输出：</strong>0
+<strong>解释：</strong>两个字符串没有公共子序列，返回 0 。
+</pre>
+<p> </p>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>1 <= text1.length, text2.length <= 1000</code></li>
+	<li><code>text1</code> 和 <code>text2</code> 仅由小写英文字符组成。</li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>相等取对角+1，不等取 max(上,左)</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">状态：</span>dp[i][j] = text1 前 i 个 与 text2 前 j 个 的 LCS 长度。</p>
+<p><span class="lab">转移：</span>相等 -&gt; dp[i-1][j-1] + 1（这个字符必进 LCS）；</p>
+<p>不等 -&gt; max(dp[i-1][j], dp[i][j-1])（各退一步）。</p>
+<p><span class="lab">「子序列 vs 子串」：</span>子串必须连续，状态要改成「以 i/j 结尾」并取 max（Q718）；</p>
+<p>子序列可以不连续，所以 dp[i][j] 直接是答案。</p>
+<p><span class="lab">复杂度：</span>时间 O(mn)，空间 O(mn)（求长度可滚动成 O(n)，但要输出方案就得留整表）</p>
+<p><span class="lab">输出方案：</span>从 (m,n) 反向走，遇到「相等且来自对角线」就记录该字符。</p>
+<p>/</p></div></div></div>
+<div class="sect"><h2>动画演示</h2><div class="anim-host" id="anim-1143"></div></div>
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 646 132" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="646" height="132" fill="#fbfbfd"/>
+<rect x="30" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="53" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">s</text>
+<text x="53" y="96" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="84" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="107" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">h</text>
+<text x="107" y="96" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="138" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="161" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">m</text>
+<text x="161" y="96" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+<rect x="192" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="215" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">t</text>
+<text x="215" y="96" text-anchor="middle" fill="#8893b8" font-size="12">3</text>
+<rect x="246" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="269" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">u</text>
+<text x="269" y="96" text-anchor="middle" fill="#8893b8" font-size="12">4</text>
+<rect x="300" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="323" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">l</text>
+<text x="323" y="96" text-anchor="middle" fill="#8893b8" font-size="12">5</text>
+<rect x="354" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="377" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">q</text>
+<text x="377" y="96" text-anchor="middle" fill="#8893b8" font-size="12">6</text>
+<rect x="408" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="431" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">r</text>
+<text x="431" y="96" text-anchor="middle" fill="#8893b8" font-size="12">7</text>
+<rect x="462" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="485" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">y</text>
+<text x="485" y="96" text-anchor="middle" fill="#8893b8" font-size="12">8</text>
+<rect x="516" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="539" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">p</text>
+<text x="539" y="96" text-anchor="middle" fill="#8893b8" font-size="12">9</text>
+<rect x="570" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="593" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">y</text>
+<text x="593" y="96" text-anchor="middle" fill="#8893b8" font-size="12">10</text>
+</svg></div><div class="fig-cap">字符串 `<shmtulqrypy>`（来自本仓库测试数据，下标从 0 开始）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc01143 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">int</span> longestCommonSubsequence(<span class="tok-k">const</span> <span class="tok-k">string</span>&amp; a, <span class="tok-k">const</span> <span class="tok-k">string</span>&amp; b) {
+    <span class="tok-k">const</span> <span class="tok-k">int</span> m = (<span class="tok-k">int</span>)a.size(), n = (<span class="tok-k">int</span>)b.size();
+    <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&gt; dp(m + <span class="tok-n">1</span>, <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;(n + <span class="tok-n">1</span>, <span class="tok-n">0</span>));  <span class="tok-c">// 空串那一行/列是天然边界</span>
+    <span class="tok-k">for</span> (<span class="tok-k">int</span> i = <span class="tok-n">1</span>; i &lt;= m; ++i)
+      <span class="tok-k">for</span> (<span class="tok-k">int</span> j = <span class="tok-n">1</span>; j &lt;= n; ++j)
+        dp[i][j] = (a[i - <span class="tok-n">1</span>] == b[j - <span class="tok-n">1</span>]) ? dp[i - <span class="tok-n">1</span>][j - <span class="tok-n">1</span>] + <span class="tok-n">1</span>
+                                          : max(dp[i - <span class="tok-n">1</span>][j], dp[i][j - <span class="tok-n">1</span>]);
+    <span class="tok-k">return</span> dp[m][n];
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc01143::Solution s;
+  CHECK_EQ(s.longestCommonSubsequence(&quot;abcde&quot;, &quot;ace&quot;), 3);
+  CHECK_EQ(s.longestCommonSubsequence(&quot;abc&quot;, &quot;abc&quot;), 3);
+  CHECK_EQ(s.longestCommonSubsequence(&quot;abc&quot;, &quot;def&quot;), 0);
+  CHECK_EQ(s.longestCommonSubsequence(&quot;bsbininm&quot;, &quot;jmjkbkjkv&quot;), 1);
+  CHECK_EQ(s.longestCommonSubsequence(&quot;&quot;, &quot;a&quot;), 0);
+  CHECK_EQ(s.longestCommonSubsequence(&quot;oxcpqrsvwf&quot;, &quot;shmtulqrypy&quot;), 2);</pre></div>
+<div class="sect"><h2>同类题（二维 DP）</h2><div class="taglist"><a href="q5.html">Q5 最长回文子串</a><a href="q62.html">Q62 不同路径</a><a href="q64.html">Q64 最小路径和</a><a href="q72.html">Q72 编辑距离</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/anim.js"></script>
+<script src="../assets/animations.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){{var s=window.LC_ANIMS&&window.LC_ANIMS["1143"];var h=document.getElementById("anim-1143");if(s&&h&&window.LCAnim)LCAnim.run(h,s);}});</script></body></html>

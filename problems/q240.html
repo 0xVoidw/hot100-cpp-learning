@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q240 搜索二维矩阵 II · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-matrix">矩阵</a> / Q240</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q240</span> 搜索二维矩阵 II</h1>
+  <span class="badge Medium">Medium</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="240"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 矩阵 · 难度 Medium · 原题 <a href="https://leetcode.cn/problems/search-a-2d-matrix-ii/" target="_blank" rel="noopener">search-a-2d-matrix-ii</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>编写一个高效的算法来搜索&nbsp;<code><em>m</em>&nbsp;x&nbsp;<em>n</em></code>&nbsp;矩阵 <code>matrix</code> 中的一个目标值 <code>target</code> 。该矩阵具有以下特性：</p>
+<ul>
+	<li>每行的元素从左到右升序排列。</li>
+	<li>每列的元素从上到下升序排列。</li>
+</ul>
+<p><b>示例 1：</b></p>
+<img alt="" src="https://assets.leetcode.cn/aliyun-lc-upload/uploads/2020/11/25/searchgrid2.jpg" />
+<pre>
+<b>输入：</b>matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 5
+<b>输出：</b>true
+</pre>
+<p><b>示例 2：</b></p>
+<img alt="" src="https://assets.leetcode.cn/aliyun-lc-upload/uploads/2020/11/25/searchgrid.jpg" />
+<pre>
+<b>输入：</b>matrix = [[1,4,7,11,15],[2,5,8,12,19],[3,6,9,16,22],[10,13,14,17,24],[18,21,23,26,30]], target = 20
+<b>输出：</b>false
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>m == matrix.length</code></li>
+	<li><code>n == matrix[i].length</code></li>
+	<li><code>1 &lt;= n, m &lt;= 300</code></li>
+	<li><code>-10<sup>9</sup>&nbsp;&lt;= matrix[i][j] &lt;= 10<sup>9</sup></code></li>
+	<li>每行的所有元素从左到右升序排列</li>
+	<li>每列的所有元素从上到下升序排列</li>
+	<li><code>-10<sup>9</sup>&nbsp;&lt;= target &lt;= 10<sup>9</sup></code></li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>从右上角出发，大了左移、小了下移</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>从右上角出发的「阶梯下降」。该位置比 target 大 -&gt; 整列太大，左移；</p>
+<p>比 target 小 -&gt; 整行太小，下移。每步排除一行或一列。</p>
+<p><span class="lab">复杂度：</span>时间 O(m+n)，空间 O(1)</p>
+<p><span class="lab">易错：</span>不能从左上角或右下角出发 —— 那两个方向「大小关系」是不确定的。</p>
+<p>/</p></div></div></div>
+<div class="sect"><h2>动画演示</h2><div class="anim-host" id="anim-240"></div></div>
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 328 268" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="328" height="268" fill="#fbfbfd"/>
+<rect x="26" y="26" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="52" y="51" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="52" y="82" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
+<rect x="82" y="26" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="108" y="51" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">4</text>
+<text x="108" y="82" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
+<rect x="138" y="26" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="164" y="51" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">7</text>
+<text x="164" y="82" text-anchor="middle" fill="#8893b8" font-size="11">j2</text>
+<rect x="194" y="26" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="220" y="51" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">11</text>
+<text x="220" y="82" text-anchor="middle" fill="#8893b8" font-size="11">j3</text>
+<rect x="250" y="26" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="276" y="51" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">15</text>
+<text x="276" y="82" text-anchor="middle" fill="#8893b8" font-size="11">j4</text>
+<text x="32" y="18" fill="#8893b8" font-size="11">i0</text>
+<rect x="26" y="70" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="52" y="95" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="52" y="126" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
+<rect x="82" y="70" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="108" y="95" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">5</text>
+<text x="108" y="126" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
+<rect x="138" y="70" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="164" y="95" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">8</text>
+<text x="164" y="126" text-anchor="middle" fill="#8893b8" font-size="11">j2</text>
+<rect x="194" y="70" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="220" y="95" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">12</text>
+<text x="220" y="126" text-anchor="middle" fill="#8893b8" font-size="11">j3</text>
+<rect x="250" y="70" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="276" y="95" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">19</text>
+<text x="276" y="126" text-anchor="middle" fill="#8893b8" font-size="11">j4</text>
+<text x="32" y="62" fill="#8893b8" font-size="11">i1</text>
+<rect x="26" y="114" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="52" y="139" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
+<text x="52" y="170" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
+<rect x="82" y="114" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="108" y="139" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">6</text>
+<text x="108" y="170" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
+<rect x="138" y="114" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="164" y="139" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">9</text>
+<text x="164" y="170" text-anchor="middle" fill="#8893b8" font-size="11">j2</text>
+<rect x="194" y="114" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="220" y="139" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">16</text>
+<text x="220" y="170" text-anchor="middle" fill="#8893b8" font-size="11">j3</text>
+<rect x="250" y="114" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="276" y="139" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">22</text>
+<text x="276" y="170" text-anchor="middle" fill="#8893b8" font-size="11">j4</text>
+<text x="32" y="106" fill="#8893b8" font-size="11">i2</text>
+<rect x="26" y="158" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="52" y="183" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">10</text>
+<text x="52" y="214" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
+<rect x="82" y="158" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="108" y="183" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">13</text>
+<text x="108" y="214" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
+<rect x="138" y="158" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="164" y="183" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">14</text>
+<text x="164" y="214" text-anchor="middle" fill="#8893b8" font-size="11">j2</text>
+<rect x="194" y="158" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="220" y="183" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">17</text>
+<text x="220" y="214" text-anchor="middle" fill="#8893b8" font-size="11">j3</text>
+<rect x="250" y="158" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="276" y="183" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">24</text>
+<text x="276" y="214" text-anchor="middle" fill="#8893b8" font-size="11">j4</text>
+<text x="32" y="150" fill="#8893b8" font-size="11">i3</text>
+<rect x="26" y="202" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="52" y="227" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">18</text>
+<text x="52" y="258" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
+<rect x="82" y="202" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="108" y="227" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">21</text>
+<text x="108" y="258" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
+<rect x="138" y="202" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="164" y="227" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">23</text>
+<text x="164" y="258" text-anchor="middle" fill="#8893b8" font-size="11">j2</text>
+<rect x="194" y="202" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="220" y="227" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">26</text>
+<text x="220" y="258" text-anchor="middle" fill="#8893b8" font-size="11">j3</text>
+<rect x="250" y="202" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="276" y="227" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">30</text>
+<text x="276" y="258" text-anchor="middle" fill="#8893b8" font-size="11">j4</text>
+<text x="32" y="194" fill="#8893b8" font-size="11">i4</text>
+</svg></div><div class="fig-cap">矩阵（来自本仓库测试数据，红色格子 = 0）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0240 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">bool</span> searchMatrix(<span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&gt;&amp; matrix, <span class="tok-k">int</span> target) {
+    <span class="tok-k">if</span> (matrix.empty() || matrix[<span class="tok-n">0</span>].empty()) <span class="tok-k">return</span> false;  <span class="tok-c">// 空矩阵不能取 matrix[0]</span>
+    <span class="tok-k">int</span> i = <span class="tok-n">0</span>, j = (<span class="tok-k">int</span>)matrix[<span class="tok-n">0</span>].size() - <span class="tok-n">1</span>;  <span class="tok-c">// 右上角</span>
+    <span class="tok-k">while</span> (i &lt; (<span class="tok-k">int</span>)matrix.size() &amp;&amp; j &gt;= <span class="tok-n">0</span>) {
+      <span class="tok-k">if</span> (matrix[i][j] == target)
+        <span class="tok-k">return</span> true;
+      <span class="tok-k">else</span> <span class="tok-k">if</span> (matrix[i][j] &gt; target)
+        --j;  <span class="tok-c">// 这一列都比 target 大</span>
+      <span class="tok-k">else</span>
+        ++i;  <span class="tok-c">// 这一行都比 target 小</span>
+    }
+    <span class="tok-k">return</span> false;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0240::Solution s;
+  vector&lt;vector&lt;int&gt;&gt; m{{1, 4, 7, 11, 15},  {2, 5, 8, 12, 19},
+                        {3, 6, 9, 16, 22},  {10, 13, 14, 17, 24},
+                        {18, 21, 23, 26, 30}};
+  CHECK_TRUE(s.searchMatrix(m, 5));
+  CHECK_FALSE(s.searchMatrix(m, 20));
+  CHECK_TRUE(s.searchMatrix(m, 1));   // 左上角
+  CHECK_TRUE(s.searchMatrix(m, 30));  // 右下角
+  vector&lt;vector&lt;int&gt;&gt; one{{-5}};
+  CHECK_TRUE(s.searchMatrix(one, -5));
+  vector&lt;vector&lt;int&gt;&gt; none{};
+  CHECK_FALSE(s.searchMatrix(none, 1));  // 空矩阵不越界
+  CHECK_FALSE(s.searchMatrix(one, -2));</pre></div>
+<div class="sect"><h2>同类题（矩阵）</h2><div class="taglist"><a href="q48.html">Q48 旋转图像</a><a href="q54.html">Q54 螺旋矩阵</a><a href="q73.html">Q73 矩阵置零</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/anim.js"></script>
+<script src="../assets/animations.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){{var s=window.LC_ANIMS&&window.LC_ANIMS["240"];var h=document.getElementById("anim-240");if(s&&h&&window.LCAnim)LCAnim.run(h,s);}});</script></body></html>

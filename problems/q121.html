@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q121 买卖股票的最佳时机 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-greedy">贪心</a> / Q121</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q121</span> 买卖股票的最佳时机</h1>
+  <span class="badge Easy">Easy</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="121"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 贪心 · 难度 Easy · 原题 <a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/" target="_blank" rel="noopener">best-time-to-buy-and-sell-stock</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给定一个数组 <code>prices</code> ，它的第 <code>i</code> 个元素 <code>prices[i]</code> 表示一支给定股票第 <code>i</code> 天的价格。</p>
+<p>你只能选择 <strong>某一天</strong> 买入这只股票，并选择在 <strong>未来的某一个不同的日子</strong> 卖出该股票。设计一个算法来计算你所能获取的最大利润。</p>
+<p>返回你可以从这笔交易中获取的最大利润。如果你不能获取任何利润，返回 <code>0</code> 。</p>
+<p> </p>
+<p><strong>示例 1：</strong></p>
+<pre>
+<strong>输入：</strong>[7,1,5,3,6,4]
+<strong>输出：</strong>5
+<strong>解释：</strong>在第 2 天（股票价格 = 1）的时候买入，在第 5 天（股票价格 = 6）的时候卖出，最大利润 = 6-1 = 5 。
+     注意利润不能是 7-1 = 6, 因为卖出价格需要大于买入价格；同时，你不能在买入前卖出股票。
+</pre>
+<p><strong>示例 2：</strong></p>
+<pre>
+<strong>输入：</strong>prices = [7,6,4,3,1]
+<strong>输出：</strong>0
+<strong>解释：</strong>在这种情况下, 没有交易完成, 所以最大利润为 0。
+</pre>
+<p> </p>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>1 <= prices.length <= 10<sup>5</sup></code></li>
+	<li><code>0 <= prices[i] <= 10<sup>4</sup></code></li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>边走边记历史最低价，当天价减它取最大</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>只许买一次卖一次（先买后卖）。边扫边记「历史最低价」，</p>
+<p>用当天价格减它取最大 —— 等价于对每个卖出日算最优买入日。</p>
+<p><span class="lab">复杂度：</span>时间 O(n)，空间 O(1)</p>
+<p><span class="lab">家族：</span>Q122 无限次交易 = 累加所有上涨段；Q123 最多 2 笔 / Q188 最多 k 笔 = 状态机 DP；</p>
+<p>Q309 含冷冻期、Q714 含手续费 = 在同一套状态机上改转移。</p>
+<p>/</p></div></div></div>
+<div class="sect"><h2>动画演示</h2><div class="anim-host" id="anim-121"></div></div>
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 376 132" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="376" height="132" fill="#fbfbfd"/>
+<rect x="30" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="53" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">7</text>
+<text x="53" y="96" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="84" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="107" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="107" y="96" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="138" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="161" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">5</text>
+<text x="161" y="96" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+<rect x="192" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="215" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
+<text x="215" y="96" text-anchor="middle" fill="#8893b8" font-size="12">3</text>
+<rect x="246" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="269" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">6</text>
+<text x="269" y="96" text-anchor="middle" fill="#8893b8" font-size="12">4</text>
+<rect x="300" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="323" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">4</text>
+<text x="323" y="96" text-anchor="middle" fill="#8893b8" font-size="12">5</text>
+</svg></div><div class="fig-cap">数组（来自本仓库测试数据，下标从 0 开始）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0121 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">int</span> maxProfit(<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; prices) {
+    <span class="tok-k">if</span> (prices.empty()) <span class="tok-k">return</span> <span class="tok-n">0</span>;  <span class="tok-c">// 防 prices[0] 越界（题面保证 n &gt;= 1）</span>
+    <span class="tok-k">int</span> ans = <span class="tok-n">0</span>;
+    <span class="tok-k">int</span> low = prices[<span class="tok-n">0</span>];  <span class="tok-c">// 到目前为止的最低买入价</span>
+    <span class="tok-k">for</span> (<span class="tok-k">int</span> p : prices) {
+      ans = max(ans, p - low);  <span class="tok-c">// 今天卖</span>
+      low = min(low, p);        <span class="tok-c">// 更新「今天及之前」最便宜的买点</span>
+    }
+    <span class="tok-k">return</span> ans;  <span class="tok-c">// 全程下跌时保持 0（不交易）</span>
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0121::Solution s;
+  vector&lt;int&gt; a{7, 1, 5, 3, 6, 4};
+  CHECK_EQ(s.maxProfit(a), 5);  // 第 2 天 1 买、第 5 天 6 卖
+  vector&lt;int&gt; b{7, 6, 4, 3, 1};
+  CHECK_EQ(s.maxProfit(b), 0);  // 一直跌就不做
+  vector&lt;int&gt; c{1, 2};
+  CHECK_EQ(s.maxProfit(c), 1);
+  vector&lt;int&gt; d{2, 4, 1};  // 低点出现在高点之后，不能倒着卖
+  CHECK_EQ(s.maxProfit(d), 2);
+  vector&lt;int&gt; e{2, 1, 4};  // 卖出日可以比买入日晚很多
+  CHECK_EQ(s.maxProfit(e), 3);
+  vector&lt;int&gt; f{5};
+  CHECK_EQ(s.maxProfit(f), 0);</pre></div>
+<div class="sect"><h2>同类题（贪心）</h2><div class="taglist"><a href="q45.html">Q45 跳跃游戏 II</a><a href="q55.html">Q55 跳跃游戏</a><a href="q763.html">Q763 划分字母区间</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/anim.js"></script>
+<script src="../assets/animations.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){{var s=window.LC_ANIMS&&window.LC_ANIMS["121"];var h=document.getElementById("anim-121");if(s&&h&&window.LCAnim)LCAnim.run(h,s);}});</script></body></html>

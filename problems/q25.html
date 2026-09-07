@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q25 K 个一组翻转链表 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-linked_list">链表</a> / Q25</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q25</span> K 个一组翻转链表</h1>
+  <span class="badge Hard">Hard</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="25"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 链表 · 难度 Hard · 原题 <a href="https://leetcode.cn/problems/reverse-nodes-in-k-group/" target="_blank" rel="noopener">reverse-nodes-in-k-group</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给你链表的头节点 <code>head</code> ，每&nbsp;<code>k</code><em>&nbsp;</em>个节点一组进行翻转，请你返回修改后的链表。</p>
+<p><code>k</code> 是一个正整数，它的值小于或等于链表的长度。如果节点总数不是&nbsp;<code>k</code><em>&nbsp;</em>的整数倍，那么请将最后剩余的节点保持原有顺序。</p>
+<p>你不能只是单纯的改变节点内部的值，而是需要实际进行节点交换。</p>
+<p><strong>示例 1：</strong></p>
+<img alt="" src="https://assets.leetcode.com/uploads/2020/10/03/reverse_ex1.jpg" style="width: 542px; height: 222px;" />
+<pre>
+<strong>输入：</strong>head = [1,2,3,4,5], k = 2
+<strong>输出：</strong>[2,1,4,3,5]
+</pre>
+<p><strong>示例 2：</strong></p>
+<p><img alt="" src="https://assets.leetcode.com/uploads/2020/10/03/reverse_ex2.jpg" style="width: 542px; height: 222px;" /></p>
+<pre>
+<strong>输入：</strong>head = [1,2,3,4,5], k = 3
+<strong>输出：</strong>[3,2,1,4,5]
+</pre>
+<strong>提示：</strong>
+<ul>
+	<li>链表中的节点数目为 <code>n</code></li>
+	<li><code>1 &lt;= k &lt;= n &lt;= 5000</code></li>
+	<li><code>0 &lt;= Node.val &lt;= 1000</code></li>
+</ul>
+<p><strong>进阶：</strong>你可以设计一个只用 <code>O(1)</code> 额外内存空间的算法解决此问题吗？</p>
+<ul>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>数够 k 个就整组反转，再串接</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>先探路确认剩余够 k 个（不够就保留原序），再反转这一组。</p>
+<p>反转时把 prev 初值设为 groupNext，反转完自然接上了后段。</p>
+<p>groupPrev 只在本组完成后前移一次，移到「本组原来的尾结点」。</p>
+<p><span class="lab">复杂度：</span>时间 O(n)，空间 O(1)</p>
+<p><span class="lab">易错：</span>反转后本组的头尾互换，记 <code>tail = 原头</code> 才能正确接下一组。</p>
+<p>/</p></div></div></div>
+
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 510 180" xmlns="http://www.w3.org/2000/svg" class="dia">
+<defs><marker id="arr341354" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#4f6ef7"/></marker></defs>
+<rect width="510" height="180" fill="#fbfbfd"/>
+<rect x="30" y="30" width="54" height="60" rx="8" fill="#eef2ff" stroke="#4f6ef7" stroke-width="2"/>
+<text x="57" y="65" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="57" y="106" text-anchor="middle" fill="#8893b8" font-size="12">i0</text>
+<rect x="124" y="30" width="54" height="60" rx="8" fill="#eef2ff" stroke="#4f6ef7" stroke-width="2"/>
+<text x="151" y="65" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="151" y="106" text-anchor="middle" fill="#8893b8" font-size="12">i1</text>
+<rect x="218" y="30" width="54" height="60" rx="8" fill="#eef2ff" stroke="#4f6ef7" stroke-width="2"/>
+<text x="245" y="65" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
+<text x="245" y="106" text-anchor="middle" fill="#8893b8" font-size="12">i2</text>
+<rect x="312" y="30" width="54" height="60" rx="8" fill="#eef2ff" stroke="#4f6ef7" stroke-width="2"/>
+<text x="339" y="65" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">4</text>
+<text x="339" y="106" text-anchor="middle" fill="#8893b8" font-size="12">i3</text>
+<rect x="406" y="30" width="54" height="60" rx="8" fill="#eef2ff" stroke="#4f6ef7" stroke-width="2"/>
+<text x="433" y="65" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">5</text>
+<text x="433" y="106" text-anchor="middle" fill="#8893b8" font-size="12">i4</text>
+<line x1="84" y1="60" x2="122" y2="60" stroke="#4f6ef7" stroke-width="2" marker-end="url(#arr341354)"/>
+<line x1="178" y1="60" x2="216" y2="60" stroke="#4f6ef7" stroke-width="2" marker-end="url(#arr341354)"/>
+<line x1="272" y1="60" x2="310" y2="60" stroke="#4f6ef7" stroke-width="2" marker-end="url(#arr341354)"/>
+<line x1="366" y1="60" x2="404" y2="60" stroke="#4f6ef7" stroke-width="2" marker-end="url(#arr341354)"/>
+</svg></div><div class="fig-cap">链表结构（来自本仓库测试数据）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0025 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  ListNode* reverseKGroup(ListNode* head, <span class="tok-k">int</span> k) {
+    ListNode dummy(<span class="tok-n">0</span>);
+    dummy.next = head;
+    ListNode* groupPrev = &amp;dummy;
+    <span class="tok-k">while</span> (true) {
+      ListNode* kth = groupPrev;
+      <span class="tok-k">for</span> (<span class="tok-k">int</span> i = <span class="tok-n">0</span>; i &lt; k &amp;&amp; kth; ++i) kth = kth-&gt;next;
+      <span class="tok-k">if</span> (!kth) <span class="tok-k">break</span>;                       <span class="tok-c">// 不足 k 个，保持原序</span>
+      ListNode* groupNext = kth-&gt;next;
+      ListNode* prev = groupNext;            <span class="tok-c">// 反转时组尾直接接上后段</span>
+      ListNode* cur = groupPrev-&gt;next;
+      <span class="tok-k">while</span> (cur != groupNext) {
+        ListNode* nxt = cur-&gt;next;
+        cur-&gt;next = prev;
+        prev = cur;
+        cur = nxt;
+      }
+      ListNode* groupTail = groupPrev-&gt;next;  <span class="tok-c">// 旧的组头，现在是组尾</span>
+      groupPrev-&gt;next = kth;                  <span class="tok-c">// 新的组头接到前一段</span>
+      groupPrev = groupTail;
+    }
+    <span class="tok-k">return</span> dummy.next;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0025::Solution s;
+  ListNode* a = buildList({1, 2, 3, 4, 5});
+  CHECK_EQ(listToVec(s.reverseKGroup(a, 2)), vector&lt;int&gt;{2, 1, 4, 3, 5});
+  ListNode* b = buildList({1, 2, 3, 4, 5});
+  CHECK_EQ(listToVec(s.reverseKGroup(b, 3)), vector&lt;int&gt;{3, 2, 1, 4, 5});
+  ListNode* c = buildList({1, 2, 3, 4, 5});
+  CHECK_EQ(listToVec(s.reverseKGroup(c, 1)), vector&lt;int&gt;{1, 2, 3, 4, 5});
+  ListNode* d = buildList({1, 2, 3});
+  CHECK_EQ(listToVec(s.reverseKGroup(d, 4)), vector&lt;int&gt;{1, 2, 3});  // k 超过长度</pre></div>
+<div class="sect"><h2>同类题（链表）</h2><div class="taglist"><a href="q2.html">Q2 两数相加</a><a href="q19.html">Q19 删除链表的倒数第 N 个结点</a><a href="q21.html">Q21 合并两个有序链表</a><a href="q23.html">Q23 合并 K 个升序链表</a><a href="q24.html">Q24 两两交换链表中的节点</a><a href="q138.html">Q138 随机链表的复制</a><a href="q141.html">Q141 环形链表</a><a href="q142.html">Q142 环形链表 II</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+</body></html>

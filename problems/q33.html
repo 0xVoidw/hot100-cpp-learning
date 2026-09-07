@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q33 搜索旋转排序数组 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-binary_search">二分查找</a> / Q33</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q33</span> 搜索旋转排序数组</h1>
+  <span class="badge Medium">Medium</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="33"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 二分查找 · 难度 Medium · 原题 <a href="https://leetcode.cn/problems/search-in-rotated-sorted-array/" target="_blank" rel="noopener">search-in-rotated-sorted-array</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>整数数组 <code>nums</code> 按升序排列，数组中的值 <strong>互不相同</strong> 。</p>
+<p>在传递给函数之前，<code>nums</code> 在预先未知的某个下标 <code>k</code>（<code>0 &lt;= k &lt; nums.length</code>）上进行了 <strong>向左旋转</strong>，使数组变为 <code>[nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]</code>（下标 <strong>从 0 开始</strong> 计数）。例如， <code>[0,1,2,4,5,6,7]</code> 下标&nbsp;<code>3</code>&nbsp;上向左旋转后可能变为&nbsp;<code>[4,5,6,7,0,1,2]</code> 。</p>
+<p>给你 <strong>旋转后</strong> 的数组 <code>nums</code> 和一个整数 <code>target</code> ，如果 <code>nums</code> 中存在这个目标值 <code>target</code> ，则返回它的下标，否则返回&nbsp;<code>-1</code>&nbsp;。</p>
+<p>你必须设计一个时间复杂度为 <code>O(log n)</code> 的算法解决此问题。</p>
+<p><strong>示例 1：</strong></p>
+<pre>
+<strong>输入：</strong>nums = [4,5,6,7,0,1,2], target = 0
+<strong>输出：</strong>4
+</pre>
+<p><strong>示例&nbsp;2：</strong></p>
+<pre>
+<strong>输入：</strong>nums = [4,5,6,7,0,1,2], target = 3
+<strong>输出：</strong>-1</pre>
+<p><strong>示例 3：</strong></p>
+<pre>
+<strong>输入：</strong>nums = [1], target = 0
+<strong>输出：</strong>-1
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>1 &lt;= nums.length &lt;= 5000</code></li>
+	<li><code>-10<sup>4</sup> &lt;= nums[i] &lt;= 10<sup>4</sup></code></li>
+	<li><code>nums</code> 中的每个值都 <strong>独一无二</strong></li>
+	<li>题目数据保证 <code>nums</code> 在预先未知的某个下标上进行了旋转</li>
+	<li><code>-10<sup>4</sup> &lt;= target &lt;= 10<sup>4</sup></code></li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>先判断哪一半有序，再决定往哪收缩</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">核心判断：</span>mid 把数组分成两半，「至少有一半是有序的」。</p>
+<p>· nums[lo] &lt;= nums[mid] -&gt; 左半有序：target 落在 [nums[lo], nums[mid]) 就去左边，否则右边。</p>
+<p><span class="lab">· 否则右半有序：</span>target 落在 (nums[mid], nums[hi]] 就去右边，否则左边。</p>
+<p>用 nums[lo] &lt;= nums[mid] 而不是 &lt; ，是为了处理 lo == mid（区间长度 2）。</p>
+<p><span class="lab">复杂度：</span>时间 O(log n)，空间 O(1)</p>
+<p><span class="lab">陷阱：</span>本题元素互不相同；若有重复就退化成 Q81，需要 nums[lo]==nums[mid] 时 lo++ 慢慢缩。</p>
+<p>/</p></div></div></div>
+<div class="sect"><h2>动画演示</h2><div class="anim-host" id="anim-33"></div></div>
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 430 132" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="430" height="132" fill="#fbfbfd"/>
+<rect x="30" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="53" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">4</text>
+<text x="53" y="96" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="84" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="107" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">5</text>
+<text x="107" y="96" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="138" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="161" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">6</text>
+<text x="161" y="96" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+<rect x="192" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="215" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">7</text>
+<text x="215" y="96" text-anchor="middle" fill="#8893b8" font-size="12">3</text>
+<rect x="246" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="269" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">0</text>
+<text x="269" y="96" text-anchor="middle" fill="#8893b8" font-size="12">4</text>
+<rect x="300" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="323" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="323" y="96" text-anchor="middle" fill="#8893b8" font-size="12">5</text>
+<rect x="354" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="377" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="377" y="96" text-anchor="middle" fill="#8893b8" font-size="12">6</text>
+</svg></div><div class="fig-cap">数组（来自本仓库测试数据，下标从 0 开始）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0033 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">int</span> search(<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; nums, <span class="tok-k">int</span> target) {
+    <span class="tok-k">int</span> lo = <span class="tok-n">0</span>, hi = (<span class="tok-k">int</span>)nums.size() - <span class="tok-n">1</span>;
+    <span class="tok-k">while</span> (lo &lt;= hi) {
+      <span class="tok-k">int</span> mid = lo + (hi - lo) / <span class="tok-n">2</span>;
+      <span class="tok-k">if</span> (nums[mid] == target) <span class="tok-k">return</span> mid;
+      <span class="tok-k">if</span> (nums[lo] &lt;= nums[mid]) {  <span class="tok-c">// 左半 [lo, mid] 有序</span>
+        <span class="tok-k">if</span> (nums[lo] &lt;= target &amp;&amp; target &lt; nums[mid])
+          hi = mid - <span class="tok-n">1</span>;
+        <span class="tok-k">else</span>
+          lo = mid + <span class="tok-n">1</span>;
+      } <span class="tok-k">else</span> {                      <span class="tok-c">// 右半 [mid, hi] 有序</span>
+        <span class="tok-k">if</span> (nums[mid] &lt; target &amp;&amp; target &lt;= nums[hi])
+          lo = mid + <span class="tok-n">1</span>;
+        <span class="tok-k">else</span>
+          hi = mid - <span class="tok-n">1</span>;
+      }
+    }
+    <span class="tok-k">return</span> -<span class="tok-n">1</span>;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0033::Solution s;
+  vector&lt;int&gt; a{4, 5, 6, 7, 0, 1, 2};
+  CHECK_EQ(s.search(a, 0), 4);
+  CHECK_EQ(s.search(a, 4), 0);
+  CHECK_EQ(s.search(a, 3), -1);
+  CHECK_EQ(s.search(a, 2), 6);   // 最小值在末尾附近
+  CHECK_EQ(s.search(a, 7), 3);   // 最大值
+  vector&lt;int&gt; b{1};
+  CHECK_EQ(s.search(b, 0), -1);
+  vector&lt;int&gt; c{3, 1};
+  CHECK_EQ(s.search(c, 1), 1);   // 两元素旋转，考验 lo==mid
+  CHECK_EQ(s.search(c, 3), 0);
+  vector&lt;int&gt; d{1, 2, 3, 4, 5};  // 没旋转
+  CHECK_EQ(s.search(d, 5), 4);</pre></div>
+<div class="sect"><h2>同类题（二分查找）</h2><div class="taglist"><a href="q4.html">Q4 寻找两个正序数组的中位数</a><a href="q34.html">Q34 在排序数组中查找元素的第一个和最后一个位置</a><a href="q35.html">Q35 搜索插入位置</a><a href="q74.html">Q74 搜索二维矩阵</a><a href="q153.html">Q153 寻找旋转排序数组中的最小值</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/anim.js"></script>
+<script src="../assets/animations.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){{var s=window.LC_ANIMS&&window.LC_ANIMS["33"];var h=document.getElementById("anim-33");if(s&&h&&window.LCAnim)LCAnim.run(h,s);}});</script></body></html>

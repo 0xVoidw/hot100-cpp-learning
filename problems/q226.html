@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q226 翻转二叉树 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-binary_tree">二叉树</a> / Q226</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q226</span> 翻转二叉树</h1>
+  <span class="badge Easy">Easy</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="226"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 二叉树 · 难度 Easy · 原题 <a href="https://leetcode.cn/problems/invert-binary-tree/" target="_blank" rel="noopener">invert-binary-tree</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给你一棵二叉树的根节点 <code>root</code> ，翻转这棵二叉树，并返回其根节点。</p>
+<p><strong>示例 1：</strong></p>
+<p><img alt="" src="https://assets.leetcode.com/uploads/2021/03/14/invert1-tree.jpg" style="height: 165px; width: 500px;" /></p>
+<pre>
+<strong>输入：</strong>root = [4,2,7,1,3,6,9]
+<strong>输出：</strong>[4,7,2,9,6,3,1]
+</pre>
+<p><strong>示例 2：</strong></p>
+<p><img alt="" src="https://assets.leetcode.com/uploads/2021/03/14/invert2-tree.jpg" style="width: 500px; height: 120px;" /></p>
+<pre>
+<strong>输入：</strong>root = [2,1,3]
+<strong>输出：</strong>[2,3,1]
+</pre>
+<p><strong>示例 3：</strong></p>
+<pre>
+<strong>输入：</strong>root = []
+<strong>输出：</strong>[]
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li>树中节点数目范围在 <code>[0, 100]</code> 内</li>
+	<li><code>-100 &lt;= Node.val &lt;= 100</code></li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>递归交换左右孩子</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>每个结点交换左右孩子，递归下去。前序或后序都行（不像 Q101 需要成对比较）。</p>
+<p><span class="lab">复杂度：</span>时间 O(n)，空间 O(h)</p>
+<p>/</p></div></div></div>
+
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 540 270" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="540" height="270" fill="#fbfbfd"/>
+<line x1="270" y1="48" x2="110" y2="82" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="270" y1="48" x2="430" y2="82" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="110" y1="118" x2="30" y2="152" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="110" y1="118" x2="190" y2="152" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="430" y1="118" x2="350" y2="152" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="430" y1="118" x2="510" y2="152" stroke="#d0d5e0" stroke-width="2"/>
+<circle cx="30" cy="170" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="30" y="175" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">1</text>
+<circle cx="110" cy="100" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="110" y="105" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">2</text>
+<circle cx="190" cy="170" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="190" y="175" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">3</text>
+<circle cx="270" cy="30" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="270" y="35" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">4</text>
+<circle cx="350" cy="170" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="350" y="175" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">6</text>
+<circle cx="430" cy="100" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="430" y="105" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">7</text>
+<circle cx="510" cy="170" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="510" y="175" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">9</text>
+</svg></div><div class="fig-cap">二叉树（来自本仓库测试数据，`nullopt` 表示空位）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0226 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  TreeNode* invertTree(TreeNode* root) {
+    <span class="tok-k">if</span> (!root) <span class="tok-k">return</span> <span class="tok-k">nullptr</span>;
+    std::swap(root-&gt;left, root-&gt;right);
+    invertTree(root-&gt;left);
+    invertTree(root-&gt;right);
+    <span class="tok-k">return</span> root;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0226::Solution s;
+  TreeNode* a = buildTree({4, 2, 7, 1, 3, 6, 9});
+  TreeNode* inv = s.invertTree(a);
+  CHECK_EQ(treeToVec(inv), OptVec{4, 7, 2, 9, 6, 3, 1});
+  freeTree(inv);
+  TreeNode* b = buildTree({2, 1, 3});
+  CHECK_EQ(treeToVec(s.invertTree(b)), OptVec{2, 3, 1});
+  freeTree(b);</pre></div>
+<div class="sect"><h2>同类题（二叉树）</h2><div class="taglist"><a href="q94.html">Q94 二叉树的中序遍历</a><a href="q98.html">Q98 验证二叉搜索树</a><a href="q101.html">Q101 对称二叉树</a><a href="q102.html">Q102 二叉树的层序遍历</a><a href="q104.html">Q104 二叉树的最大深度</a><a href="q105.html">Q105 从前序与中序遍历序列构造二叉树</a><a href="q108.html">Q108 将有序数组转换为二叉搜索树</a><a href="q114.html">Q114 二叉树展开为链表</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+</body></html>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q169 多数元素 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-tricks">技巧</a> / Q169</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q169</span> 多数元素</h1>
+  <span class="badge Easy">Easy</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="169"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 技巧 · 难度 Easy · 原题 <a href="https://leetcode.cn/problems/majority-element/" target="_blank" rel="noopener">majority-element</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给定一个大小为 <code>n</code><em> </em>的数组&nbsp;<code>nums</code> ，返回其中的多数元素。多数元素是指在数组中出现次数 <strong>大于</strong>&nbsp;<code>⌊ n/2 ⌋</code>&nbsp;的元素。</p>
+<p>你可以假设数组是非空的，并且给定的数组总是存在多数元素。</p>
+<p><strong>示例&nbsp;1：</strong></p>
+<pre>
+<strong>输入：</strong>nums = [3,2,3]
+<strong>输出：</strong>3</pre>
+<p><strong>示例&nbsp;2：</strong></p>
+<pre>
+<strong>输入：</strong>nums = [2,2,1,1,1,2,2]
+<strong>输出：</strong>2
+</pre>
+<strong>提示：</strong>
+<ul>
+	<li><code>n == nums.length</code></li>
+	<li><code>1 &lt;= n &lt;= 5 * 10<sup>4</sup></code></li>
+	<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>
+	<li>输入保证数组中一定有一个多数元素。</li>
+</ul>
+<p><strong>进阶：</strong>尝试设计时间复杂度为 O(n)、空间复杂度为 O(1) 的算法解决此问题。</p></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>摩尔投票，O(1) 空间</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>摩尔投票。count 归零就换候选人 —— 相当于每次消掉一对「不同元素」。</p>
+<p>多数元素数量 &gt; n/2，消不完，最后一定剩下它。</p>
+<p><span class="lab">复杂度：</span>时间 O(n)，空间 O(1)</p>
+<p><span class="lab">对比：</span>哈希统计是 O(n) 空间；排序后取中间元素是 O(n log n)/O(1)（能过但不优雅）。</p>
+<p><span class="lab">注意：</span>LeetCode 保证多数元素存在，所以不用再验证；</p>
+<p>自己写库时务必补一遍「候选人的真实出现次数」检查。</p>
+<p><span class="lab">推广：</span>Q229 出现超过 n/3 的元素 -&gt; 只有两个候选人，最后要分别验证计数。</p>
+<p>/</p></div></div></div>
+<div class="sect"><h2>动画演示</h2><div class="anim-host" id="anim-169"></div></div>
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 430 132" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="430" height="132" fill="#fbfbfd"/>
+<rect x="30" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="53" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="53" y="96" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="84" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="107" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="107" y="96" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="138" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="161" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="161" y="96" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+<rect x="192" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="215" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="215" y="96" text-anchor="middle" fill="#8893b8" font-size="12">3</text>
+<rect x="246" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="269" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="269" y="96" text-anchor="middle" fill="#8893b8" font-size="12">4</text>
+<rect x="300" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="323" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="323" y="96" text-anchor="middle" fill="#8893b8" font-size="12">5</text>
+<rect x="354" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="377" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="377" y="96" text-anchor="middle" fill="#8893b8" font-size="12">6</text>
+</svg></div><div class="fig-cap">数组（来自本仓库测试数据，下标从 0 开始）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0169 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">int</span> majorityElement(<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; nums) {
+    <span class="tok-k">int</span> cand = <span class="tok-n">0</span>, count = <span class="tok-n">0</span>;
+    <span class="tok-k">for</span> (<span class="tok-k">int</span> v : nums) {
+      <span class="tok-k">if</span> (count == <span class="tok-n">0</span>) cand = v;  <span class="tok-c">// 没有候选人就立当前值为候选</span>
+      count += (v == cand) ? <span class="tok-n">1</span> : -<span class="tok-n">1</span>;
+    }
+    <span class="tok-k">return</span> cand;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0169::Solution s;
+  vector&lt;int&gt; a{3, 2, 3};
+  CHECK_EQ(s.majorityElement(a), 3);
+  vector&lt;int&gt; b{2, 2, 1, 1, 1, 2, 2};
+  CHECK_EQ(s.majorityElement(b), 2);
+  vector&lt;int&gt; c{1};
+  CHECK_EQ(s.majorityElement(c), 1);
+  vector&lt;int&gt; d{6, 6, 6, 7, 7};  // 候选换人后仍是 6
+  CHECK_EQ(s.majorityElement(d), 6);
+  vector&lt;int&gt; e{2, 2, 3, 3, 2};  // 前缀刚好抵消，考验归零换人
+  CHECK_EQ(s.majorityElement(e), 2);</pre></div>
+<div class="sect"><h2>同类题（技巧）</h2><div class="taglist"><a href="q31.html">Q31 下一个排列</a><a href="q75.html">Q75 颜色分类</a><a href="q136.html">Q136 只出现一次的数字</a><a href="q287.html">Q287 寻找重复数</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/anim.js"></script>
+<script src="../assets/animations.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){{var s=window.LC_ANIMS&&window.LC_ANIMS["169"];var h=document.getElementById("anim-169");if(s&&h&&window.LCAnim)LCAnim.run(h,s);}});</script></body></html>
