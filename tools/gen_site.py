@@ -345,21 +345,27 @@ def render_matrix_svg(rows):
     if not rows:
         return ''
     R = len(rows); C = max(len(r) for r in rows)
-    CS = 56; RS = 44; PAD = 24
-    width = C * CS + PAD * 2; height = R * RS + PAD * 2
+    # 给行、列坐标留出独立的边距。此前 j 标签被重复画在每一行底部，
+    # i 标签又落在上一行单元格内，较大的矩阵会显得像“标号乱飞”。
+    CS = 56; RS = 44
+    LEFT = 36; TOP = 30; RIGHT = 16; BOTTOM = 16
+    width = LEFT + C * CS + RIGHT; height = TOP + R * RS + BOTTOM
     parts = [f'<svg viewBox="0 0 {width} {height}" xmlns="http://www.w3.org/2000/svg" class="dia">']
     parts.append(f'<rect width="{width}" height="{height}" fill="#fbfbfd"/>')
+    for j in range(C):
+        x = LEFT + j * CS
+        parts.append(f'<text x="{x+CS//2}" y="18" text-anchor="middle" fill="#8893b8" font-size="11">j{j}</text>')
     for i, row in enumerate(rows):
+        y = TOP + i * RS
+        parts.append(f'<text x="{LEFT-10}" y="{y+RS//2+4}" text-anchor="end" fill="#8893b8" font-size="11">i{esc(i)}</text>')
         for j in range(C):
-            x = PAD + j * CS; y = PAD + i * RS
+            x = LEFT + j * CS
             val = row[j] if j < len(row) else ''
             zero = (val == 0)
             fill = '#ffe9e6' if zero else '#eef2ff'
             stroke = '#e2554d' if zero else '#4f6ef7'
             parts.append(f'<rect x="{x+2}" y="{y+2}" width="{CS-4}" height="{RS-4}" rx="6" fill="{fill}" stroke="{stroke}" stroke-width="1.6"/>')
             parts.append(f'<text x="{x+CS//2}" y="{y+RS//2+5}" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">{esc(val)}</text>')
-            parts.append(f'<text x="{x+CS//2}" y="{y+RS+14}" text-anchor="middle" fill="#8893b8" font-size="11">j{j}</text>')
-        parts.append(f'<text x="{PAD+8}" y="{PAD+i*RS-6}" fill="#8893b8" font-size="11">i{esc(i)}</text>')
     parts.append('</svg>')
     return '\n'.join(parts)
 

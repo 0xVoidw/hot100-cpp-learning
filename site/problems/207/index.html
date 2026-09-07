@@ -35,36 +35,30 @@
 	<li><code>0 &lt;= a<sub>i</sub>, b<sub>i</sub> &lt; numCourses</code></li>
 	<li><code>prerequisites[i]</code> 中的所有课程对 <strong>互不相同</strong></li>
 </ul>
-</div></section><section id="guide" class="section-card glass" data-astro-cid-ma4ndlab><div class="section-heading" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>03</span><div data-astro-cid-ma4ndlab><p class="eyebrow" data-astro-cid-ma4ndlab>分步讲解</p><h2 data-astro-cid-ma4ndlab>把“会做”拆成可执行的思考步骤</h2></div></div><div class="teach-grid mt-5" data-astro-cid-ma4ndlab><div class="teach-card" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>为什么用 图论</span><p data-astro-cid-ma4ndlab>把“连通、依赖、扩散”转成 DFS、BFS 或拓扑状态。</p></div><div class="teach-card" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>复杂度</span><p data-astro-cid-ma4ndlab>复杂度：时间 O(n+E)，空间 O(n+E)</p></div></div><ol class="steps" data-astro-cid-ma4ndlab><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>01</b><span data-astro-cid-ma4ndlab>思路：拓扑排序（Kahn）。先修关系建边 pre-&gt;cur，统计入度；</span></li><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>02</b><span data-astro-cid-ma4ndlab>每次取出入度为 0 的课。若能取完 n 门 -&gt; 无环，否则存在环。</span></li><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>03</b><span data-astro-cid-ma4ndlab>「环」就是有门课程间接要求自己先修完自己。</span></li><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>04</b><span data-astro-cid-ma4ndlab>另解：DFS 三色标记（白/灰/黑），遇到灰色结点即成环 —— Q210 输出方案时更顺手。</span></li><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>05</b><span data-astro-cid-ma4ndlab>求「具体选课顺序」见 Q210，只要把出队顺序记下来。</span></li></ol></section><section id="diagram" class="section-card glass" data-astro-cid-ma4ndlab><div class="section-heading" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>04</span><div data-astro-cid-ma4ndlab><p class="eyebrow" data-astro-cid-ma4ndlab>结构图解</p><h2 data-astro-cid-ma4ndlab>使用本仓库真实测试数据</h2></div></div><div class="diagram-wrap mt-5" data-astro-cid-ma4ndlab><div class="fig"><div class="fig-body"><svg viewBox="0 0 160 224" xmlns="http://www.w3.org/2000/svg" class="dia">
-<rect width="160" height="224" fill="#fbfbfd"/>
-<rect x="26" y="26" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="52" y="51" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
-<text x="52" y="82" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
-<rect x="82" y="26" width="52" height="40" rx="6" fill="#ffe9e6" stroke="#e2554d" stroke-width="1.6"/>
-<text x="108" y="51" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">0</text>
-<text x="108" y="82" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
-<text x="32" y="18" fill="#8893b8" font-size="11">i0</text>
-<rect x="26" y="70" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="52" y="95" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
-<text x="52" y="126" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
-<rect x="82" y="70" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="108" y="95" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
-<text x="108" y="126" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
-<text x="32" y="62" fill="#8893b8" font-size="11">i1</text>
-<rect x="26" y="114" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="52" y="139" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
-<text x="52" y="170" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
-<rect x="82" y="114" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="108" y="139" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
-<text x="108" y="170" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
-<text x="32" y="106" fill="#8893b8" font-size="11">i2</text>
-<rect x="26" y="158" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="52" y="183" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
-<text x="52" y="214" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
-<rect x="82" y="158" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="108" y="183" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
-<text x="108" y="214" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
-<text x="32" y="150" fill="#8893b8" font-size="11">i3</text>
+</div></section><section id="guide" class="section-card glass" data-astro-cid-ma4ndlab><div class="section-heading" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>03</span><div data-astro-cid-ma4ndlab><p class="eyebrow" data-astro-cid-ma4ndlab>分步讲解</p><h2 data-astro-cid-ma4ndlab>把“会做”拆成可执行的思考步骤</h2></div></div><div class="teach-grid mt-5" data-astro-cid-ma4ndlab><div class="teach-card" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>为什么用 图论</span><p data-astro-cid-ma4ndlab>把“连通、依赖、扩散”转成 DFS、BFS 或拓扑状态。</p></div><div class="teach-card" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>复杂度</span><p data-astro-cid-ma4ndlab>复杂度：时间 O(n+E)，空间 O(n+E)</p></div></div><ol class="steps" data-astro-cid-ma4ndlab><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>01</b><span data-astro-cid-ma4ndlab>思路：拓扑排序（Kahn）。先修关系建边 pre-&gt;cur，统计入度；</span></li><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>02</b><span data-astro-cid-ma4ndlab>每次取出入度为 0 的课。若能取完 n 门 -&gt; 无环，否则存在环。</span></li><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>03</b><span data-astro-cid-ma4ndlab>「环」就是有门课程间接要求自己先修完自己。</span></li><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>04</b><span data-astro-cid-ma4ndlab>另解：DFS 三色标记（白/灰/黑），遇到灰色结点即成环 —— Q210 输出方案时更顺手。</span></li><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>05</b><span data-astro-cid-ma4ndlab>求「具体选课顺序」见 Q210，只要把出队顺序记下来。</span></li></ol></section><section id="diagram" class="section-card glass" data-astro-cid-ma4ndlab><div class="section-heading" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>04</span><div data-astro-cid-ma4ndlab><p class="eyebrow" data-astro-cid-ma4ndlab>结构图解</p><h2 data-astro-cid-ma4ndlab>使用本仓库真实测试数据</h2></div></div><div class="diagram-wrap mt-5" data-astro-cid-ma4ndlab><div class="fig"><div class="fig-body"><svg viewBox="0 0 164 222" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="164" height="222" fill="#fbfbfd"/>
+<text x="64" y="18" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
+<text x="120" y="18" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
+<text x="26" y="56" text-anchor="end" fill="#8893b8" font-size="11">i0</text>
+<rect x="38" y="32" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="64" y="57" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<rect x="94" y="32" width="52" height="40" rx="6" fill="#ffe9e6" stroke="#e2554d" stroke-width="1.6"/>
+<text x="120" y="57" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">0</text>
+<text x="26" y="100" text-anchor="end" fill="#8893b8" font-size="11">i1</text>
+<rect x="38" y="76" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="64" y="101" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<rect x="94" y="76" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="120" y="101" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="26" y="144" text-anchor="end" fill="#8893b8" font-size="11">i2</text>
+<rect x="38" y="120" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="64" y="145" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
+<rect x="94" y="120" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="120" y="145" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="26" y="188" text-anchor="end" fill="#8893b8" font-size="11">i3</text>
+<rect x="38" y="164" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="64" y="189" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<rect x="94" y="164" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="120" y="189" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
 </svg></div><div class="fig-cap">矩阵（来自本仓库测试数据，红色格子 = 0）</div></div></div></section><section id="code" class="section-card glass" data-astro-cid-ma4ndlab><div class="section-heading" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>06</span><div data-astro-cid-ma4ndlab><p class="eyebrow" data-astro-cid-ma4ndlab>C++17 实现</p><h2 data-astro-cid-ma4ndlab>保持 LeetCode 可直接提交的 Solution 写法</h2></div></div><div class="mt-5" data-astro-cid-ma4ndlab><astro-island uid="our7Y" component-url="/hot100-cpp-learning/_astro/CodeViewer.BvXqBewp.js" component-export="default" renderer-url="/hot100-cpp-learning/_astro/client.svelte.DwR6YfJU.js" props="{&quot;code&quot;:[0,&quot;namespace lc0207 {\nclass Solution {\n public:\n  bool canFinish(int numCourses, vector&lt;vector&lt;int&gt;&gt;&amp; prerequisites) {\n    vector&lt;vector&lt;int&gt;&gt; g(numCourses);\n    vector&lt;int&gt; indeg(numCourses, 0);\n    for (const auto&amp; e : prerequisites) {  // e = [课程, 先修]\n      g[e[1]].push_back(e[0]);\n      ++indeg[e[0]];\n    }\n    queue&lt;int&gt; q;\n    for (int i = 0; i &lt; numCourses; ++i)\n      if (indeg[i] == 0) q.push(i);\n    int done = 0;\n    while (!q.empty()) {\n      int u = q.front();\n      q.pop();\n      ++done;\n      for (int v : g[u])\n        if (--indeg[v] == 0) q.push(v);\n    }\n    return done == numCourses;\n  }\n};\n}&quot;],&quot;data-astro-cid-ma4ndlab&quot;:[0,true]}" ssr client="load" opts="{&quot;name&quot;:&quot;CodeViewer&quot;,&quot;value&quot;:true}" await-children><!--[--><div class="code-view"><button class="copy-btn" type="button">复制 C++</button> <pre><code>namespace lc0207 {
 class Solution {
  public:

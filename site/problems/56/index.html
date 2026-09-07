@@ -34,36 +34,30 @@
 	<li><code>intervals[i].length == 2</code></li>
 	<li><code>0 &lt;= start<sub>i</sub> &lt;= end<sub>i</sub> &lt;= 10<sup>4</sup></code></li>
 </ul>
-</div></section><section id="guide" class="section-card glass" data-astro-cid-ma4ndlab><div class="section-heading" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>03</span><div data-astro-cid-ma4ndlab><p class="eyebrow" data-astro-cid-ma4ndlab>分步讲解</p><h2 data-astro-cid-ma4ndlab>把“会做”拆成可执行的思考步骤</h2></div></div><div class="teach-grid mt-5" data-astro-cid-ma4ndlab><div class="teach-card" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>为什么用 数组</span><p data-astro-cid-ma4ndlab>围绕下标、原地状态和局部不变量组织一次或有限次扫描。</p></div><div class="teach-card" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>复杂度</span><p data-astro-cid-ma4ndlab>复杂度：时间 O(n log n)，空间 O(log n)</p></div></div><ol class="steps" data-astro-cid-ma4ndlab><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>01</b><span data-astro-cid-ma4ndlab>思路：按左端点排序后，只需要和「结果里最后一个区间」比：</span></li><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>02</b><span data-astro-cid-ma4ndlab>新区间左端 &gt; 上一个的右端 -&gt; 开新段；否则取 max 扩右端。</span></li></ol><div class="tips" data-astro-cid-ma4ndlab><strong data-astro-cid-ma4ndlab>容易漏掉的点</strong><p data-astro-cid-ma4ndlab>易错：合并时必须用 max(r, itv[1])，因为存在 [1,10],[2,3] 这种被包含的情况。</p></div></section><section id="diagram" class="section-card glass" data-astro-cid-ma4ndlab><div class="section-heading" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>04</span><div data-astro-cid-ma4ndlab><p class="eyebrow" data-astro-cid-ma4ndlab>结构图解</p><h2 data-astro-cid-ma4ndlab>使用本仓库真实测试数据</h2></div></div><div class="diagram-wrap mt-5" data-astro-cid-ma4ndlab><div class="fig"><div class="fig-body"><svg viewBox="0 0 160 224" xmlns="http://www.w3.org/2000/svg" class="dia">
-<rect width="160" height="224" fill="#fbfbfd"/>
-<rect x="26" y="26" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="52" y="51" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
-<text x="52" y="82" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
-<rect x="82" y="26" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="108" y="51" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
-<text x="108" y="82" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
-<text x="32" y="18" fill="#8893b8" font-size="11">i0</text>
-<rect x="26" y="70" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="52" y="95" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
-<text x="52" y="126" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
-<rect x="82" y="70" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="108" y="95" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">6</text>
-<text x="108" y="126" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
-<text x="32" y="62" fill="#8893b8" font-size="11">i1</text>
-<rect x="26" y="114" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="52" y="139" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">8</text>
-<text x="52" y="170" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
-<rect x="82" y="114" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="108" y="139" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">10</text>
-<text x="108" y="170" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
-<text x="32" y="106" fill="#8893b8" font-size="11">i2</text>
-<rect x="26" y="158" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="52" y="183" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">15</text>
-<text x="52" y="214" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
-<rect x="82" y="158" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
-<text x="108" y="183" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">18</text>
-<text x="108" y="214" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
-<text x="32" y="150" fill="#8893b8" font-size="11">i3</text>
+</div></section><section id="guide" class="section-card glass" data-astro-cid-ma4ndlab><div class="section-heading" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>03</span><div data-astro-cid-ma4ndlab><p class="eyebrow" data-astro-cid-ma4ndlab>分步讲解</p><h2 data-astro-cid-ma4ndlab>把“会做”拆成可执行的思考步骤</h2></div></div><div class="teach-grid mt-5" data-astro-cid-ma4ndlab><div class="teach-card" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>为什么用 数组</span><p data-astro-cid-ma4ndlab>围绕下标、原地状态和局部不变量组织一次或有限次扫描。</p></div><div class="teach-card" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>复杂度</span><p data-astro-cid-ma4ndlab>复杂度：时间 O(n log n)，空间 O(log n)</p></div></div><ol class="steps" data-astro-cid-ma4ndlab><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>01</b><span data-astro-cid-ma4ndlab>思路：按左端点排序后，只需要和「结果里最后一个区间」比：</span></li><li data-astro-cid-ma4ndlab><b data-astro-cid-ma4ndlab>02</b><span data-astro-cid-ma4ndlab>新区间左端 &gt; 上一个的右端 -&gt; 开新段；否则取 max 扩右端。</span></li></ol><div class="tips" data-astro-cid-ma4ndlab><strong data-astro-cid-ma4ndlab>容易漏掉的点</strong><p data-astro-cid-ma4ndlab>易错：合并时必须用 max(r, itv[1])，因为存在 [1,10],[2,3] 这种被包含的情况。</p></div></section><section id="diagram" class="section-card glass" data-astro-cid-ma4ndlab><div class="section-heading" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>04</span><div data-astro-cid-ma4ndlab><p class="eyebrow" data-astro-cid-ma4ndlab>结构图解</p><h2 data-astro-cid-ma4ndlab>使用本仓库真实测试数据</h2></div></div><div class="diagram-wrap mt-5" data-astro-cid-ma4ndlab><div class="fig"><div class="fig-body"><svg viewBox="0 0 164 222" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="164" height="222" fill="#fbfbfd"/>
+<text x="64" y="18" text-anchor="middle" fill="#8893b8" font-size="11">j0</text>
+<text x="120" y="18" text-anchor="middle" fill="#8893b8" font-size="11">j1</text>
+<text x="26" y="56" text-anchor="end" fill="#8893b8" font-size="11">i0</text>
+<rect x="38" y="32" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="64" y="57" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<rect x="94" y="32" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="120" y="57" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
+<text x="26" y="100" text-anchor="end" fill="#8893b8" font-size="11">i1</text>
+<rect x="38" y="76" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="64" y="101" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<rect x="94" y="76" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="120" y="101" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">6</text>
+<text x="26" y="144" text-anchor="end" fill="#8893b8" font-size="11">i2</text>
+<rect x="38" y="120" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="64" y="145" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">8</text>
+<rect x="94" y="120" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="120" y="145" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">10</text>
+<text x="26" y="188" text-anchor="end" fill="#8893b8" font-size="11">i3</text>
+<rect x="38" y="164" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="64" y="189" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">15</text>
+<rect x="94" y="164" width="52" height="40" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="120" y="189" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">18</text>
 </svg></div><div class="fig-cap">矩阵（来自本仓库测试数据，红色格子 = 0）</div></div></div></section><section id="code" class="section-card glass" data-astro-cid-ma4ndlab><div class="section-heading" data-astro-cid-ma4ndlab><span data-astro-cid-ma4ndlab>06</span><div data-astro-cid-ma4ndlab><p class="eyebrow" data-astro-cid-ma4ndlab>C++17 实现</p><h2 data-astro-cid-ma4ndlab>保持 LeetCode 可直接提交的 Solution 写法</h2></div></div><div class="mt-5" data-astro-cid-ma4ndlab><astro-island uid="Yha9v" component-url="/hot100-cpp-learning/_astro/CodeViewer.BvXqBewp.js" component-export="default" renderer-url="/hot100-cpp-learning/_astro/client.svelte.DwR6YfJU.js" props="{&quot;code&quot;:[0,&quot;namespace lc0056 {\nclass Solution {\n public:\n  vector&lt;vector&lt;int&gt;&gt; merge(vector&lt;vector&lt;int&gt;&gt;&amp; intervals) {\n    sort(intervals.begin(), intervals.end(),\n         [](const vector&lt;int&gt;&amp; a, const vector&lt;int&gt;&amp; b) { return a[0] &lt; b[0]; });\n    vector&lt;vector&lt;int&gt;&gt; ans;\n    for (const auto&amp; itv : intervals) {\n      if (!ans.empty() &amp;&amp; itv[0] &lt;= ans.back()[1])\n        ans.back()[1] = max(ans.back()[1], itv[1]);\n      else\n        ans.push_back(itv);\n    }\n    return ans;\n  }\n};\n}&quot;],&quot;data-astro-cid-ma4ndlab&quot;:[0,true]}" ssr client="load" opts="{&quot;name&quot;:&quot;CodeViewer&quot;,&quot;value&quot;:true}" await-children><!--[--><div class="code-view"><button class="copy-btn" type="button">复制 C++</button> <pre><code>namespace lc0056 {
 class Solution {
  public:
