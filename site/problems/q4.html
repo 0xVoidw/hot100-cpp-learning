@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q4 寻找两个正序数组的中位数 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-binary_search">二分查找</a> / Q4</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q4</span> 寻找两个正序数组的中位数</h1>
+  <span class="badge Hard">Hard</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="4"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 二分查找 · 难度 Hard · 原题 <a href="https://leetcode.cn/problems/median-of-two-sorted-arrays/" target="_blank" rel="noopener">median-of-two-sorted-arrays</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给定两个大小分别为 <code>m</code> 和 <code>n</code> 的正序（从小到大）数组&nbsp;<code>nums1</code> 和&nbsp;<code>nums2</code>。请你找出并返回这两个正序数组的 <strong>中位数</strong> 。</p>
+<p>算法的时间复杂度应该为 <code>O(log (m+n))</code> 。</p>
+<p><strong>示例 1：</strong></p>
+<pre>
+<strong>输入：</strong>nums1 = [1,3], nums2 = [2]
+<strong>输出：</strong>2.00000
+<strong>解释：</strong>合并数组 = [1,2,3] ，中位数 2
+</pre>
+<p><strong>示例 2：</strong></p>
+<pre>
+<strong>输入：</strong>nums1 = [1,2], nums2 = [3,4]
+<strong>输出：</strong>2.50000
+<strong>解释：</strong>合并数组 = [1,2,3,4] ，中位数 (2 + 3) / 2 = 2.5
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>nums1.length == m</code></li>
+	<li><code>nums2.length == n</code></li>
+	<li><code>0 &lt;= m &lt;= 1000</code></li>
+	<li><code>0 &lt;= n &lt;= 1000</code></li>
+	<li><code>1 &lt;= m + n &lt;= 2000</code></li>
+	<li><code>-10<sup>6</sup> &lt;= nums1[i], nums2[i] &lt;= 10<sup>6</sup></code></li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>只在短数组上枚举合法切点</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路（划分数法）：</span>中位数把两个数组各自切成「左半 / 右半」，要求</p>
+<p>① 左半元素总数 = 右半（或比右半多 1）</p>
+<p>② A 的左最大 &lt;= B 的右最小，且 B 的左最大 &lt;= A 的右最小</p>
+<p>只在较短数组上枚举切点 i（保证 O(log(min(m,n)))），j 由 ① 直接算出。</p>
+<p>边界用 ±INF 表示「这一侧没有元素」，可以把四种情况统一成一行 max/min。</p>
+<p><span class="lab">复杂度：</span>时间 O(log(min(m,n)))，空间 O(1)</p>
+<p><span class="lab">备用解法：</span>求「第 k 小」，每次扔掉两个数组各 k/2 个 -&gt; O(log(m+n))，更好想。</p>
+<p><span class="lab">别用：</span>合并后取中位是 O(m+n)，不满足题目要求（虽然能 AC）。</p>
+<p>/</p></div></div></div>
+
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 322 132" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="322" height="132" fill="#fbfbfd"/>
+<rect x="30" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="53" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="53" y="96" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="84" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="107" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="107" y="96" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="138" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="161" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
+<text x="161" y="96" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+<rect x="192" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="215" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">4</text>
+<text x="215" y="96" text-anchor="middle" fill="#8893b8" font-size="12">3</text>
+<rect x="246" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="269" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">5</text>
+<text x="269" y="96" text-anchor="middle" fill="#8893b8" font-size="12">4</text>
+</svg></div><div class="fig-cap">数组（来自本仓库测试数据，下标从 0 开始）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0004 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">double</span> findMedianSortedArrays(<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; a, <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; b) {
+    <span class="tok-k">if</span> (a.size() &gt; b.size()) <span class="tok-k">return</span> findMedianSortedArrays(b, a);  <span class="tok-c">// 让 a 更短</span>
+    <span class="tok-k">const</span> <span class="tok-k">int</span> m = (<span class="tok-k">int</span>)a.size(), n = (<span class="tok-k">int</span>)b.size();
+    <span class="tok-k">const</span> <span class="tok-k">int</span> half = (m + n + <span class="tok-n">1</span>) / <span class="tok-n">2</span>;  <span class="tok-c">// 左半元素总数（奇数时归左半）</span>
+    <span class="tok-k">int</span> lo = <span class="tok-n">0</span>, hi = m;
+    <span class="tok-k">while</span> (lo &lt;= hi) {
+      <span class="tok-k">int</span> i = lo + (hi - lo) / <span class="tok-n">2</span>;   <span class="tok-c">// a 贡献 i 个到左半</span>
+      <span class="tok-k">int</span> j = half - i;             <span class="tok-c">// b 贡献剩下的</span>
+      <span class="tok-k">int</span> aL = (i == <span class="tok-n">0</span>) ? INT_MIN : a[i - <span class="tok-n">1</span>];
+      <span class="tok-k">int</span> aR = (i == m) ? INT_MAX : a[i];
+      <span class="tok-k">int</span> bL = (j == <span class="tok-n">0</span>) ? INT_MIN : b[j - <span class="tok-n">1</span>];
+      <span class="tok-k">int</span> bR = (j == n) ? INT_MAX : b[j];
+      <span class="tok-k">if</span> (aL &lt;= bR &amp;&amp; bL &lt;= aR) {  <span class="tok-c">// 切法合法</span>
+        <span class="tok-k">if</span> ((m + n) % <span class="tok-n">2</span> == <span class="tok-n">1</span>) <span class="tok-k">return</span> std::max(aL, bL);
+        <span class="tok-k">return</span> (static_cast&lt;<span class="tok-k">double</span>&gt;(std::max(aL, bL)) + std::min(aR, bR)) / <span class="tok-n">2.0</span>;
+      }
+      <span class="tok-k">if</span> (aL &gt; bR)
+        hi = i - <span class="tok-n">1</span>;  <span class="tok-c">// a 取多了</span>
+      <span class="tok-k">else</span>
+        lo = i + <span class="tok-n">1</span>;  <span class="tok-c">// a 取少了</span>
+    }
+    <span class="tok-k">return</span> <span class="tok-n">0.0</span>;  <span class="tok-c">// 输入保证有序，理论到不了这里</span>
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0004::Solution s;
+  vector&lt;int&gt; a1{1, 3}, b1{2};
+  CHECK_NEAR(s.findMedianSortedArrays(a1, b1), 2.0, 1e-9);
+  vector&lt;int&gt; a2{1, 2}, b2{3, 4};
+  CHECK_NEAR(s.findMedianSortedArrays(a2, b2), 2.5, 1e-9);
+  vector&lt;int&gt; a3{}, b3{1};
+  CHECK_NEAR(s.findMedianSortedArrays(a3, b3), 1.0, 1e-9);  // 一个数组为空
+  vector&lt;int&gt; a4{2}, b4{};
+  CHECK_NEAR(s.findMedianSortedArrays(a4, b4), 2.0, 1e-9);
+  vector&lt;int&gt; a5{1, 2, 3, 4, 5}, b5{6, 7, 8};
+  CHECK_NEAR(s.findMedianSortedArrays(a5, b5), 4.5, 1e-9);
+  vector&lt;int&gt; a6{1, 1}, b6{1, 1};  // 全相等
+  CHECK_NEAR(s.findMedianSortedArrays(a6, b6), 1.0, 1e-9);
+  vector&lt;int&gt; a7{-5, 3, 6, 12, 15}, b7{-12, -10, -6, -3, 4, 10};
+  // 合起来排序后共 11 个，中位数是第 6 个 = 3
+  CHECK_NEAR(s.findMedianSortedArrays(a7, b7), 3.0, 1e-9);</pre></div>
+<div class="sect"><h2>同类题（二分查找）</h2><div class="taglist"><a href="q33.html">Q33 搜索旋转排序数组</a><a href="q34.html">Q34 在排序数组中查找元素的第一个和最后一个位置</a><a href="q35.html">Q35 搜索插入位置</a><a href="q74.html">Q74 搜索二维矩阵</a><a href="q153.html">Q153 寻找旋转排序数组中的最小值</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+</body></html>

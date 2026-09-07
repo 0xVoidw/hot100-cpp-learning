@@ -1,0 +1,10 @@
+{
+  "search.exclude": {
+    "**/build": true,
+    "**/.agents": true
+  },
+  "files.encoding": "utf8",
+  "cmake.configureOnOpen": false,
+  "C_Cpp.default.cppStandard": "c++17",
+  "terminal.integrated.defaultProfile.windows": "Git Bash"
+}

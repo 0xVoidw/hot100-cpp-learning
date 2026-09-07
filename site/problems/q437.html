@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q437 路径总和 III · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-binary_tree">二叉树</a> / Q437</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q437</span> 路径总和 III</h1>
+  <span class="badge Medium">Medium</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="437"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 二叉树 · 难度 Medium · 原题 <a href="https://leetcode.cn/problems/path-sum-iii/" target="_blank" rel="noopener">path-sum-iii</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给定一个二叉树的根节点 <code>root</code> ，和一个整数 <code>targetSum</code> ，求该二叉树里节点值之和等于 <code>targetSum</code> 的 <strong>路径</strong> 的数目。</p>
+<p><strong>路径</strong> 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。</p>
+<p> </p>
+<p><strong>示例 1：</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/04/09/pathsum3-1-tree.jpg" style="width: 452px; " /></p>
+<pre>
+<strong>输入：</strong>root = [10,5,-3,3,2,null,11,3,-2,null,1], targetSum = 8
+<strong>输出：</strong>3
+<strong>解释：</strong>和等于 8 的路径有 3 条，如图所示。
+</pre>
+<p><strong>示例 2：</strong></p>
+<pre>
+<strong>输入：</strong>root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22
+<strong>输出：</strong>3
+</pre>
+<p> </p>
+<p><strong>提示:</strong></p>
+<ul>
+	<li>二叉树的节点个数的范围是 <code>[0,1000]</code></li>
+	<li><meta charset="UTF-8" /><code>-10<sup>9</sup> <= Node.val <= 10<sup>9</sup></code> </li>
+	<li><code>-1000 <= targetSum <= 1000</code> </li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>树上前缀和 + 哈希（Q560 的树版）</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>路径必须「向下」但起终点任意 -&gt; 等价于树上任意一条根向链上的子段和，</p>
+<p><span class="lab">于是套用 Q560：</span>DFS 维护根到当前的前缀和 cur，查有多少祖先的前缀和 = cur-target。</p>
+<p>回溯时必须 cnt[cur]--（离开这条分支要把状态还回去），这是树上前缀和的命门。</p>
+<p><span class="lab">复杂度：</span>时间 O(n)，空间 O(n)</p>
+<p><span class="lab">对比：</span>双重 DFS（每个结点都当一次起点）是 O(n^2)。若结点值全为非负，可以在</p>
+<p>「向下累积和已超过 target」时剪枝；但本题允许 -1000 ≤ val ≤ 1000，</p>
+<p>往下走不保证和变大，所以必须一路探到底 —— 这才是它需要前缀和的原因。</p>
+<p>/</p></div></div></div>
+
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 700 340" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="700" height="340" fill="#fbfbfd"/>
+<line x1="510" y1="48" x2="270" y2="82" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="510" y1="48" x2="590" y2="82" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="270" y1="118" x2="110" y2="152" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="270" y1="118" x2="350" y2="152" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="590" y1="118" x2="670" y2="152" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="110" y1="188" x2="30" y2="222" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="110" y1="188" x2="190" y2="222" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="350" y1="188" x2="430" y2="222" stroke="#d0d5e0" stroke-width="2"/>
+<circle cx="30" cy="240" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="30" y="245" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">3</text>
+<circle cx="110" cy="170" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="110" y="175" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">3</text>
+<circle cx="190" cy="240" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="190" y="245" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">-2</text>
+<circle cx="270" cy="100" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="270" y="105" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">5</text>
+<circle cx="350" cy="170" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="350" y="175" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">2</text>
+<circle cx="430" cy="240" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="430" y="245" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">1</text>
+<circle cx="510" cy="30" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="510" y="35" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">10</text>
+<circle cx="590" cy="100" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="590" y="105" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">-3</text>
+<circle cx="670" cy="170" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="670" y="175" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">11</text>
+</svg></div><div class="fig-cap">二叉树（来自本仓库测试数据，`nullopt` 表示空位）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0437 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">int</span> pathSum(TreeNode* root, <span class="tok-k">int</span> targetSum) {
+    <span class="tok-k">unordered_map</span>&lt;<span class="tok-k">long</span> <span class="tok-k">long</span>, <span class="tok-k">int</span>&gt; cnt;
+    cnt[<span class="tok-n">0</span>] = <span class="tok-n">1</span>;  <span class="tok-c">// 空前缀：从根出发的路径</span>
+    <span class="tok-k">return</span> dfs(root, <span class="tok-n">0</span>, (<span class="tok-k">long</span> <span class="tok-k">long</span>)targetSum, cnt);
+  }
+
+ <span class="tok-k">private</span>:
+  <span class="tok-k">static</span> <span class="tok-k">int</span> dfs(TreeNode* n, <span class="tok-k">long</span> <span class="tok-k">long</span> cur, <span class="tok-k">long</span> <span class="tok-k">long</span> target,
+                 <span class="tok-k">unordered_map</span>&lt;<span class="tok-k">long</span> <span class="tok-k">long</span>, <span class="tok-k">int</span>&gt;&amp; cnt) {
+    <span class="tok-k">if</span> (!n) <span class="tok-k">return</span> <span class="tok-n">0</span>;
+    cur += n-&gt;val;
+    <span class="tok-k">int</span> ans = cnt[cur - target];       <span class="tok-c">// 以 n 为终点、起点是某祖先的路径条数</span>
+    ++cnt[cur];
+    ans += dfs(n-&gt;left, cur, target, cnt);
+    ans += dfs(n-&gt;right, cur, target, cnt);
+    --cnt[cur];                        <span class="tok-c">// 回溯！兄弟分支不该看到这条路径的前缀和</span>
+    <span class="tok-k">return</span> ans;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0437::Solution s;
+  TreeNode* a = buildTree({10, 5, -3, 3, 2, nullopt, 11, 3, -2, nullopt, 1});
+  CHECK_EQ(s.pathSum(a, 8), 3);  // 5-&gt;3, 5-&gt;2-&gt;1, -3-&gt;11
+  TreeNode* b = buildTree({5, 4, 8, 11, nullopt, 13, 4, 7, 2, nullopt, nullopt, nullopt, 1});
+  // 注意路径起点不必是根：5-&gt;4-&gt;11-&gt;2 与 4-&gt;11-&gt;7 都算，共 2 条
+  // （同一棵树用 Q112/113「根到叶」只会有 1 条，这就是两者的区别）
+  CHECK_EQ(s.pathSum(b, 22), 2);
+  CHECK_EQ(s.pathSum(nullptr, 0), 0);
+  freeTree(a);
+  freeTree(b);</pre></div>
+<div class="sect"><h2>同类题（二叉树）</h2><div class="taglist"><a href="q94.html">Q94 二叉树的中序遍历</a><a href="q98.html">Q98 验证二叉搜索树</a><a href="q101.html">Q101 对称二叉树</a><a href="q102.html">Q102 二叉树的层序遍历</a><a href="q104.html">Q104 二叉树的最大深度</a><a href="q105.html">Q105 从前序与中序遍历序列构造二叉树</a><a href="q108.html">Q108 将有序数组转换为二叉搜索树</a><a href="q114.html">Q114 二叉树展开为链表</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+</body></html>

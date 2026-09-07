@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q160 相交链表 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-linked_list">链表</a> / Q160</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q160</span> 相交链表</h1>
+  <span class="badge Easy">Easy</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="160"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 链表 · 难度 Easy · 原题 <a href="https://leetcode.cn/problems/intersection-of-two-linked-lists/" target="_blank" rel="noopener">intersection-of-two-linked-lists</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给你两个单链表的头节点&nbsp;<code>headA</code> 和 <code>headB</code> ，请你找出并返回两个单链表相交的起始节点。如果两个链表不存在相交节点，返回 <code>null</code> 。</p>
+<p>图示两个链表在节点 <code>c1</code> 开始相交<strong>：</strong></p>
+<p><a href="https://assets.leetcode.cn/aliyun-lc-upload/uploads/2018/12/14/160_statement.png" target="_blank"><img alt="" src="https://assets.leetcode.cn/aliyun-lc-upload/uploads/2018/12/14/160_statement.png" style="height:130px; width:400px" /></a></p>
+<p>题目数据 <strong>保证</strong> 整个链式结构中不存在环。</p>
+<p><strong>注意</strong>，函数返回结果后，链表必须 <strong>保持其原始结构</strong> 。</p>
+<p><strong>自定义评测：</strong></p>
+<p><strong>评测系统</strong> 的输入如下（你设计的程序 <strong>不适用</strong> 此输入）：</p>
+<ul>
+	<li><code>intersectVal</code> - 相交的起始节点的值。如果不存在相交节点，这一值为 <code>0</code></li>
+	<li><code>listA</code> - 第一个链表</li>
+	<li><code>listB</code> - 第二个链表</li>
+	<li><code>skipA</code> - 在 <code>listA</code> 中（从头节点开始）跳到交叉节点的节点数</li>
+	<li><code>skipB</code> - 在 <code>listB</code> 中（从头节点开始）跳到交叉节点的节点数</li>
+</ul>
+<p>评测系统将根据这些输入创建链式数据结构，并将两个头节点 <code>headA</code> 和 <code>headB</code> 传递给你的程序。如果程序能够正确返回相交节点，那么你的解决方案将被 <strong>视作正确答案</strong> 。</p>
+<p><strong>示例 1：</strong></p>
+<p><a href="https://assets.leetcode.com/uploads/2018/12/13/160_example_1.png" target="_blank"><img alt="" src="https://assets.leetcode.com/uploads/2021/03/05/160_example_1_1.png" style="height:130px; width:400px" /></a></p>
+<pre>
+<strong>输入：</strong>intersectVal = 8, listA = [4,1,8,4,5], listB = [5,6,1,8,4,5], skipA = 2, skipB = 3
+<strong>输出：</strong>Intersected at '8'
+<strong>解释：</strong>相交节点的值为 8 （注意，如果两个链表相交则不能为 0）。
+从各自的表头开始算起，链表 A 为 [4,1,8,4,5]，链表 B 为 [5,6,1,8,4,5]。
+在 A 中，相交节点前有 2 个节点；在 B 中，相交节点前有 3 个节点。
+— 请注意相交节点的值不为 1，因为在链表 A 和链表 B 之中值为 1 的节点 (A 中第二个节点和 B 中第三个节点) 是不同的节点。换句话说，它们在内存中指向两个不同的位置，而链表 A 和链表 B 中值为 8 的节点 (A 中<font size="1">第三个</font>节点，B 中第四个节点) 在内存中指向相同的位置。
+</pre>
+<p><strong>示例&nbsp;2：</strong></p>
+<p><a href="https://assets.leetcode.com/uploads/2018/12/13/160_example_2.png" target="_blank"><img alt="" src="https://assets.leetcode.com/uploads/2021/03/05/160_example_2.png" style="height:136px; width:350px" /></a></p>
+<pre>
+<strong>输入：</strong>intersectVal&nbsp;= 2, listA = [1,9,1,2,4], listB = [3,2,4], skipA = 3, skipB = 1
+<strong>输出：</strong>Intersected at '2'
+<strong>解释：</strong>相交节点的值为 2 （注意，如果两个链表相交则不能为 0）。
+从各自的表头开始算起，链表 A 为 [1,9,1,2,4]，链表 B 为 [3,2,4]。
+在 A 中，相交节点前有 3 个节点；在 B 中，相交节点前有 1 个节点。
+</pre>
+<p><strong>示例&nbsp;3：</strong></p>
+<p><a href="https://assets.leetcode.com/uploads/2018/12/13/160_example_3.png" target="_blank"><img alt="" src="https://assets.leetcode.cn/aliyun-lc-upload/uploads/2018/12/14/160_example_3.png" style="height:126px; width:200px" /></a></p>
+<pre>
+<strong>输入：</strong>intersectVal = 0, listA = [2,6,4], listB = [1,5], skipA = 3, skipB = 2
+<strong>输出：</strong>No intersection
+<strong>解释：</strong>从各自的表头开始算起，链表 A 为 [2,6,4]，链表 B 为 [1,5]。
+由于这两个链表不相交，所以 intersectVal 必须为 0，而 skipA 和 skipB 可以是任意值。
+这两个链表不相交，因此返回 null 。
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>listA</code> 中节点数目为 <code>m</code></li>
+	<li><code>listB</code> 中节点数目为 <code>n</code></li>
+	<li><code>1 &lt;= m, n &lt;= 3 * 10<sup>4</sup></code></li>
+	<li><code>1 &lt;= Node.val &lt;= 10<sup>5</sup></code></li>
+	<li><code>0 &lt;= skipA &lt;= m</code></li>
+	<li><code>0 &lt;= skipB &lt;= n</code></li>
+	<li>如果 <code>listA</code> 和 <code>listB</code> 没有交点，<code>intersectVal</code> 为 <code>0</code></li>
+	<li>如果 <code>listA</code> 和 <code>listB</code> 有交点，<code>intersectVal == listA[skipA] == listB[skipB]</code></li>
+</ul>
+<p><strong>进阶：</strong>你能否设计一个时间复杂度 <code>O(m + n)</code> 、仅用 <code>O(1)</code> 内存的解决方案？</p></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>先对齐起点：长链表多走差值步</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>双指针各自走完自己的链后切换到对方的头。两人都走了 a+b 与 b+a 步，</p>
+<p>路程相等 -&gt; 若相交必在交点相遇；不相交则同时在 nullptr 相遇。</p>
+<p><span class="lab">复杂度：</span>时间 O(m+n)，空间 O(1)  —— 比「先算长度差再对齐」的写法更短</p>
+<p>/</p></div></div></div>
+
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 322 180" xmlns="http://www.w3.org/2000/svg" class="dia">
+<defs><marker id="arr502130" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#4f6ef7"/></marker></defs>
+<rect width="322" height="180" fill="#fbfbfd"/>
+<rect x="30" y="30" width="54" height="60" rx="8" fill="#eef2ff" stroke="#4f6ef7" stroke-width="2"/>
+<text x="57" y="65" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">5</text>
+<text x="57" y="106" text-anchor="middle" fill="#8893b8" font-size="12">i0</text>
+<rect x="124" y="30" width="54" height="60" rx="8" fill="#eef2ff" stroke="#4f6ef7" stroke-width="2"/>
+<text x="151" y="65" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">6</text>
+<text x="151" y="106" text-anchor="middle" fill="#8893b8" font-size="12">i1</text>
+<rect x="218" y="30" width="54" height="60" rx="8" fill="#eef2ff" stroke="#4f6ef7" stroke-width="2"/>
+<text x="245" y="65" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="245" y="106" text-anchor="middle" fill="#8893b8" font-size="12">i2</text>
+<line x1="84" y1="60" x2="122" y2="60" stroke="#4f6ef7" stroke-width="2" marker-end="url(#arr502130)"/>
+<line x1="178" y1="60" x2="216" y2="60" stroke="#4f6ef7" stroke-width="2" marker-end="url(#arr502130)"/>
+</svg></div><div class="fig-cap">链表结构（来自本仓库测试数据）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0160 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  ListNode* getIntersectionNode(ListNode* headA, ListNode* headB) {
+    <span class="tok-k">if</span> (!headA || !headB) <span class="tok-k">return</span> <span class="tok-k">nullptr</span>;
+    ListNode *p = headA, *q = headB;
+    <span class="tok-k">while</span> (p != q) {
+      p = p ? p-&gt;next : headB;  <span class="tok-c">// 走完自己就换到对方头上</span>
+      q = q ? q-&gt;next : headA;
+    }
+    <span class="tok-k">return</span> p;  <span class="tok-c">// 交点，或者 nullptr</span>
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0160::Solution s;
+  auto abc = buildIntersect({4, 1}, {5, 6, 1}, {8, 4, 5});
+  CHECK_EQ(s.getIntersectionNode(abc[0], abc[1]), abc[2]);  // 指针相等，不只是值相等
+  auto noTouch = buildIntersect({2, 6, 4}, {1, 5}, {});     // 公共后缀为空 -&gt; 不相交
+  CHECK_TRUE(s.getIntersectionNode(noTouch[0], noTouch[1]) == nullptr);
+  auto onlyCommon = buildIntersect({}, {}, {9});            // 完全共用一条链
+  CHECK_EQ(s.getIntersectionNode(onlyCommon[0], onlyCommon[1]), onlyCommon[2]);</pre></div>
+<div class="sect"><h2>同类题（链表）</h2><div class="taglist"><a href="q2.html">Q2 两数相加</a><a href="q19.html">Q19 删除链表的倒数第 N 个结点</a><a href="q21.html">Q21 合并两个有序链表</a><a href="q23.html">Q23 合并 K 个升序链表</a><a href="q24.html">Q24 两两交换链表中的节点</a><a href="q25.html">Q25 K 个一组翻转链表</a><a href="q138.html">Q138 随机链表的复制</a><a href="q141.html">Q141 环形链表</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+</body></html>

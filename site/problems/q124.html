@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q124 二叉树中的最大路径和 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-binary_tree">二叉树</a> / Q124</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q124</span> 二叉树中的最大路径和</h1>
+  <span class="badge Hard">Hard</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="124"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 二叉树 · 难度 Hard · 原题 <a href="https://leetcode.cn/problems/binary-tree-maximum-path-sum/" target="_blank" rel="noopener">binary-tree-maximum-path-sum</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>二叉树中的<strong> 路径</strong> 被定义为一条节点序列，序列中每对相邻节点之间都存在一条边。同一个节点在一条路径序列中 <strong>至多出现一次</strong> 。该路径<strong> 至少包含一个 </strong>节点，且不一定经过根节点。</p>
+<p><strong>路径和</strong> 是路径中各节点值的总和。</p>
+<p>给你一个二叉树的根节点 <code>root</code> ，返回其 <strong>最大路径和</strong> 。</p>
+<p><strong>示例 1：</strong></p>
+<img alt="" src="https://assets.leetcode.com/uploads/2020/10/13/exx1.jpg" style="width: 322px; height: 182px;" />
+<pre>
+<strong>输入：</strong>root = [1,2,3]
+<strong>输出：</strong>6
+<strong>解释：</strong>最优路径是 2 -&gt; 1 -&gt; 3 ，路径和为 2 + 1 + 3 = 6</pre>
+<p><strong>示例 2：</strong></p>
+<img alt="" src="https://assets.leetcode.com/uploads/2020/10/13/exx2.jpg" />
+<pre>
+<strong>输入：</strong>root = [-10,9,20,null,null,15,7]
+<strong>输出：</strong>42
+<strong>解释：</strong>最优路径是 15 -&gt; 20 -&gt; 7 ，路径和为 15 + 20 + 7 = 42
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li>树中节点数目范围是 <code>[1, 3 * 10<sup>4</sup>]</code></li>
+	<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>DFS 只返回「单边贡献」，答案全局取 max</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p>区分两个量（本题的难点全在这里）：</p>
+<p><span class="lab">· 链贡献 gain(n)：</span>从 n 出发还能往「上」延伸给父亲用，只能二选一，</p>
+<p>所以是 n-&gt;val + max(左, 右)，并且负贡献要截断为 0。</p>
+<p><span class="lab">· 路径答案：</span>在 n 处「拐弯」，左 + n + 右，只能在此刻更新全局答案，无法上传。</p>
+<p><span class="lab">全负树：</span>答案必须是最大的那个负数，所以初值是 INT_MIN 而不是 0。</p>
+<p><span class="lab">复杂度：</span>时间 O(n)，空间 O(h)</p>
+<p>/</p></div></div></div>
+
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 380 270" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="380" height="270" fill="#fbfbfd"/>
+<line x1="110" y1="48" x2="30" y2="82" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="110" y1="48" x2="270" y2="82" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="270" y1="118" x2="190" y2="152" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="270" y1="118" x2="350" y2="152" stroke="#d0d5e0" stroke-width="2"/>
+<circle cx="30" cy="100" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="30" y="105" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">9</text>
+<circle cx="110" cy="30" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="110" y="35" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">-10</text>
+<circle cx="190" cy="170" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="190" y="175" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">15</text>
+<circle cx="270" cy="100" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="270" y="105" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">20</text>
+<circle cx="350" cy="170" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="350" y="175" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">7</text>
+</svg></div><div class="fig-cap">二叉树（来自本仓库测试数据，`nullopt` 表示空位）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0124 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">int</span> maxPathSum(TreeNode* root) {
+    <span class="tok-k">int</span> best = INT_MIN;
+    gain(root, best);
+    <span class="tok-k">return</span> best;
+  }
+
+ <span class="tok-k">private</span>:
+  <span class="tok-k">static</span> <span class="tok-k">int</span> gain(TreeNode* n, <span class="tok-k">int</span>&amp; best) {
+    <span class="tok-k">if</span> (!n) <span class="tok-k">return</span> <span class="tok-n">0</span>;
+    <span class="tok-k">int</span> l = max(<span class="tok-n">0</span>, gain(n-&gt;left, best));   <span class="tok-c">// 负收益的子树直接不要</span>
+    <span class="tok-k">int</span> r = max(<span class="tok-n">0</span>, gain(n-&gt;right, best));
+    best = max(best, l + r + n-&gt;val);      <span class="tok-c">// 在 n 处拐弯的完整路径</span>
+    <span class="tok-k">return</span> n-&gt;val + max(l, r);             <span class="tok-c">// 只能带一条边上传</span>
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0124::Solution s;
+  TreeNode* a = buildTree({-10, 9, 20, nullopt, nullopt, 15, 7});
+  CHECK_EQ(s.maxPathSum(a), 42);  // 15 -&gt; 20 -&gt; 7
+  freeTree(a);
+  TreeNode* b = buildTree({1, 2, 3});
+  CHECK_EQ(s.maxPathSum(b), 6);
+  freeTree(b);
+  TreeNode* c = buildTree({-3});  // 全负
+  CHECK_EQ(s.maxPathSum(c), -3);
+  freeTree(c);
+  TreeNode* d = buildTree({2, -1});
+  CHECK_EQ(s.maxPathSum(d), 2);  // 宁可只取根
+  freeTree(d);</pre></div>
+<div class="sect"><h2>同类题（二叉树）</h2><div class="taglist"><a href="q94.html">Q94 二叉树的中序遍历</a><a href="q98.html">Q98 验证二叉搜索树</a><a href="q101.html">Q101 对称二叉树</a><a href="q102.html">Q102 二叉树的层序遍历</a><a href="q104.html">Q104 二叉树的最大深度</a><a href="q105.html">Q105 从前序与中序遍历序列构造二叉树</a><a href="q108.html">Q108 将有序数组转换为二叉搜索树</a><a href="q114.html">Q114 二叉树展开为链表</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+</body></html>

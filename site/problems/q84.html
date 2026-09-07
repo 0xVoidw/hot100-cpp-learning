@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q84 柱状图中最大的矩形 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-stack">栈</a> / Q84</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q84</span> 柱状图中最大的矩形</h1>
+  <span class="badge Hard">Hard</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="84"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 栈 · 难度 Hard · 原题 <a href="https://leetcode.cn/problems/largest-rectangle-in-histogram/" target="_blank" rel="noopener">largest-rectangle-in-histogram</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给定 <em>n</em> 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。</p>
+<p>求在该柱状图中，能够勾勒出来的矩形的最大面积。</p>
+<p> </p>
+<p><strong>示例 1:</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/01/04/histogram.jpg" /></p>
+<pre>
+<strong>输入：</strong>heights = [2,1,5,6,2,3]
+<strong>输出：</strong>10
+<strong>解释：</strong>最大的矩形为图中红色区域，面积为 10
+</pre>
+<p><strong>示例 2：</strong></p>
+<p><img src="https://assets.leetcode.com/uploads/2021/01/04/histogram-1.jpg" /></p>
+<pre>
+<strong>输入：</strong> heights = [2,4]
+<b>输出：</b> 4</pre>
+<p> </p>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>1 <= heights.length <=10<sup>5</sup></code></li>
+	<li><code>0 <= heights[i] <= 10<sup>4</sup></code></li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>单调递增栈 + 首尾 0 哨兵结算宽度</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>枚举「以某根柱子的高度为准」能撑多宽 —— 即左右第一个更矮的柱子在哪。</p>
+<p><span class="lab">单调递增栈一次遍历搞定：</span>当 h[i] 小于栈顶时弹出 t，</p>
+<p>弹出后新栈顶 left 就是 t 左边第一个更矮的位置，i 是右边第一个更矮的位置，</p>
+<p>于是宽度 = i - left - 1。</p>
+<p>首尾各加一根 0 哨兵，免掉「栈空」和「收尾未结算」两种特判。</p>
+<p><span class="lab">复杂度：</span>时间 O(n)，空间 O(n)</p>
+<p><span class="lab">联动：</span>Q85 最大矩形 = 把每一行当作柱状图的底，逐行调用本函数。</p>
+<p><span class="lab">数值范围：</span>高度 &lt;= 10^4、n &lt;= 10^5，面积最大 10^9，int 刚好装得下（2^31-1 ≈ 2.1×10^9）；</p>
+<p>范围再大一档（比如高度 10^5）就必须换 long long 了。</p>
+<p>/</p></div></div></div>
+<div class="sect"><h2>动画演示</h2><div class="anim-host" id="anim-84"></div></div>
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 484 132" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="484" height="132" fill="#fbfbfd"/>
+<rect x="30" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="53" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">6</text>
+<text x="53" y="96" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="84" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="107" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">7</text>
+<text x="107" y="96" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="138" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="161" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">5</text>
+<text x="161" y="96" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+<rect x="192" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="215" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="215" y="96" text-anchor="middle" fill="#8893b8" font-size="12">3</text>
+<rect x="246" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="269" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">4</text>
+<text x="269" y="96" text-anchor="middle" fill="#8893b8" font-size="12">4</text>
+<rect x="300" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="323" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">5</text>
+<text x="323" y="96" text-anchor="middle" fill="#8893b8" font-size="12">5</text>
+<rect x="354" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="377" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">9</text>
+<text x="377" y="96" text-anchor="middle" fill="#8893b8" font-size="12">6</text>
+<rect x="408" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="431" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
+<text x="431" y="96" text-anchor="middle" fill="#8893b8" font-size="12">7</text>
+</svg></div><div class="fig-cap">数组（来自本仓库测试数据，下标从 0 开始）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0084 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">int</span> largestRectangleArea(<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; heights) {
+    <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt; h;
+    h.reserve(heights.size() + <span class="tok-n">2</span>);
+    h.push_back(<span class="tok-n">0</span>);  <span class="tok-c">// 左哨兵：保证栈里永远有一个更矮的柱子</span>
+    <span class="tok-k">for</span> (<span class="tok-k">int</span> x : heights) h.push_back(x);
+    h.push_back(<span class="tok-n">0</span>);  <span class="tok-c">// 右哨兵：保证结束时全部结算完</span>
+    <span class="tok-k">stack</span>&lt;<span class="tok-k">int</span>&gt; st;   <span class="tok-c">// 单调递增栈（存下标）</span>
+    <span class="tok-k">int</span> best = <span class="tok-n">0</span>;
+    <span class="tok-k">for</span> (<span class="tok-k">int</span> i = <span class="tok-n">0</span>; i &lt; (<span class="tok-k">int</span>)h.size(); ++i) {
+      <span class="tok-k">while</span> (!st.empty() &amp;&amp; h[i] &lt; h[st.top()]) {
+        <span class="tok-k">int</span> height = h[st.top()];
+        st.pop();
+        <span class="tok-k">int</span> left = st.top();  <span class="tok-c">// 左边第一个更矮的</span>
+        best = max(best, height * (i - left - <span class="tok-n">1</span>));
+      }
+      st.push(i);
+    }
+    <span class="tok-k">return</span> best;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0084::Solution s;
+  vector&lt;int&gt; a{2, 1, 5, 6, 2, 3};
+  CHECK_EQ(s.largestRectangleArea(a), 10);  // 高 5、宽 2（柱子 5 和 6）
+  vector&lt;int&gt; b{2, 4};
+  CHECK_EQ(s.largestRectangleArea(b), 4);
+  vector&lt;int&gt; c{1, 1, 1, 1};  // 等高要能连成一片
+  CHECK_EQ(s.largestRectangleArea(c), 4);
+  vector&lt;int&gt; d{6, 7, 5, 2, 4, 5, 9, 3};
+  CHECK_EQ(s.largestRectangleArea(d), 16);  // 高 2 撑满 8 根柱子；高&gt;4 的最长段只有 3（→ 12）
+  vector&lt;int&gt; e{0};
+  CHECK_EQ(s.largestRectangleArea(e), 0);
+  vector&lt;int&gt; f{2, 1, 2};
+  CHECK_EQ(s.largestRectangleArea(f), 3);  // 高 1 × 宽 3（中间那根矮柱不阻断底边）</pre></div>
+<div class="sect"><h2>同类题（栈）</h2><div class="taglist"><a href="q20.html">Q20 有效的括号</a><a href="q155.html">Q155 最小栈</a><a href="q394.html">Q394 字符串解码</a><a href="q739.html">Q739 每日温度</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/anim.js"></script>
+<script src="../assets/animations.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){{var s=window.LC_ANIMS&&window.LC_ANIMS["84"];var h=document.getElementById("anim-84");if(s&&h&&window.LCAnim)LCAnim.run(h,s);}});</script></body></html>

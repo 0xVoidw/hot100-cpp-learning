@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q394 字符串解码 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-stack">栈</a> / Q394</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q394</span> 字符串解码</h1>
+  <span class="badge Medium">Medium</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="394"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 栈 · 难度 Medium · 原题 <a href="https://leetcode.cn/problems/decode-string/" target="_blank" rel="noopener">decode-string</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给定一个经过编码的字符串，返回它解码后的字符串。</p>
+<p>编码规则为: <code>k[encoded_string]</code>，表示其中方括号内部的 <code>encoded_string</code> 正好重复 <code>k</code> 次。注意 <code>k</code> 保证为正整数。</p>
+<p>你可以认为输入字符串总是有效的；输入字符串中没有额外的空格，且输入的方括号总是符合格式要求的。</p>
+<p>此外，你可以认为原始数据不包含数字，所有的数字只表示重复的次数 <code>k</code> ，例如不会出现像&nbsp;<code>3a</code>&nbsp;或&nbsp;<code>2[4]</code>&nbsp;的输入。</p>
+<p>测试用例保证输出的长度不会超过&nbsp;<code>10<sup>5</sup></code>。</p>
+<p><strong>示例 1：</strong></p>
+<pre>
+<strong>输入：</strong>s = "3[a]2[bc]"
+<strong>输出：</strong>"aaabcbc"
+</pre>
+<p><strong>示例 2：</strong></p>
+<pre>
+<strong>输入：</strong>s = "3[a2[c]]"
+<strong>输出：</strong>"accaccacc"
+</pre>
+<p><strong>示例 3：</strong></p>
+<pre>
+<strong>输入：</strong>s = "2[abc]3[cd]ef"
+<strong>输出：</strong>"abcabccdcdcdef"
+</pre>
+<p><strong>示例 4：</strong></p>
+<pre>
+<strong>输入：</strong>s = "abc3[cd]xyz"
+<strong>输出：</strong>"abccdcdcdxyz"
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>1 &lt;= s.length &lt;= 30</code></li>
+	<li><meta charset="UTF-8" /><code>s</code>&nbsp;由小写英文字母、数字和方括号<meta charset="UTF-8" />&nbsp;<code>'[]'</code> 组成</li>
+	<li><code>s</code>&nbsp;保证是一个&nbsp;<strong>有效</strong>&nbsp;的输入。</li>
+	<li><code>s</code>&nbsp;中所有整数的取值范围为<meta charset="UTF-8" />&nbsp;<code>[1, 300]</code>&nbsp;</li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>双栈处理嵌套：数字栈 + 字符串栈</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>嵌套结构 -&gt; 双栈。一个存重复次数，一个存「进入本层之前已拼好的串」。</p>
+<p>遇 &#x27;[&#x27; 把当前 num 和当前 cur 同时压栈并清零（开新层）；</p>
+<p><span class="lab">遇 &#x27;]&#x27; 弹栈：</span>cur = 上层前缀 + 本层内容 × 次数。</p>
+<p>数字可能多位（&quot;12[a]&quot;），所以要 num = num*10 + (c-&#x27;0&#x27;) 累积。</p>
+<p><span class="lab">另解：</span>递归下降（遇 &#x27;[&#x27; 就递归）代码更短，栈空间隐式。</p>
+<p><span class="lab">复杂度：</span>时间 O(输出长度)，空间 O(嵌套层数 + 输出长度)（栈里存的串本身也是 O(输出)）</p>
+<p>/</p></div></div></div>
+<div class="sect"><h2>动画演示</h2><div class="anim-host" id="anim-394"></div></div>
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 808 132" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="808" height="132" fill="#fbfbfd"/>
+<rect x="30" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="53" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">a</text>
+<text x="53" y="96" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="84" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="107" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">b</text>
+<text x="107" y="96" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="138" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="161" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">c</text>
+<text x="161" y="96" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+<rect x="192" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="215" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">a</text>
+<text x="215" y="96" text-anchor="middle" fill="#8893b8" font-size="12">3</text>
+<rect x="246" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="269" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">b</text>
+<text x="269" y="96" text-anchor="middle" fill="#8893b8" font-size="12">4</text>
+<rect x="300" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="323" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">c</text>
+<text x="323" y="96" text-anchor="middle" fill="#8893b8" font-size="12">5</text>
+<rect x="354" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="377" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">c</text>
+<text x="377" y="96" text-anchor="middle" fill="#8893b8" font-size="12">6</text>
+<rect x="408" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="431" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">d</text>
+<text x="431" y="96" text-anchor="middle" fill="#8893b8" font-size="12">7</text>
+<rect x="462" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="485" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">c</text>
+<text x="485" y="96" text-anchor="middle" fill="#8893b8" font-size="12">8</text>
+<rect x="516" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="539" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">d</text>
+<text x="539" y="96" text-anchor="middle" fill="#8893b8" font-size="12">9</text>
+<rect x="570" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="593" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">c</text>
+<text x="593" y="96" text-anchor="middle" fill="#8893b8" font-size="12">10</text>
+<rect x="624" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="647" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">d</text>
+<text x="647" y="96" text-anchor="middle" fill="#8893b8" font-size="12">11</text>
+<rect x="678" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="701" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">e</text>
+<text x="701" y="96" text-anchor="middle" fill="#8893b8" font-size="12">12</text>
+<rect x="732" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="755" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">f</text>
+<text x="755" y="96" text-anchor="middle" fill="#8893b8" font-size="12">13</text>
+</svg></div><div class="fig-cap">字符串 `<abcabccdcdcdef>`（来自本仓库测试数据，下标从 0 开始）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0394 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">string</span> decodeString(<span class="tok-k">const</span> <span class="tok-k">string</span>&amp; s) {
+    <span class="tok-k">stack</span>&lt;<span class="tok-k">int</span>&gt; nums;
+    <span class="tok-k">stack</span>&lt;<span class="tok-k">string</span>&gt; parts;
+    <span class="tok-k">string</span> cur;
+    <span class="tok-k">int</span> num = <span class="tok-n">0</span>;
+    <span class="tok-k">for</span> (<span class="tok-k">char</span> c : s) {
+      <span class="tok-k">if</span> (isdigit((<span class="tok-k">unsigned</span> <span class="tok-k">char</span>)c)) {
+        num = num * <span class="tok-n">10</span> + (c - <span class="tok-s">&#x27;0&#x27;</span>);
+      } <span class="tok-k">else</span> <span class="tok-k">if</span> (c == <span class="tok-s">&#x27;[&#x27;</span>) {
+        nums.push(num);   <span class="tok-c">// 本层要重复几次</span>
+        parts.push(cur);  <span class="tok-c">// 保存本层之前的内容</span>
+        num = <span class="tok-n">0</span>;
+        cur.clear();      <span class="tok-c">// 开始收集本层内容</span>
+      } <span class="tok-k">else</span> <span class="tok-k">if</span> (c == <span class="tok-s">&#x27;]&#x27;</span>) {
+        <span class="tok-k">string</span> body = cur;
+        <span class="tok-k">int</span> times = nums.top();
+        nums.pop();
+        cur = parts.top();  <span class="tok-c">// 回到上一层</span>
+        parts.pop();
+        <span class="tok-k">for</span> (<span class="tok-k">int</span> i = <span class="tok-n">0</span>; i &lt; times; ++i) cur += body;
+      } <span class="tok-k">else</span> {
+        cur += c;
+      }
+    }
+    <span class="tok-k">return</span> cur;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0394::Solution s;
+  CHECK_EQ(s.decodeString(&quot;3[a]2[bc]&quot;), string(&quot;aaabcbc&quot;));
+  CHECK_EQ(s.decodeString(&quot;3[a2[c]]&quot;), string(&quot;accaccacc&quot;));  // 嵌套
+  CHECK_EQ(s.decodeString(&quot;2[abc]3[cd]ef&quot;), string(&quot;abcabccdcdcdef&quot;));
+  CHECK_EQ(s.decodeString(&quot;abc3[cd]xyz&quot;), string(&quot;abccdcdcdxyz&quot;));
+  CHECK_EQ(s.decodeString(&quot;10[a]&quot;), string(&quot;aaaaaaaaaa&quot;));  // 多位数字</pre></div>
+<div class="sect"><h2>同类题（栈）</h2><div class="taglist"><a href="q20.html">Q20 有效的括号</a><a href="q84.html">Q84 柱状图中最大的矩形</a><a href="q155.html">Q155 最小栈</a><a href="q739.html">Q739 每日温度</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/anim.js"></script>
+<script src="../assets/animations.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){{var s=window.LC_ANIMS&&window.LC_ANIMS["394"];var h=document.getElementById("anim-394");if(s&&h&&window.LCAnim)LCAnim.run(h,s);}});</script></body></html>

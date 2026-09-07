@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q347 前 K 个高频元素 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-heap">堆</a> / Q347</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q347</span> 前 K 个高频元素</h1>
+  <span class="badge Medium">Medium</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="347"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 堆 · 难度 Medium · 原题 <a href="https://leetcode.cn/problems/top-k-frequent-elements/" target="_blank" rel="noopener">top-k-frequent-elements</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给你一个整数数组 <code>nums</code> 和一个整数 <code>k</code> ，请你返回其中出现频率前 <code>k</code> 高的元素。你可以按 <strong>任意顺序</strong> 返回答案。</p>
+<p><strong class="example">示例 1：</strong></p>
+<div class="example-block">
+<p><span class="example-io"><b>输入：</b>nums = [1,1,1,2,2,3], k = 2</span></p>
+<p><strong>输出：</strong><span class="example-io">[1,2]</span></p>
+</div>
+<p><strong class="example">示例 2：</strong></p>
+<div class="example-block">
+<p><span class="example-io"><b>输入：</b>nums = [1], k = 1</span></p>
+<p><span class="example-io"><b>输出：</b>[1]</span></p>
+</div>
+<p><strong class="example">示例 3：</strong></p>
+<div class="example-block">
+<p><span class="example-io"><b>输入：</b>nums = [1,2,1,2,1,2,3,1,3,2], k = 2</span></p>
+<p><strong>输出：</strong><span class="example-io">[1,2]</span></p>
+</div>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>1 &lt;= nums.length &lt;= 10<sup>5</sup></code></li>
+	<li><code>-10<sup>4</sup>&nbsp;&lt;= nums[i] &lt;= 10<sup>4</sup></code></li>
+	<li><code>k</code> 的取值范围是 <code>[1, 数组中不相同的元素的个数]</code></li>
+	<li>题目数据保证答案唯一，换句话说，数组中前 <code>k</code> 个高频元素的集合是唯一的</li>
+</ul>
+<p><strong>进阶：</strong>你所设计算法的时间复杂度 <strong>必须</strong> 优于 <code>O(n log n)</code> ，其中 <code>n</code><em>&nbsp;</em>是数组大小。</p></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>按频次桶排序（值域有界比堆更快）</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">解法 A：</span>频次 -&gt; 小顶堆（容量 K），O(n log k)。</p>
+<p><span class="lab">解法 B：</span>桶排序，O(n)：频次只可能落在 1..n，开 n+1 个桶，从高频桶倒序取 K 个。</p>
+<p>—— 「值域有界」时，桶排序几乎总是比堆更快更好写。</p>
+<p>输出顺序题目不要求，所以测试里先排序再比较。</p>
+<p>/</p></div></div></div>
+<div class="sect"><h2>动画演示</h2><div class="anim-host" id="anim-347"></div></div>
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 592 132" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="592" height="132" fill="#fbfbfd"/>
+<rect x="30" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="53" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">4</text>
+<text x="53" y="96" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="84" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="107" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">4</text>
+<text x="107" y="96" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="138" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="161" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">4</text>
+<text x="161" y="96" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+<rect x="192" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="215" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
+<text x="215" y="96" text-anchor="middle" fill="#8893b8" font-size="12">3</text>
+<rect x="246" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="269" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
+<text x="269" y="96" text-anchor="middle" fill="#8893b8" font-size="12">4</text>
+<rect x="300" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="323" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="323" y="96" text-anchor="middle" fill="#8893b8" font-size="12">5</text>
+<rect x="354" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="377" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="377" y="96" text-anchor="middle" fill="#8893b8" font-size="12">6</text>
+<rect x="408" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="431" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="431" y="96" text-anchor="middle" fill="#8893b8" font-size="12">7</text>
+<rect x="462" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="485" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="485" y="96" text-anchor="middle" fill="#8893b8" font-size="12">8</text>
+<rect x="516" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="539" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="539" y="96" text-anchor="middle" fill="#8893b8" font-size="12">9</text>
+</svg></div><div class="fig-cap">数组（来自本仓库测试数据，下标从 0 开始）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0347 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt; topKFrequent(<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; nums, <span class="tok-k">int</span> k) {
+    <span class="tok-k">unordered_map</span>&lt;<span class="tok-k">int</span>, <span class="tok-k">int</span>&gt; cnt;
+    <span class="tok-k">for</span> (<span class="tok-k">int</span> x : nums) ++cnt[x];
+    <span class="tok-c">// 小顶堆按频次淘汰：堆里始终保留频次最高的 k 个</span>
+    <span class="tok-k">auto</span> cmp = [](<span class="tok-k">const</span> <span class="tok-k">pair</span>&lt;<span class="tok-k">int</span>, <span class="tok-k">int</span>&gt;&amp; a, <span class="tok-k">const</span> <span class="tok-k">pair</span>&lt;<span class="tok-k">int</span>, <span class="tok-k">int</span>&gt;&amp; b) {
+      <span class="tok-k">return</span> a.second &gt; b.second;  <span class="tok-c">// 注意方向：&gt; 让小顶堆</span>
+    };
+    <span class="tok-k">priority_queue</span>&lt;<span class="tok-k">pair</span>&lt;<span class="tok-k">int</span>, <span class="tok-k">int</span>&gt;, <span class="tok-k">vector</span>&lt;<span class="tok-k">pair</span>&lt;<span class="tok-k">int</span>, <span class="tok-k">int</span>&gt;&gt;, decltype(cmp)&gt; heap(cmp);
+    <span class="tok-k">for</span> (<span class="tok-k">auto</span>&amp; [num, c] : cnt) {
+      heap.push({num, c});
+      <span class="tok-k">if</span> ((<span class="tok-k">int</span>)heap.size() &gt; k) heap.pop();
+    }
+    <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt; ans;
+    <span class="tok-k">while</span> (!heap.empty()) {
+      ans.push_back(heap.top().first);
+      heap.pop();
+    }
+    <span class="tok-k">return</span> ans;
+  }
+
+  <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt; topKFrequentBucket(<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; nums, <span class="tok-k">int</span> k) {
+    <span class="tok-k">unordered_map</span>&lt;<span class="tok-k">int</span>, <span class="tok-k">int</span>&gt; cnt;
+    <span class="tok-k">for</span> (<span class="tok-k">int</span> x : nums) ++cnt[x];
+    <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&gt; bucket(nums.size() + <span class="tok-n">1</span>);  <span class="tok-c">// 下标 = 出现次数</span>
+    <span class="tok-k">for</span> (<span class="tok-k">auto</span>&amp; [num, c] : cnt) bucket[c].push_back(num);
+    <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt; ans;
+    <span class="tok-k">for</span> (<span class="tok-k">int</span> f = (<span class="tok-k">int</span>)bucket.size() - <span class="tok-n">1</span>; f &gt;= <span class="tok-n">0</span> &amp;&amp; (<span class="tok-k">int</span>)ans.size() &lt; k; --f)
+      <span class="tok-k">for</span> (<span class="tok-k">int</span> num : bucket[f]) {
+        ans.push_back(num);
+        <span class="tok-k">if</span> ((<span class="tok-k">int</span>)ans.size() == k) <span class="tok-k">break</span>;
+      }
+    <span class="tok-k">return</span> ans;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0347::Solution s;
+  auto sorted = [](vector&lt;int&gt; v) {
+    sort(v.begin(), v.end());
+    return v;
+  };
+  vector&lt;int&gt; a{1, 1, 1, 2, 2, 3};
+  CHECK_EQ(sorted(s.topKFrequent(a, 2)), sorted(vector&lt;int&gt;{1, 2}));
+  CHECK_EQ(sorted(s.topKFrequentBucket(a, 2)), sorted(vector&lt;int&gt;{1, 2}));
+  vector&lt;int&gt; b{1};
+  CHECK_EQ(s.topKFrequent(b, 1), vector&lt;int&gt;{1});
+  vector&lt;int&gt; c{-1, -1};
+  CHECK_EQ(s.topKFrequent(c, 1), vector&lt;int&gt;{-1});
+  vector&lt;int&gt; d{1, 2};  // 频次相同，任取一个；k=2 时都要
+  CHECK_EQ(sorted(s.topKFrequent(d, 2)), sorted(vector&lt;int&gt;{1, 2}));
+  CHECK_EQ(sorted(s.topKFrequentBucket(d, 2)), sorted(vector&lt;int&gt;{1, 2}));
+  vector&lt;int&gt; e{4, 4, 4, 3, 3, 2, 1, 1, 1, 1};
+  CHECK_EQ(sorted(s.topKFrequentBucket(e, 2)), sorted(vector&lt;int&gt;{1, 4}));</pre></div>
+<div class="sect"><h2>同类题（堆）</h2><div class="taglist"><a href="q215.html">Q215 数组中的第 K 个最大元素</a><a href="q295.html">Q295 数据流的中位数</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/anim.js"></script>
+<script src="../assets/animations.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){{var s=window.LC_ANIMS&&window.LC_ANIMS["347"];var h=document.getElementById("anim-347");if(s&&h&&window.LCAnim)LCAnim.run(h,s);}});</script></body></html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q138 随机链表的复制 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-linked_list">链表</a> / Q138</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q138</span> 随机链表的复制</h1>
+  <span class="badge Medium">Medium</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="138"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 链表 · 难度 Medium · 原题 <a href="https://leetcode.cn/problems/copy-list-with-random-pointer/" target="_blank" rel="noopener">copy-list-with-random-pointer</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给你一个长度为 <code>n</code> 的链表，每个节点包含一个额外增加的随机指针 <code>random</code> ，该指针可以指向链表中的任何节点或空节点。</p>
+<p>构造这个链表的&nbsp;<strong><a href="https://baike.baidu.com/item/深拷贝/22785317?fr=aladdin" target="_blank">深拷贝</a></strong>。&nbsp;深拷贝应该正好由 <code>n</code> 个 <strong>全新</strong> 节点组成，其中每个新节点的值都设为其对应的原节点的值。新节点的 <code>next</code> 指针和 <code>random</code> 指针也都应指向复制链表中的新节点，并使原链表和复制链表中的这些指针能够表示相同的链表状态。<strong>复制链表中的指针都不应指向原链表中的节点 </strong>。</p>
+<p>例如，如果原链表中有 <code>X</code> 和 <code>Y</code> 两个节点，其中 <code>X.random --&gt; Y</code> 。那么在复制链表中对应的两个节点 <code>x</code> 和 <code>y</code> ，同样有 <code>x.random --&gt; y</code> 。</p>
+<p>返回复制链表的头节点。</p>
+<p>用一个由&nbsp;<code>n</code>&nbsp;个节点组成的链表来表示输入/输出中的链表。每个节点用一个&nbsp;<code>[val, random_index]</code>&nbsp;表示：</p>
+<ul>
+	<li><code>val</code>：一个表示&nbsp;<code>Node.val</code>&nbsp;的整数。</li>
+	<li><code>random_index</code>：随机指针指向的节点索引（范围从&nbsp;<code>0</code>&nbsp;到&nbsp;<code>n-1</code>）；如果不指向任何节点，则为&nbsp;&nbsp;<code>null</code>&nbsp;。</li>
+</ul>
+<p>你的代码 <strong>只</strong> 接受原链表的头节点 <code>head</code> 作为传入参数。</p>
+<p><strong class="example">示例 1：</strong></p>
+<p><img alt="" src="https://assets.leetcode.cn/aliyun-lc-upload/uploads/2020/01/09/e1.png" style="height: 142px; width: 700px;" /></p>
+<pre>
+<strong>输入：</strong>head = [[7,null],[13,0],[11,4],[10,2],[1,0]]
+<strong>输出：</strong>[[7,null],[13,0],[11,4],[10,2],[1,0]]
+</pre>
+<p><strong class="example">示例 2：</strong></p>
+<p><img alt="" src="https://assets.leetcode.cn/aliyun-lc-upload/uploads/2020/01/09/e2.png" style="height: 114px; width: 700px;" /></p>
+<pre>
+<strong>输入：</strong>head = [[1,1],[2,1]]
+<strong>输出：</strong>[[1,1],[2,1]]
+</pre>
+<p><strong class="example">示例 3：</strong></p>
+<p><strong><img alt="" src="https://assets.leetcode.cn/aliyun-lc-upload/uploads/2020/01/09/e3.png" style="height: 122px; width: 700px;" /></strong></p>
+<pre>
+<strong>输入：</strong>head = [[3,null],[3,0],[3,null]]
+<strong>输出：</strong>[[3,null],[3,0],[3,null]]
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>0 &lt;= n &lt;= 1000</code><meta charset="UTF-8" /></li>
+	<li><code>-10<sup>4</sup>&nbsp;&lt;= Node.val &lt;= 10<sup>4</sup></code></li>
+	<li><code>Node.random</code>&nbsp;为&nbsp;<code>null</code> 或指向链表中的节点。</li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>原地把 next 指向克隆结点，再拆两条链</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">解法一（本文件采用）：</span>两趟 + 哈希表 old-&gt;new。好懂、好讲。</p>
+<p><span class="lab">解法二 O(1) 空间：</span>先把 copy 插在 原结点 后面 A-&gt;A&#x27;-&gt;B-&gt;B&#x27;，</p>
+<p>则 A&#x27;-&gt;random = A-&gt;random-&gt;next；最后再拆链。</p>
+<p><span class="lab">复杂度：</span>解法一 时间 O(n)，空间 O(n)</p>
+<p>/</p></div></div></div>
+
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 510 180" xmlns="http://www.w3.org/2000/svg" class="dia">
+<defs><marker id="arr306373" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#4f6ef7"/></marker></defs>
+<rect width="510" height="180" fill="#fbfbfd"/>
+<rect x="30" y="30" width="54" height="60" rx="8" fill="#eef2ff" stroke="#4f6ef7" stroke-width="2"/>
+<text x="57" y="65" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">7</text>
+<text x="57" y="106" text-anchor="middle" fill="#8893b8" font-size="12">i0</text>
+<rect x="124" y="30" width="54" height="60" rx="8" fill="#eef2ff" stroke="#4f6ef7" stroke-width="2"/>
+<text x="151" y="65" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">13</text>
+<text x="151" y="106" text-anchor="middle" fill="#8893b8" font-size="12">i1</text>
+<rect x="218" y="30" width="54" height="60" rx="8" fill="#eef2ff" stroke="#4f6ef7" stroke-width="2"/>
+<text x="245" y="65" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">11</text>
+<text x="245" y="106" text-anchor="middle" fill="#8893b8" font-size="12">i2</text>
+<rect x="312" y="30" width="54" height="60" rx="8" fill="#eef2ff" stroke="#4f6ef7" stroke-width="2"/>
+<text x="339" y="65" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">10</text>
+<text x="339" y="106" text-anchor="middle" fill="#8893b8" font-size="12">i3</text>
+<rect x="406" y="30" width="54" height="60" rx="8" fill="#eef2ff" stroke="#4f6ef7" stroke-width="2"/>
+<text x="433" y="65" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="433" y="106" text-anchor="middle" fill="#8893b8" font-size="12">i4</text>
+<line x1="84" y1="60" x2="122" y2="60" stroke="#4f6ef7" stroke-width="2" marker-end="url(#arr306373)"/>
+<line x1="178" y1="60" x2="216" y2="60" stroke="#4f6ef7" stroke-width="2" marker-end="url(#arr306373)"/>
+<line x1="272" y1="60" x2="310" y2="60" stroke="#4f6ef7" stroke-width="2" marker-end="url(#arr306373)"/>
+<line x1="366" y1="60" x2="404" y2="60" stroke="#4f6ef7" stroke-width="2" marker-end="url(#arr306373)"/>
+</svg></div><div class="fig-cap">链表结构（来自本仓库测试数据）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0138 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  Node* copyRandomList(Node* head) {
+    <span class="tok-k">unordered_map</span>&lt;Node*, Node*&gt; mp;
+    <span class="tok-k">for</span> (Node* p = head; p; p = p-&gt;next) mp[p] = <span class="tok-k">new</span> Node(p-&gt;val);  <span class="tok-c">// 只复制值</span>
+    <span class="tok-k">for</span> (Node* p = head; p; p = p-&gt;next) {
+      mp[p]-&gt;next = p-&gt;next ? mp[p-&gt;next] : <span class="tok-k">nullptr</span>;
+      mp[p]-&gt;random = p-&gt;random ? mp[p-&gt;random] : <span class="tok-k">nullptr</span>;  <span class="tok-c">// 指针映射过去</span>
+    }
+    <span class="tok-k">return</span> head ? mp[head] : <span class="tok-k">nullptr</span>;
+  }
+};
+
+<span class="tok-c">// —— 测试脚手架：按下标数组构造随机链表 ——</span>
+<span class="tok-k">inline</span> Node* buildRandList(<span class="tok-k">const</span> <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; vals, <span class="tok-k">const</span> <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; randomIdx) {
+  <span class="tok-k">vector</span>&lt;Node*&gt; nodes;
+  <span class="tok-k">for</span> (<span class="tok-k">size_t</span> i = <span class="tok-n">0</span>; i &lt; vals.size(); ++i) nodes.push_back(<span class="tok-k">new</span> Node(vals[i]));
+  <span class="tok-k">for</span> (<span class="tok-k">size_t</span> i = <span class="tok-n">0</span>; i &lt; nodes.size(); ++i) {
+    <span class="tok-k">if</span> (i + <span class="tok-n">1</span> &lt; nodes.size()) nodes[i]-&gt;next = nodes[i + <span class="tok-n">1</span>];
+    nodes[i]-&gt;random = randomIdx[i] &lt; <span class="tok-n">0</span> ? <span class="tok-k">nullptr</span> : nodes[randomIdx[i]];
+  }
+  <span class="tok-k">return</span> nodes.empty() ? <span class="tok-k">nullptr</span> : nodes[<span class="tok-n">0</span>];
+}
+<span class="tok-k">inline</span> <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt; randRandomIdx(Node* head, <span class="tok-k">const</span> <span class="tok-k">vector</span>&lt;Node*&gt;&amp; orig) {
+  <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt; out;
+  <span class="tok-k">for</span> (Node* p = head; p; p = p-&gt;next) {
+    <span class="tok-k">int</span> idx = -<span class="tok-n">1</span>;
+    <span class="tok-k">for</span> (<span class="tok-k">size_t</span> i = <span class="tok-n">0</span>; i &lt; orig.size(); ++i)
+      <span class="tok-k">if</span> (orig[i] == p-&gt;random) idx = (<span class="tok-k">int</span>)i;
+    out.push_back(idx);
+  }
+  <span class="tok-k">return</span> out;
+}
+<span class="tok-k">inline</span> <span class="tok-k">vector</span>&lt;Node*&gt; collect(Node* head) {
+  <span class="tok-k">vector</span>&lt;Node*&gt; v;
+  <span class="tok-k">for</span> (Node* p = head; p; p = p-&gt;next) v.push_back(p);
+  <span class="tok-k">return</span> v;
+}
+<span class="tok-c">// random 不影响 next 链，只顺着 next 释放即可（不会 double free）</span>
+<span class="tok-k">inline</span> <span class="tok-k">void</span> freeRandList(Node* head) {
+  <span class="tok-k">while</span> (head) {
+    Node* n = head-&gt;next;
+    <span class="tok-k">delete</span> head;
+    head = n;
+  }
+}
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0138::Solution s;
+  Node* head = lc0138::buildRandList({7, 13, 11, 10, 1}, {-1, 0, 4, 2, 0});
+  Node* copy = s.copyRandomList(head);
+  CHECK_EQ(lc0138::collect(copy).size(), (size_t)5);  // 长度一致
+  CHECK_EQ(lc0138::randRandomIdx(copy, lc0138::collect(copy)),
+           vector&lt;int&gt;{-1, 0, 4, 2, 0});  // random 相对结构一致
+  CHECK_TRUE(copy != head);               // 必须是新结点
+  CHECK_TRUE(copy-&gt;next != head-&gt;next);
+  Node* empty = s.copyRandomList(nullptr);
+  CHECK_TRUE(empty == nullptr);
+  lc0138::freeRandList(head);
+  lc0138::freeRandList(copy);</pre></div>
+<div class="sect"><h2>同类题（链表）</h2><div class="taglist"><a href="q2.html">Q2 两数相加</a><a href="q19.html">Q19 删除链表的倒数第 N 个结点</a><a href="q21.html">Q21 合并两个有序链表</a><a href="q23.html">Q23 合并 K 个升序链表</a><a href="q24.html">Q24 两两交换链表中的节点</a><a href="q25.html">Q25 K 个一组翻转链表</a><a href="q141.html">Q141 环形链表</a><a href="q142.html">Q142 环形链表 II</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+</body></html>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q102 二叉树的层序遍历 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-binary_tree">二叉树</a> / Q102</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q102</span> 二叉树的层序遍历</h1>
+  <span class="badge Medium">Medium</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="102"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 二叉树 · 难度 Medium · 原题 <a href="https://leetcode.cn/problems/binary-tree-level-order-traversal/" target="_blank" rel="noopener">binary-tree-level-order-traversal</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给你二叉树的根节点 <code>root</code> ，返回其节点值的 <strong>层序遍历</strong> 。 （即逐层地，从左到右访问所有节点）。</p>
+<p><strong>示例 1：</strong></p>
+<img alt="" src="https://assets.leetcode.com/uploads/2021/02/19/tree1.jpg" style="width: 277px; height: 302px;" />
+<pre>
+<strong>输入：</strong>root = [3,9,20,null,null,15,7]
+<strong>输出：</strong>[[3],[9,20],[15,7]]
+</pre>
+<p><strong>示例 2：</strong></p>
+<pre>
+<strong>输入：</strong>root = [1]
+<strong>输出：</strong>[[1]]
+</pre>
+<p><strong>示例 3：</strong></p>
+<pre>
+<strong>输入：</strong>root = []
+<strong>输出：</strong>[]
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li>树中节点数目在范围 <code>[0, 2000]</code> 内</li>
+	<li><code>-1000 &lt;= Node.val &lt;= 1000</code></li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>BFS 按层出队，用 size 定层宽</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>BFS + 「进入循环前先记下 q.size()」，这个 size 就是当前层的结点数，</p>
+<p>于是天然把层与层分开。Q199 右视图 / Q103 锯齿 / Q107 自底向上都改这一行。</p>
+<p><span class="lab">复杂度：</span>时间 O(n)，空间 O(最宽一层) = O(n)</p>
+<p>/</p></div></div></div>
+<div class="sect"><h2>动画演示</h2><div class="anim-host" id="anim-102"></div></div>
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 380 270" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="380" height="270" fill="#fbfbfd"/>
+<line x1="110" y1="48" x2="30" y2="82" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="110" y1="48" x2="270" y2="82" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="270" y1="118" x2="190" y2="152" stroke="#d0d5e0" stroke-width="2"/>
+<line x1="270" y1="118" x2="350" y2="152" stroke="#d0d5e0" stroke-width="2"/>
+<circle cx="30" cy="100" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="30" y="105" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">9</text>
+<circle cx="110" cy="30" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="110" y="35" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">3</text>
+<circle cx="190" cy="170" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="190" y="175" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">15</text>
+<circle cx="270" cy="100" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="270" y="105" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">20</text>
+<circle cx="350" cy="170" r="18" fill="#4f6ef7" stroke="#3a55d6" stroke-width="2"/>
+<text x="350" y="175" text-anchor="middle" fill="#fff" font-size="15" font-family="Consolas,Menlo,monospace">7</text>
+</svg></div><div class="fig-cap">二叉树（来自本仓库测试数据，`nullopt` 表示空位）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0102 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&gt; levelOrder(TreeNode* root) {
+    <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&gt; ans;
+    <span class="tok-k">if</span> (!root) <span class="tok-k">return</span> ans;
+    <span class="tok-k">queue</span>&lt;TreeNode*&gt; q;
+    q.push(root);
+    <span class="tok-k">while</span> (!q.empty()) {
+      <span class="tok-k">int</span> sz = (<span class="tok-k">int</span>)q.size();  <span class="tok-c">// 本层结点数，关键一步</span>
+      ans.emplace_back();
+      ans.back().reserve(sz);
+      <span class="tok-k">for</span> (<span class="tok-k">int</span> i = <span class="tok-n">0</span>; i &lt; sz; ++i) {
+        TreeNode* cur = q.front();
+        q.pop();
+        ans.back().push_back(cur-&gt;val);
+        <span class="tok-k">if</span> (cur-&gt;left) q.push(cur-&gt;left);
+        <span class="tok-k">if</span> (cur-&gt;right) q.push(cur-&gt;right);
+      }
+    }
+    <span class="tok-k">return</span> ans;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0102::Solution s;
+  TreeNode* a = buildTree({3, 9, 20, nullopt, nullopt, 15, 7});
+  CHECK_EQ(s.levelOrder(a), vector&lt;vector&lt;int&gt;&gt;({{3}, {9, 20}, {15, 7}}));
+  freeTree(a);
+  CHECK_EQ(s.levelOrder(nullptr), vector&lt;vector&lt;int&gt;&gt;{});
+  TreeNode* b = buildTree({1});
+  CHECK_EQ(s.levelOrder(b), vector&lt;vector&lt;int&gt;&gt;({{1}}));
+  freeTree(b);</pre></div>
+<div class="sect"><h2>同类题（二叉树）</h2><div class="taglist"><a href="q94.html">Q94 二叉树的中序遍历</a><a href="q98.html">Q98 验证二叉搜索树</a><a href="q101.html">Q101 对称二叉树</a><a href="q104.html">Q104 二叉树的最大深度</a><a href="q105.html">Q105 从前序与中序遍历序列构造二叉树</a><a href="q108.html">Q108 将有序数组转换为二叉搜索树</a><a href="q114.html">Q114 二叉树展开为链表</a><a href="q124.html">Q124 二叉树中的最大路径和</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/anim.js"></script>
+<script src="../assets/animations.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){{var s=window.LC_ANIMS&&window.LC_ANIMS["102"];var h=document.getElementById("anim-102");if(s&&h&&window.LCAnim)LCAnim.run(h,s);}});</script></body></html>

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q118 杨辉三角 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-dp">动态规划</a> / Q118</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q118</span> 杨辉三角</h1>
+  <span class="badge Easy">Easy</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="118"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 动态规划 · 难度 Easy · 原题 <a href="https://leetcode.cn/problems/pascals-triangle/" target="_blank" rel="noopener">pascals-triangle</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给定一个非负整数&nbsp;<em><code>numRows</code>，</em>生成「杨辉三角」的前&nbsp;<em><code>numRows</code>&nbsp;</em>行。</p>
+<p>在<strong>「杨辉三角」</strong>中，每个数是它左上方和右上方的数的和。</p>
+<p><img alt="" src="https://pic.leetcode.cn/1626927345-DZmfxB-PascalTriangleAnimated2.gif" /></p>
+<p><strong>示例 1:</strong></p>
+<pre>
+<strong>输入:</strong> numRows = 5
+<strong>输出:</strong> [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
+</pre>
+<p><strong>示例&nbsp;2:</strong></p>
+<pre>
+<strong>输入:</strong> numRows = 1
+<strong>输出:</strong> [[1]]
+</pre>
+<p><strong>提示:</strong></p>
+<ul>
+	<li><code>1 &lt;= numRows &lt;= 30</code></li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>tri[i][j]=上一行相邻两数之和</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">状态：</span>tri[i][j] = tri[i-1][j-1] + tri[i-1][j]，边界每行首尾为 1。</p>
+<p><span class="lab">复杂度：</span>时间 O(n^2)，空间 O(n^2)（输出本身）</p>
+<p><span class="lab">变体：</span>Q119 只返回第 rowIndex 行 -&gt; 逆序原地滚动成一行，空间 O(k)；</p>
+<p><span class="lab">另一个视角：</span>第 n 行第 k 个数就是组合数 C(n, k)。</p>
+<p>/</p></div></div></div>
+<div class="sect"><h2>动画演示</h2><div class="anim-host" id="anim-118"></div></div>
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 338 294" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="338" height="294" fill="#fbfbfd"/>
+<rect x="26" y="26" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="53" y="52" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">1</text>
+<text x="53" y="22" text-anchor="middle" fill="#c98a00" font-size="11">0</text>
+<rect x="84" y="26" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="111" y="52" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace"></text>
+<text x="111" y="22" text-anchor="middle" fill="#c98a00" font-size="11">1</text>
+<rect x="142" y="26" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="169" y="52" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace"></text>
+<text x="169" y="22" text-anchor="middle" fill="#c98a00" font-size="11">2</text>
+<rect x="200" y="26" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="227" y="52" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace"></text>
+<text x="227" y="22" text-anchor="middle" fill="#c98a00" font-size="11">3</text>
+<rect x="258" y="26" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="285" y="52" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace"></text>
+<text x="285" y="22" text-anchor="middle" fill="#c98a00" font-size="11">4</text>
+<rect x="26" y="72" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="53" y="98" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">1</text>
+<text x="53" y="68" text-anchor="middle" fill="#c98a00" font-size="11"></text>
+<rect x="84" y="72" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="111" y="98" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">1</text>
+<rect x="142" y="72" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="169" y="98" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace"></text>
+<rect x="200" y="72" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="227" y="98" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace"></text>
+<rect x="258" y="72" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="285" y="98" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace"></text>
+<rect x="26" y="118" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="53" y="144" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">1</text>
+<text x="53" y="114" text-anchor="middle" fill="#c98a00" font-size="11"></text>
+<rect x="84" y="118" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="111" y="144" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">2</text>
+<rect x="142" y="118" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="169" y="144" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">1</text>
+<rect x="200" y="118" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="227" y="144" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace"></text>
+<rect x="258" y="118" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="285" y="144" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace"></text>
+<rect x="26" y="164" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="53" y="190" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">1</text>
+<text x="53" y="160" text-anchor="middle" fill="#c98a00" font-size="11"></text>
+<rect x="84" y="164" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="111" y="190" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">3</text>
+<rect x="142" y="164" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="169" y="190" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">3</text>
+<rect x="200" y="164" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="227" y="190" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">1</text>
+<rect x="258" y="164" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="285" y="190" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace"></text>
+<rect x="26" y="210" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="53" y="236" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">1</text>
+<text x="53" y="206" text-anchor="middle" fill="#c98a00" font-size="11"></text>
+<rect x="84" y="210" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="111" y="236" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">4</text>
+<rect x="142" y="210" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="169" y="236" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">6</text>
+<rect x="200" y="210" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="227" y="236" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">4</text>
+<rect x="258" y="210" width="54" height="42" rx="6" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.6"/>
+<text x="285" y="236" text-anchor="middle" fill="#16204a" font-size="15" font-family="Consolas,Menlo,monospace">1</text>
+<text x="24" y="290" fill="#8893b8" font-size="12">每行首尾为 1，中间的 = 上一行相邻两个之和。</text>
+</svg><div class="fig-cap">第 k 行第 j 个数 = C(k,j)。从上一行递推即可。</div></div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0118 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&gt; generate(<span class="tok-k">int</span> numRows) {
+    <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&gt; tri(numRows);
+    <span class="tok-k">for</span> (<span class="tok-k">int</span> i = <span class="tok-n">0</span>; i &lt; numRows; ++i) {
+      tri[i].assign(i + <span class="tok-n">1</span>, <span class="tok-n">1</span>);  <span class="tok-c">// 每行首尾都是 1</span>
+      <span class="tok-k">for</span> (<span class="tok-k">int</span> j = <span class="tok-n">1</span>; j &lt; i; ++j) tri[i][j] = tri[i - <span class="tok-n">1</span>][j - <span class="tok-n">1</span>] + tri[i - <span class="tok-n">1</span>][j];
+    }
+    <span class="tok-k">return</span> tri;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0118::Solution s;
+  CHECK_EQ(s.generate(5),
+           vector&lt;vector&lt;int&gt;&gt;({{1}, {1, 1}, {1, 2, 1}, {1, 3, 3, 1}, {1, 4, 6, 4, 1}}));
+  CHECK_EQ(s.generate(1), vector&lt;vector&lt;int&gt;&gt;({{1}}));
+  CHECK_EQ(s.generate(3)[2], vector&lt;int&gt;({1, 2, 1}));</pre></div>
+<div class="sect"><h2>同类题（动态规划）</h2><div class="taglist"><a href="q32.html">Q32 最长有效括号</a><a href="q70.html">Q70 爬楼梯</a><a href="q139.html">Q139 单词拆分</a><a href="q152.html">Q152 乘积最大子数组</a><a href="q198.html">Q198 打家劫舍</a><a href="q279.html">Q279 完全平方数</a><a href="q300.html">Q300 最长递增子序列</a><a href="q322.html">Q322 零钱兑换</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/anim.js"></script>
+<script src="../assets/animations.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){{var s=window.LC_ANIMS&&window.LC_ANIMS["118"];var h=document.getElementById("anim-118");if(s&&h&&window.LCAnim)LCAnim.run(h,s);}});</script></body></html>

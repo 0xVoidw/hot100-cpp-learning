@@ -1,0 +1,64 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "跑全部用例（调试版）",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/hot100_debug.exe",
+      "args": [],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "PATH",
+          "value": "C:/mingw64/bin;${env:PATH}"
+        }
+      ],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "C:/mingw64/bin/gdb.exe",
+      "setupCommands": [
+        {
+          "description": "为 gdb 打开整齐打印",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "build: debug binary (-O0 -g)"
+    },
+    {
+      "name": "只跑某一类 / 某一题（调试版）",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/build/hot100_debug.exe",
+      "args": ["${input:filter}"],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [
+        {
+          "name": "PATH",
+          "value": "C:/mingw64/bin;${env:PATH}"
+        }
+      ],
+      "MIMode": "gdb",
+      "miDebuggerPath": "C:/mingw64/bin/gdb.exe",
+      "setupCommands": [
+        {
+          "description": "为 gdb 打开整齐打印",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ],
+      "preLaunchTask": "build: debug binary (-O0 -g)"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "filter",
+      "type": "promptString",
+      "description": "过滤词：分类名（如 dp）或用例名（如 q31_）",
+      "default": "binary_tree"
+    }
+  ]
+}

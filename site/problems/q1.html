@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q1 两数之和 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-hash">哈希</a> / Q1</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q1</span> 两数之和</h1>
+  <span class="badge Easy">Easy</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="1"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 哈希 · 难度 Easy · 原题 <a href="https://leetcode.cn/problems/two-sum/" target="_blank" rel="noopener">two-sum</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给定一个整数数组 <code>nums</code>&nbsp;和一个整数目标值 <code>target</code>，请你在该数组中找出 <strong>和为目标值 </strong><em><code>target</code></em>&nbsp; 的那&nbsp;<strong>两个</strong>&nbsp;整数，并返回它们的数组下标。</p>
+<p>你可以假设每种输入只会对应一个答案，并且你不能使用两次相同的元素。</p>
+<p>你可以按任意顺序返回答案。</p>
+<p><strong class="example">示例 1：</strong></p>
+<pre>
+<strong>输入：</strong>nums = [2,7,11,15], target = 9
+<strong>输出：</strong>[0,1]
+<strong>解释：</strong>因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。
+</pre>
+<p><strong class="example">示例 2：</strong></p>
+<pre>
+<strong>输入：</strong>nums = [3,2,4], target = 6
+<strong>输出：</strong>[1,2]
+</pre>
+<p><strong class="example">示例 3：</strong></p>
+<pre>
+<strong>输入：</strong>nums = [3,3], target = 6
+<strong>输出：</strong>[0,1]
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>2 &lt;= nums.length &lt;= 10<sup>4</sup></code></li>
+	<li><code>-10<sup>9</sup> &lt;= nums[i] &lt;= 10<sup>9</sup></code></li>
+	<li><code>-10<sup>9</sup> &lt;= target &lt;= 10<sup>9</sup></code></li>
+	<li><strong>只会存在一个有效答案</strong></li>
+</ul>
+<p><strong>进阶：</strong>你可以想出一个时间复杂度小于 <code>O(n<sup>2</sup>)</code> 的算法吗？</p></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>哈希存「值→下标」，查 target-x</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>一次遍历，哈希表里存「已经看过的值 -&gt; 下标」。</p>
+<p>对当前 nums[i]，先查 target-nums[i] 在不在表里，再把自己塞进去。</p>
+<p>顺序「先查后存」保证不会用同一个元素两次（[3,3] target=6 也能过）。</p>
+<p><span class="lab">复杂度：</span>时间 O(n)，空间 O(n)</p>
+<p><span class="lab">对比：</span>暴力二重循环 O(n^2)；本题要返回下标，直接 sort 会把下标打乱（得额外带下标排序），</p>
+<p>所以哈希表一遍扫更顺手。</p>
+<p>/</p></div></div></div>
+<div class="sect"><h2>动画演示</h2><div class="anim-host" id="anim-1"></div></div>
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 268 132" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="268" height="132" fill="#fbfbfd"/>
+<rect x="30" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="53" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="53" y="96" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="84" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="107" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">7</text>
+<text x="107" y="96" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="138" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="161" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">11</text>
+<text x="161" y="96" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+<rect x="192" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="215" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">15</text>
+<text x="215" y="96" text-anchor="middle" fill="#8893b8" font-size="12">3</text>
+</svg></div><div class="fig-cap">数组（来自本仓库测试数据，下标从 0 开始）</div></div><div class="fig"><div class="fig-body"><svg viewBox="0 0 284 152" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="284" height="152" fill="#fbfbfd"/>
+<rect x="30" y="30" width="50" height="52" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="55" y="62" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="55" y="97" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="88" y="30" width="50" height="52" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="113" y="62" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">7</text>
+<text x="113" y="97" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="146" y="30" width="50" height="52" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="171" y="62" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">11</text>
+<text x="171" y="97" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+<rect x="204" y="30" width="50" height="52" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="229" y="62" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">15</text>
+<text x="229" y="97" text-anchor="middle" fill="#8893b8" font-size="12">3</text>
+<line x1="55" y1="24" x2="55" y2="30" stroke="#4f6ef7" stroke-width="2"/>
+<polygon points="51,22 59,22 55,30" fill="#4f6ef7"/>
+<text x="55" y="18" text-anchor="middle" fill="#4f6ef7" font-size="13" font-weight="700">l</text>
+<line x1="113" y1="24" x2="113" y2="30" stroke="#e2554d" stroke-width="2"/>
+<polygon points="109,22 117,22 113,30" fill="#e2554d"/>
+<text x="113" y="18" text-anchor="middle" fill="#e2554d" font-size="13" font-weight="700">r</text>
+</svg><div class="fig-cap">扫描到 <code>nums[1]=7</code>，查 <code>seen[9-7=2]</code> 命中 <code>下标0</code>，返回 <code>[0,1]</code>。先查后存，避免自配对。</div></div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0001 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt; twoSum(<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; nums, <span class="tok-k">int</span> target) {
+    <span class="tok-k">unordered_map</span>&lt;<span class="tok-k">int</span>, <span class="tok-k">int</span>&gt; seen;  <span class="tok-c">// 值 -&gt; 下标</span>
+    seen.reserve(nums.size() * <span class="tok-n">2</span>);
+    <span class="tok-k">for</span> (<span class="tok-k">int</span> i = <span class="tok-n">0</span>; i &lt; (<span class="tok-k">int</span>)nums.size(); ++i) {
+      <span class="tok-k">auto</span> it = seen.find(target - nums[i]);
+      <span class="tok-k">if</span> (it != seen.end()) <span class="tok-k">return</span> {it-&gt;second, i};
+      seen[nums[i]] = i;
+    }
+    <span class="tok-k">return</span> {};  <span class="tok-c">// 题目保证有解，这里只是编译器安心</span>
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0001::Solution s;
+  vector&lt;int&gt; a{2, 7, 11, 15};
+  CHECK_EQ(s.twoSum(a, 9), vector&lt;int&gt;{0, 1});
+  vector&lt;int&gt; b{3, 2, 4};
+  CHECK_EQ(s.twoSum(b, 6), vector&lt;int&gt;{1, 2});
+  vector&lt;int&gt; c{3, 3};  // 重复元素：先查后存才不会自配
+  CHECK_EQ(s.twoSum(c, 6), vector&lt;int&gt;{0, 1});
+  vector&lt;int&gt; d{2, 5, 5, 11};
+  CHECK_EQ(s.twoSum(d, 10), vector&lt;int&gt;{1, 2});</pre></div>
+<div class="sect"><h2>同类题（哈希）</h2><div class="taglist"><a href="q49.html">Q49 字母异位词分组</a><a href="q128.html">Q128 最长连续序列</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/anim.js"></script>
+<script src="../assets/animations.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){{var s=window.LC_ANIMS&&window.LC_ANIMS["1"];var h=document.getElementById("anim-1");if(s&&h&&window.LCAnim)LCAnim.run(h,s);}});</script></body></html>

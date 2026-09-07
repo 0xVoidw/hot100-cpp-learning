@@ -1,0 +1,64 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build + test (build.sh)",
+      "type": "shell",
+      "command": "bash build.sh",
+      "options": {
+        "shell": {
+          "executable": "C:/Program Files/Git/bin/bash.exe",
+          "args": ["-lc"]
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"],
+      "detail": "g++ -std=c++17 -Iinclude src/*.cpp 一次编完并跑 99 个用例"
+    },
+    {
+      "label": "build: debug binary (-O0 -g)",
+      "type": "shell",
+      "command": "mkdir -p build && g++ -std=c++17 -g -O0 -Iinclude src/*.cpp -o build/hot100_debug.exe",
+      "options": {
+        "shell": {
+          "executable": "C:/Program Files/Git/bin/bash.exe",
+          "args": ["-lc"]
+        }
+      },
+      "group": "build",
+      "problemMatcher": ["$gcc"],
+      "detail": "F5 调试用的未优化版本（-O1 会把变量优化掉，断点看不准）"
+    },
+    {
+      "label": "cmake configure",
+      "type": "shell",
+      "command": "cmake -S . -B build/cmake -G \"MinGW Makefiles\"",
+      "options": {
+        "shell": {
+          "executable": "C:/Program Files/Git/bin/bash.exe",
+          "args": ["-lc"]
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "cmake build + ctest",
+      "type": "shell",
+      "command": "cmake --build build/cmake -j8 && ctest --test-dir build/cmake --output-on-failure",
+      "options": {
+        "shell": {
+          "executable": "C:/Program Files/Git/bin/bash.exe",
+          "args": ["-lc"]
+        }
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": ["$gcc"]
+    }
+  ]
+}

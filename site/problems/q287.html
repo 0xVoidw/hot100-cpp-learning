@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q287 寻找重复数 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-tricks">技巧</a> / Q287</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q287</span> 寻找重复数</h1>
+  <span class="badge Medium">Medium</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="287"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 技巧 · 难度 Medium · 原题 <a href="https://leetcode.cn/problems/find-the-duplicate-number/" target="_blank" rel="noopener">find-the-duplicate-number</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给定一个包含&nbsp;<code>n + 1</code> 个整数的数组&nbsp;<code>nums</code> ，其数字都在&nbsp;<code>[1, n]</code>&nbsp;范围内（包括 <code>1</code> 和 <code>n</code>），可知至少存在一个重复的整数。</p>
+<p>假设 <code>nums</code> 只有 <strong>一个重复的整数</strong> ，返回&nbsp;<strong>这个重复的数</strong> 。</p>
+<p>你设计的解决方案必须 <strong>不修改</strong> 数组 <code>nums</code> 且只用常量级 <code>O(1)</code> 的额外空间。</p>
+<p><strong>示例 1：</strong></p>
+<pre>
+<strong>输入：</strong>nums = [1,3,4,2,2]
+<strong>输出：</strong>2
+</pre>
+<p><strong>示例 2：</strong></p>
+<pre>
+<strong>输入：</strong>nums = [3,1,3,4,2]
+<strong>输出：</strong>3
+</pre>
+<p><strong>示例 3 :</strong></p>
+<pre>
+<strong>输入：</strong>nums = [3,3,3,3,3]
+<strong>输出：</strong>3
+</pre>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>1 &lt;= n &lt;= 10<sup>5</sup></code></li>
+	<li><code>nums.length == n + 1</code></li>
+	<li><code>1 &lt;= nums[i] &lt;= n</code></li>
+	<li><code>nums</code> 中 <strong>只有一个整数</strong> 出现 <strong>两次或多次</strong> ，其余整数均只出现 <strong>一次</strong></li>
+</ul>
+<p><b>进阶：</b></p>
+<ul>
+	<li>如何证明 <code>nums</code> 中至少存在一个重复的数字?</li>
+	<li>你可以设计一个线性级时间复杂度 <code>O(n)</code> 的解决方案吗？</li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>值当下一跳构成链表 → Floyd 找环入口</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">约束：</span>不能修改数组、只能用 O(1) 额外空间 —— 排序/哈希/set 全部出局。</p>
+<p><span class="lab">思路 A（Floyd 判圈）：</span>把下标当结点、nums[i] 当「下一条边」，</p>
+<p>n+1 个数落在 [1,n]，所以一定有环；重复的数就是环的入口。</p>
+<p><span class="lab">快慢指针：</span>slow=nums[slow]，fast=nums[nums[fast]]；</p>
+<p>相遇后把一个放回起点，各走一步，再相遇处即入口（Q142 同款）。</p>
+<p><span class="lab">思路 B（值域二分）：</span>对值 mid 统计「&lt;= mid 的元素个数」，个数 &gt; mid 说明重复值在左半边。</p>
+<p>O(n log n)，不需要修改数组，也很好想。</p>
+<p><span class="lab">思路 C（原地取负）：</span>把 nums[x] 位置的数取负当 visited —— 但违反「不修改数组」。</p>
+<p><span class="lab">复杂度：</span>A 时间 O(n)、空间 O(1)（最优）；B 时间 O(n log n)、空间 O(1)</p>
+<p>/</p></div></div></div>
+<div class="sect"><h2>动画演示</h2><div class="anim-host" id="anim-287"></div></div>
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 538 132" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="538" height="132" fill="#fbfbfd"/>
+<rect x="30" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="53" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">4</text>
+<text x="53" y="96" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="84" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="107" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">1</text>
+<text x="107" y="96" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="138" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="161" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">8</text>
+<text x="161" y="96" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+<rect x="192" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="215" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">8</text>
+<text x="215" y="96" text-anchor="middle" fill="#8893b8" font-size="12">3</text>
+<rect x="246" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="269" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">7</text>
+<text x="269" y="96" text-anchor="middle" fill="#8893b8" font-size="12">4</text>
+<rect x="300" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="323" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">5</text>
+<text x="323" y="96" text-anchor="middle" fill="#8893b8" font-size="12">5</text>
+<rect x="354" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="377" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">2</text>
+<text x="377" y="96" text-anchor="middle" fill="#8893b8" font-size="12">6</text>
+<rect x="408" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="431" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">6</text>
+<text x="431" y="96" text-anchor="middle" fill="#8893b8" font-size="12">7</text>
+<rect x="462" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="485" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">3</text>
+<text x="485" y="96" text-anchor="middle" fill="#8893b8" font-size="12">8</text>
+</svg></div><div class="fig-cap">数组（来自本仓库测试数据，下标从 0 开始）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0287 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">static</span> <span class="tok-k">int</span> findDuplicate(<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; nums) {
+    <span class="tok-k">int</span> slow = nums[<span class="tok-n">0</span>], fast = nums[nums[<span class="tok-n">0</span>]];
+    <span class="tok-k">while</span> (slow != fast) {  <span class="tok-c">// 阶段一：找相遇点</span>
+      slow = nums[slow];
+      fast = nums[nums[fast]];
+    }
+    slow = <span class="tok-n">0</span>;  <span class="tok-c">// 阶段二：一个回起点，同速前进（Q142 的结论）</span>
+    <span class="tok-k">while</span> (slow != fast) {
+      slow = nums[slow];
+      fast = nums[fast];
+    }
+    <span class="tok-k">return</span> slow;
+  }
+
+  <span class="tok-c">// 值域二分版：不依赖「慢指针能到起点」这个性质，思路更直白</span>
+  <span class="tok-k">static</span> <span class="tok-k">int</span> findDuplicateBinary(<span class="tok-k">vector</span>&lt;<span class="tok-k">int</span>&gt;&amp; nums) {
+    <span class="tok-k">int</span> lo = <span class="tok-n">1</span>, hi = (<span class="tok-k">int</span>)nums.size() - <span class="tok-n">1</span>;  <span class="tok-c">// 值域是 [1, n]</span>
+    <span class="tok-k">while</span> (lo &lt; hi) {
+      <span class="tok-k">int</span> mid = lo + (hi - lo) / <span class="tok-n">2</span>;
+      <span class="tok-k">int</span> cnt = <span class="tok-n">0</span>;
+      <span class="tok-k">for</span> (<span class="tok-k">int</span> x : nums)
+        <span class="tok-k">if</span> (x &lt;= mid) ++cnt;  <span class="tok-c">// 统计 &lt;= mid 的元素个数</span>
+      <span class="tok-k">if</span> (cnt &gt; mid)
+        hi = mid;  <span class="tok-c">// 抽屉原理：重复值在 [lo, mid]</span>
+      <span class="tok-k">else</span>
+        lo = mid + <span class="tok-n">1</span>;
+    }
+    <span class="tok-k">return</span> lo;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0287::Solution s;
+  vector&lt;int&gt; a{1, 3, 4, 2, 2};
+  CHECK_EQ(s.findDuplicate(a), 2);
+  CHECK_EQ(s.findDuplicateBinary(a), 2);
+  vector&lt;int&gt; b{3, 1, 3, 4, 2};
+  CHECK_EQ(s.findDuplicate(b), 3);
+  CHECK_EQ(s.findDuplicateBinary(b), 3);
+  vector&lt;int&gt; c{1, 1};
+  CHECK_EQ(s.findDuplicate(c), 1);
+  CHECK_EQ(s.findDuplicateBinary(c), 1);
+  vector&lt;int&gt; d{2, 2, 2, 2, 2};  // 只有一种数且重复多次
+  CHECK_EQ(s.findDuplicate(d), 2);
+  CHECK_EQ(s.findDuplicateBinary(d), 2);
+  vector&lt;int&gt; e{1, 4, 4, 2, 3};  // 长度为 n+1 时元素必须落在 [1,n]（否则下面的快指针会越界）
+  CHECK_EQ(s.findDuplicate(e), 4);
+  CHECK_EQ(s.findDuplicateBinary(e), 4);
+  vector&lt;int&gt; f{1, 2, 3, 4, 5, 6, 6};  // 6 出现两次
+  CHECK_EQ(s.findDuplicate(f), 6);
+  CHECK_EQ(s.findDuplicateBinary(f), 6);
+  // 两版必须完全一致（Floyd 依赖「从 0 出发进环」，二分版不依赖）
+  vector&lt;int&gt; g{4, 1, 8, 8, 7, 5, 2, 6, 3};
+  CHECK_EQ(s.findDuplicate(g), s.findDuplicateBinary(g));</pre></div>
+<div class="sect"><h2>同类题（技巧）</h2><div class="taglist"><a href="q31.html">Q31 下一个排列</a><a href="q75.html">Q75 颜色分类</a><a href="q136.html">Q136 只出现一次的数字</a><a href="q169.html">Q169 多数元素</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+<script src="../assets/anim.js"></script>
+<script src="../assets/animations.js"></script>
+<script>window.addEventListener('DOMContentLoaded',function(){{var s=window.LC_ANIMS&&window.LC_ANIMS["287"];var h=document.getElementById("anim-287");if(s&&h&&window.LCAnim)LCAnim.run(h,s);}});</script></body></html>

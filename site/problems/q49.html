@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Q49 字母异位词分组 · LeetCode Hot 100</title>
+<link rel="stylesheet" href="../assets/site.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='88'>📚</text></svg>"></head><body>
+<div class="wrap">
+<div class="topbar">
+  <a class="brand" href="../index.html">← 返回</a>
+  <span class="brand small">LeetCode Hot 100 · C++</span>
+  <span class="spacer"></span>
+  <button class="iconbtn" id="themeBtn">🌙</button>
+</div>
+<div class="crumb"><a href="../index.html">首页</a> / <a href="../index.html#cat-hash">哈希</a> / Q49</div>
+<header class="dhead">
+  <h1><span style="color:var(--muted);font-weight:600">Q49</span> 字母异位词分组</h1>
+  <span class="badge Medium">Medium</span>
+  <label style="margin-left:auto;display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;cursor:pointer">
+    <input type="checkbox" data-check="49"> 已掌握
+  </label>
+</header>
+<div class="meta">分类 哈希 · 难度 Medium · 原题 <a href="https://leetcode.cn/problems/group-anagrams/" target="_blank" rel="noopener">group-anagrams</a></div>
+<div class="sect"><h2>题目描述</h2><div class="card2"><div class="desc"><p>给你一个字符串数组，请你将 <span data-keyword="anagram">字母异位词</span> 组合在一起。可以按任意顺序返回结果列表。</p>
+<p><strong>示例 1:</strong></p>
+<div class="example-block">
+<p><strong>输入:</strong> strs = ["eat", "tea", "tan", "ate", "nat", "bat"]</p>
+<p><strong>输出: </strong>[["bat"],["nat","tan"],["ate","eat","tea"]]</p>
+<p><strong>解释：</strong></p>
+<ul>
+	<li>在 strs 中没有字符串可以通过重新排列来形成 <code>"bat"</code>。</li>
+	<li>字符串 <code>"nat"</code> 和 <code>"tan"</code> 是字母异位词，因为它们可以重新排列以形成彼此。</li>
+	<li>字符串 <code>"ate"</code>&nbsp;，<code>"eat"</code>&nbsp;和 <code>"tea"</code> 是字母异位词，因为它们可以重新排列以形成彼此。</li>
+</ul>
+</div>
+<p><strong>示例 2:</strong></p>
+<div class="example-block">
+<p><strong>输入:</strong> strs = [""]</p>
+<p><strong>输出: </strong>[[""]]</p>
+</div>
+<p><strong>示例 3:</strong></p>
+<div class="example-block">
+<p><strong>输入:</strong> strs = ["a"]</p>
+<p><strong>输出: </strong>[["a"]]</p>
+</div>
+<p><strong>提示：</strong></p>
+<ul>
+	<li><code>1 &lt;= strs.length &lt;= 10<sup>4</sup></code></li>
+	<li><code>0 &lt;= strs[i].length &lt;= 100</code></li>
+	<li><code>strs[i]</code>&nbsp;仅包含小写字母</li>
+</ul></div></div></div>
+<div class="note">💡 <strong>核心套路：</strong>排序后的串当分组 key</div>
+<div class="sect"><h2>讲解与思路</h2><div class="card2"><div class="bodytext"><p><span class="lab">思路：</span>异位词排序后是同一个字符串 —— 拿「排序后的串」当分组 key。</p>
+<p><span class="lab">进阶写法：</span>用 26 个字母的计数串做 key（每段前缀一个 &#x27;#&#x27; 分隔），</p>
+<p>把每组 O(k log k) 降到 O(k)。分隔符是必需的：没有它，「1个a+11个b」与</p>
+<p>「11个a+1个b」都会拼成 &quot;111&quot;，两组不同字母就被归到一组了。</p>
+<p><span class="lab">复杂度：</span>排序法 时间 O(n·k log k)；计数法 时间 O(n·k)，空间 O(n·k)</p>
+<p>/</p></div></div></div>
+
+<div class='sect'><h2>结构图解</h2><div class="fig"><div class="fig-body"><svg viewBox="0 0 214 132" xmlns="http://www.w3.org/2000/svg" class="dia">
+<rect width="214" height="132" fill="#fbfbfd"/>
+<rect x="30" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="53" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">e</text>
+<text x="53" y="96" text-anchor="middle" fill="#8893b8" font-size="12">0</text>
+<rect x="84" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="107" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">a</text>
+<text x="107" y="96" text-anchor="middle" fill="#8893b8" font-size="12">1</text>
+<rect x="138" y="30" width="46" height="50" rx="7" fill="#eef2ff" stroke="#4f6ef7" stroke-width="1.8"/>
+<text x="161" y="61" text-anchor="middle" fill="#16204a" font-size="16" font-family="Consolas,Menlo,monospace">t</text>
+<text x="161" y="96" text-anchor="middle" fill="#8893b8" font-size="12">2</text>
+</svg></div><div class="fig-cap">字符串 `<eat>`（来自本仓库测试数据，下标从 0 开始）</div></div></div>
+<div class="sect"><h2>带注释代码</h2><pre class="code"><button class="copy" onclick="copyCode(this)">复制</button><code><span class="tok-k">namespace</span> lc0049 {
+<span class="tok-k">class</span> Solution {
+ <span class="tok-k">public</span>:
+  <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">string</span>&gt;&gt; groupAnagrams(<span class="tok-k">vector</span>&lt;<span class="tok-k">string</span>&gt;&amp; strs) {
+    <span class="tok-k">unordered_map</span>&lt;<span class="tok-k">string</span>, <span class="tok-k">vector</span>&lt;<span class="tok-k">string</span>&gt;&gt; groups;
+    <span class="tok-k">for</span> (<span class="tok-k">const</span> <span class="tok-k">string</span>&amp; w : strs) {
+      <span class="tok-k">string</span> key = w;
+      sort(key.begin(), key.end());  <span class="tok-c">// &quot;eat&quot; / &quot;tea&quot; -&gt; &quot;aet&quot;</span>
+      groups[key].push_back(w);
+    }
+    <span class="tok-k">vector</span>&lt;<span class="tok-k">vector</span>&lt;<span class="tok-k">string</span>&gt;&gt; ans;
+    ans.reserve(groups.size());
+    <span class="tok-k">for</span> (<span class="tok-k">auto</span>&amp; kv : groups) ans.push_back(std::move(kv.second));
+    <span class="tok-k">return</span> ans;
+  }
+
+  <span class="tok-c">// 计数法 key：适合单词很长、组很多的情况</span>
+  <span class="tok-k">static</span> <span class="tok-k">string</span> countKey(<span class="tok-k">const</span> <span class="tok-k">string</span>&amp; w) {
+    <span class="tok-k">int</span> cnt[<span class="tok-n">26</span>] = {};
+    <span class="tok-k">for</span> (<span class="tok-k">char</span> c : w) cnt[c - <span class="tok-s">&#x27;a&#x27;</span>]++;
+    <span class="tok-k">string</span> key;
+    <span class="tok-k">for</span> (<span class="tok-k">int</span> i = <span class="tok-n">0</span>; i &lt; <span class="tok-n">26</span>; ++i) {
+      key += <span class="tok-s">&#x27;#&#x27;</span>;
+      key += std::to_string(cnt[i]);
+    }
+    <span class="tok-k">return</span> key;
+  }
+};
+}</code></pre></div>
+<div class="sect"><h2>测试用例（本仓库，与代码一一对应）</h2><pre>lc0049::Solution s;
+  vector&lt;string&gt; a{&quot;eat&quot;, &quot;tea&quot;, &quot;tan&quot;, &quot;ate&quot;, &quot;nat&quot;, &quot;bat&quot;};
+  vector&lt;vector&lt;string&gt;&gt; got = s.groupAnagrams(a);
+  // 组间顺序无序 —— 排序后再比，这是「结果集合类」题目的通用断言手法
+  for (auto&amp; g : got) sort(g.begin(), g.end());
+  sort(got.begin(), got.end());
+  vector&lt;vector&lt;string&gt;&gt; want{{&quot;ate&quot;, &quot;eat&quot;, &quot;tea&quot;}, {&quot;bat&quot;}, {&quot;nat&quot;, &quot;tan&quot;}};
+  CHECK_EQ(got, want);
+  // countKey 必须与排序 key 等价
+  CHECK_EQ(lc0049::Solution::countKey(&quot;abc&quot;), lc0049::Solution::countKey(&quot;cab&quot;));
+  // 真正考验 &#x27;#&#x27; 分隔符的一对：计数序列 [1,11] 与 [11,1]，不加分隔都拼成 &quot;111&quot;
+  const string xa = &quot;a&quot; + string(11, &#x27;b&#x27;);
+  const string xb = string(11, &#x27;a&#x27;) + &quot;b&quot;;
+  CHECK_TRUE(lc0049::Solution::countKey(xa) != lc0049::Solution::countKey(xb));
+  vector&lt;string&gt; b{&quot;&quot;};
+  CHECK_EQ(s.groupAnagrams(b), vector&lt;vector&lt;string&gt;&gt;{{&quot;&quot;}});</pre></div>
+<div class="sect"><h2>同类题（哈希）</h2><div class="taglist"><a href="q1.html">Q1 两数之和</a><a href="q128.html">Q128 最长连续序列</a></div></div>
+<div class="center" style="padding:20px">— 完 —</div>
+</div>
+<script>function copyCode(b){var c=b.parentNode.querySelector('code');var t=c.innerText;navigator.clipboard&&navigator.clipboard.writeText(t);b.textContent='已复制';setTimeout(function(){b.textContent='复制'},1200)}</script>
+<script src="../assets/site.js"></script>
+</body></html>

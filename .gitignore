@@ -1,0 +1,23 @@
+# 忽略产物与 IDE 私有配置
+build/
+out/
+*.o
+*.obj
+*.exe
+*.pdb
+.cache/
+compile_commands.json
+
+# .vscode/ 里是本仓库的构建/调试任务配置，故意跟着仓库走；
+# 如果你在里面加了个人私有配置，改成 .vscode/settings.local.json 并忽略它
+.idea/
+.vscode/*.local.json
+*.user
+__pycache__/
+*.pyc
+
+# 本地 AI 工具与浏览器自动化 / 截图临时产物
+.agents/
+.playwright-cli/
+site/_preview_*.png
+nul
