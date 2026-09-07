@@ -25,7 +25,12 @@ def node(i,c=HL): return {'f':'node','i':i,'c':c}
 def tn(id,c=HL): return {'f':'tn','id':id,'c':c}
 def pt(k,i,label=None,color=B): return {'f':'pt','k':k,'i':i,'label':label or k,'color':color}
 def npt(k,i,label=None,color=B): return {'f':'npt','k':k,'i':i,'label':label or k,'color':color}
-def fr(note,*p): return {'note':note,'paint':list(p)}
+def stat(*pairs): return [{'label': str(k), 'value': str(v)} for k, v in pairs]
+def fr(note,*p,values=None,state=None):
+    d = {'note':note, 'paint':list(p)}
+    if values is not None: d['values'] = values
+    if state is not None: d['state'] = state
+    return d
 def A(vals,frs): return {'kind':'array','data':vals,'frames':frs}
 def G(rows,frs): return {'kind':'grid','data':rows,'frames':frs}
 def L(vals,frs,cyc=None):
@@ -496,6 +501,60 @@ ANIMS[79] = G([['A','B','C','E'],['S','F','C','S'],['A','D','E','E']], [
   fr('沿 A→B→C→E 走；走不通就回溯换方向。', cell(0,0,DONE),cell(0,1,DONE),cell(0,2,DONE),cell(0,3,DONE),cell(1,2,HL)),
   fr('找到 "ABCCED" → true。', cell(0,0,DONE),cell(0,1,DONE),cell(0,2,DONE),cell(0,3,DONE),cell(1,2,DONE),cell(2,2,DONE),cell(2,3,DONE)),
 ])
+
+# ---------- 真实数据状态补丁 ----------
+# 这些题包含交换/反转/扩散等“数据本身会变”的操作；旧版只高亮，
+# 这里给每帧补上可视数据，让播放器真正展示变化过程。
+def enrich_motion():
+    def values(q, frame, data):
+        ANIMS[q]['frames'][frame]['values'] = data
+    def state(q, frame, *pairs):
+        ANIMS[q]['frames'][frame]['state'] = stat(*pairs)
+
+    # 原地数组变换
+    for i, data in enumerate([[1,2,3], [1,2,3], [1,3,2]]): values(31, i, data)
+    for i, data in enumerate([[3,4,-1,1], [1,-1,3,4], [1,-1,3,4]]): values(41, i, data)
+    for i, data in enumerate([[2,0,2,1,1,0], [0,0,2,1,1,2], [0,0,2,1,1,2], [0,0,1,1,2,2]]): values(75, i, data)
+    for i, data in enumerate([[0,1,0,3,12], [0,1,0,3,12], [1,0,0,3,12], [1,0,0,3,12], [1,3,0,0,12], [1,3,12,0,0]]): values(283, i, data)
+    for i, data in enumerate([[1,2,3,4,5,6,7], [7,6,5,4,3,2,1], [5,6,7,1,2,3,4]]): values(189, i, data)
+
+    # 链表的连接顺序/长度变化
+    values(19, 0, [1,2,3,4,5]); values(19, 1, [1,2,3,4,5]); values(19, 2, [1,2,3,5])
+    values(24, 0, [1,2,3,4]); values(24, 1, [2,1,4,3])
+    values(234, 2, [1,2,1,2])
+
+    # 二维原地变换与 BFS 扩散
+    values(48, 0, [[1,2,3],[4,5,6],[7,8,9]])
+    values(48, 1, [[1,4,7],[2,5,8],[3,6,9]])
+    values(48, 2, [[7,4,1],[8,5,2],[9,6,3]])
+    values(73, 0, [[1,1,1],[1,0,1],[1,1,1]])
+    values(73, 1, [[1,1,1],[1,0,1],[1,1,1]])
+    values(73, 2, [[1,0,1],[0,0,0],[1,0,1]])
+    cleared = [['0','0','0','0','0'],['0','0','0','0','0'],['0','0','0','0','0'],['0','0','0','0','0']]
+    values(200, 0, [['1','1','1','1','0'],['1','1','0','1','0'],['1','1','0','0','0'],['0','0','0','0','0']])
+    values(200, 1, cleared); values(200, 2, cleared)
+    state(200, 0, ('已发现岛屿', 1), ('已访问格子', 1))
+    state(200, 1, ('已发现岛屿', 1), ('已访问格子', 9))
+    state(200, 2, ('最终岛屿数', 1))
+    values(994, 0, [[2,1,1],[1,1,0],[0,1,1]])
+    values(994, 1, [[2,2,1],[2,1,0],[0,1,1]])
+    values(994, 2, [[2,2,1],[2,2,0],[0,2,1]])
+    values(994, 3, [[2,2,1],[2,2,0],[0,2,2]])
+    for i, minute in enumerate(range(4)): state(994, i, ('经过分钟', minute))
+
+    # 以前只有文字变化的状态型动画，补出可观察的状态面板。
+    for i, pairs in enumerate([
+        (('pre',0), ('ans',0), ('mp','{0:1}')),
+        (('pre',1), ('ans',0), ('mp','{0:1, 1:1}')),
+        (('pre',2), ('ans',1), ('命中 pre-k',0)),
+        (('pre',3), ('ans',2), ('命中 pre-k',1)),
+        (('最终答案',2),),
+    ]): state(560, i, *pairs)
+    for i, data in enumerate([['左堆','右堆','中位数'], ['1','—','1'], ['1','2','1.5'], ['2,1','3','2']]): values(295, i, data)
+    for i, pairs in enumerate([(('左堆', '[]'), ('右堆', '[]')), (('左堆','[1]'), ('右堆','[]')), (('左堆','[1]'), ('右堆','[2]')), (('左堆','[2,1]'), ('右堆','[3]'))]): state(295, i, *pairs)
+    state(78, 2, ('子集总数', '2³ = 8'))
+
+enrich_motion()
 
 def main():
     os.makedirs(os.path.dirname(OUT), exist_ok=True)

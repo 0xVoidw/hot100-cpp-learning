@@ -12,10 +12,16 @@ export type Paint = {
   label?: string;
 };
 
-export type AnimationFrame = { note: string; paint: Paint[] };
+export type AnimationData = Array<string | number | null> | Array<Array<string | number | null>>;
+export type AnimationFrame = {
+  note: string;
+  paint: Paint[];
+  values?: AnimationData;
+  state?: Array<{ label: string; value: string }>;
+};
 export type AnimationScript = {
   kind: 'array' | 'grid' | 'list' | 'tree';
-  data: Array<string | number | null> | Array<Array<string | number | null>>;
+  data: AnimationData;
   cycle?: number;
   frames: AnimationFrame[];
 };

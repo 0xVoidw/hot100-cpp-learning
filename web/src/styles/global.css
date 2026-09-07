@@ -70,6 +70,9 @@ button, input { font: inherit; }
 .anim-svg { display: block; min-width: 340px; width: 100%; height: auto; }
 .anim-scroll { overflow-x: auto; padding: .6rem; }
 .anim-note { min-height: 3.1rem; padding: .85rem 1rem; border-bottom: 1px solid var(--line); color: var(--muted); font-size: .93rem; line-height: 1.65; }
+.anim-state { display:flex; flex-wrap:wrap; gap:.45rem; padding:.65rem 1rem; border-bottom:1px solid var(--line); background:color-mix(in srgb,var(--brand) 5%,var(--surface-solid)); }
+.anim-state span { display:flex; align-items:baseline; gap:.35rem; border:1px solid color-mix(in srgb,var(--brand) 18%,var(--line)); border-radius:.55rem; background:var(--surface-solid); padding:.28rem .5rem; }
+.anim-state small { color:var(--muted); font-size:.7rem; }.anim-state b { color:var(--brand); font:.77rem var(--font-mono); }
 .anim-control { display: flex; flex-wrap: wrap; gap: .45rem; align-items: center; padding: .8rem 1rem; border-top: 1px solid var(--line); }
 .anim-control button { border: 1px solid var(--line); border-radius: .55rem; background: var(--surface); color: var(--ink); padding: .38rem .6rem; cursor: pointer; }
 .anim-control button:hover { border-color: var(--brand); color: var(--brand); }

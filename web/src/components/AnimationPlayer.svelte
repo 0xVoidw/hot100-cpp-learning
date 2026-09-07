@@ -11,8 +11,10 @@
   let timer: ReturnType<typeof setInterval> | undefined;
 
   $: frame = script.frames[index] ?? { note: '', paint: [] };
-  $: arrayData = Array.isArray(script.data) && !Array.isArray(script.data[0]) ? script.data as Array<string | number | null> : [];
-  $: gridData = Array.isArray(script.data) && Array.isArray(script.data[0]) ? script.data as Array<Array<string | number | null>> : [];
+  // values 存在时表示该帧之后的真实数据状态（交换、反转、BFS 等）。
+  $: visibleData = frame.values ?? script.data;
+  $: arrayData = Array.isArray(visibleData) && !Array.isArray(visibleData[0]) ? visibleData as Array<string | number | null> : [];
+  $: gridData = Array.isArray(visibleData) && Array.isArray(visibleData[0]) ? visibleData as Array<Array<string | number | null>> : [];
   $: tree = script.kind === 'tree' ? layoutTree(arrayData) : { nodes: [], edges: [], width: 320, height: 100 };
 
   function paints(kind: Paint['f']) { return frame.paint.filter((p) => p.f === kind); }
@@ -70,6 +72,9 @@
 
 <div class="anim-shell">
   <div class="anim-note">{frame.note}</div>
+  {#if frame.state?.length}
+    <div class="anim-state">{#each frame.state as item}<span><small>{item.label}</small><b>{item.value}</b></span>{/each}</div>
+  {/if}
   <div class="anim-scroll">
     {#if script.kind === 'array'}
       <svg class="anim-svg" viewBox={`0 0 ${Math.max(180, 60 + arrayData.length * 56)} 132`} aria-label="数组动画">
@@ -105,7 +110,7 @@
           <rect x={30 + i * 86} y="56" width="52" height="52" rx="8" fill={listFill(i)} stroke={colors.stroke} stroke-width="2" style="transition:fill .35s" />
           <text x={56 + i * 86} y="88" text-anchor="middle" fill="#16204a" font-size="16" font-family="monospace">{value}</text>
         {/each}
-        {#each paints('npt') as p (p.k)}
+        {#each [...paints('npt'), ...paints('pt')] as p (p.k)}
           <g style={`transition:transform .45s cubic-bezier(.4,1,.4,1);transform:translate(${pointerX(p)}px,44px)`}>
             <text x="0" y="-7" text-anchor="middle" fill={p.color ?? colors.ptr} font-size="14" font-weight="700">{p.label ?? p.k}</text><line x1="0" y1="0" x2="0" y2="21" stroke={p.color ?? colors.ptr} stroke-width="2.4" /><path d="M-4 19 L4 19 L0 25 Z" fill={p.color ?? colors.ptr} />
           </g>
