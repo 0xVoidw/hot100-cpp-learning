@@ -10,31 +10,31 @@
 
 ## 图解网站（一题一页，图文并茂）
 
-仓库自带一个**静态生成、可部署到 GitHub Pages** 的讲解网站：
+仓库自带一个**零依赖、静态生成**的讲解网站，推送到 `main` 后由 GitHub Actions 自动构建并发布到 GitHub Pages：
+👉 **https://0xvoidw.github.io/hot100-cpp-learning/**
 
 ```text
-web/                    # Astro + TypeScript + Svelte + Tailwind CSS v4 源码
-├── src/pages/          # 首页 + 100 个静态题目页
-├── src/components/     # Svelte：筛选、主题、进度、动画、复制代码
-├── src/data/           # Python 从 C++ 注释导出的题目数据
-└── astro.config.mjs
-site/                   # Astro 构建产物，也是 GitHub Pages 发布内容
+www/
+├── build.mjs           # Node 静态生成器：读 build/problems.json + src/*.cpp 文件头，输出 dist/
+├── preview.py          # 本地预览服务器（路径与 GitHub Pages 一致）
+└── assets/             # style.css / app.js（筛选、进度、搜索、主题）/ player.js（逐帧动画）
+.github/workflows/pages.yml   # 构建并部署到 GitHub Pages
 ```
 
-前端采用 **Astro + TypeScript + Svelte + Tailwind CSS v4**：
-- Astro 在构建时生成完整的 HTML；100 题都可被直接访问和索引。
-- 只有搜索、进度、主题和动画播放器等交互区使用 Svelte。
-- 所有样式和脚本均在构建时打包，运行时不依赖 CDN。
+网站特点：
+- 首页按 17 个分类排列 100 题，可按题号 / 题名 / 套路搜索，按难度、进度、是否有动画筛选。
+- 每题一页：原题描述、复杂度、分段讲解（思路 / 易错 / 拓展）、结构图解、逐帧动画、C++17 题解和单元测试。
+- 「套路」页汇总每个分类源文件开头的通用思路。
+- 学习进度（未开始 / 学习中 / 已掌握）保存在浏览器本地；支持深色模式；`/` 随时搜索，`[` `]` 切换上一题 / 下一题。
+- 只用原生 HTML / CSS / JS，**不需要 `npm install`**，运行时不依赖任何 CDN。
 
-如何开发 / 重新生成：
+如何重新生成 / 本地预览（需要 Python 3 和 Node.js 18+）：
 
 | 操作 | 命令 |
 |---|---|
-| 首次安装前端依赖 | `cd web && npm install` |
-| 本地开发预览 | `cd web && npm run dev` |
-| 重新生成生产网站 | Windows 双击 `build_site.bat`；或 `bash build_site.sh` |
-| 只校验前端类型 | `cd web && npm run check` |
-| 从 C++ 注释导出前端数据 | `cd web && npm run generate:data` |
+| 生成网站到 `dist/` | Windows 双击 `build_site.bat`；或 `bash build_site.sh` |
+| 本地预览 | `python www/preview.py`，打开 http://localhost:8000/hot100-cpp-learning/ |
+| 只从 C++ 注释导出数据 | `python tools/gen_site.py --json --data-only` |
 
 每页的「结构图解」**直接取自本仓库的真实测试数据**（链表、二叉树、矩阵、数组/字符串），
 所以图里的数字和你刷题时看到的一致；少数难画结构的题（DP 表、双指针走位、N 皇后等）
@@ -43,7 +43,7 @@ site/                   # Astro 构建产物，也是 GitHub Pages 发布内容
 **能“动起来”的题都配了算法动图**：页面上点「▶ 播放」就能看指针怎么走、窗口怎么滑、树怎么遍历、DP 表怎么填。
 目前已做 **78 题**（覆盖双指针 / 滑动窗口 / 哈希 / 链表 / 树 / 网格 DFS·BFS / 回溯 / 二分 / 栈 / 堆 / 贪心 / DP / 二维 DP / 技巧几乎全部），
 其余题保留静态图解。控制条支持 **播放 / 暂停 / 单步 / 速度**（1× → 1.5× → 2× → **0.5× → 0.75×**）循环。
-想新增或改动某个动图，编辑 `tools/gen_animations.py` 后运行 `bash build_site.sh` 即可。
+想新增或改动某个动图，编辑 `tools/gen_animations.py` 后运行 `bash build_site.sh` 即可；推送到 `main` 后网站会自动更新。
 
 **每题页首还自带原始「题目描述」**（含示例、约束，中文，来自 `data/descriptions.json`），
 不用再点去力扣看题。该文件已一次性抓取好并提交；想刷新描述，运行：
@@ -52,7 +52,7 @@ site/                   # Astro 构建产物，也是 GitHub Pages 发布内容
 python tools/fetch_descriptions.py   # 或 --force 全量重抓
 ```
 
-> 网站部署后无需后端或运行时 CDN；推荐通过 GitHub Pages 或 `npm run dev` / `npm run preview` 访问。
+> 网站部署后无需后端或运行时 CDN；在线访问 GitHub Pages，或本地用 `python www/preview.py` 预览。
 
 ---
 

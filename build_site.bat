@@ -1,25 +1,14 @@
 @echo off
-rem 一键生成图解网站（Windows 双击即可）
+rem 生成 Hot 100 图解网站（Windows），需要 Python 3 和 Node.js 18+
 cd /d "%~dp0"
-echo 正在生成 Astro + Svelte + Tailwind 讲解网站...
-python tools\gen_animations.py
-if errorlevel 1 (
-  echo.
-  echo [失败] 动画数据生成出错。请检查上方报错。
-  pause
-  exit /b 1
-)
-pushd web
-call npm run build
-set BUILD_ERR=%errorlevel%
-popd
-if not "%BUILD_ERR%"=="0" (
-  echo.
-  echo [失败] 前端构建出错。请确认已安装 Node.js 和 npm，并检查上方报错。
-  pause
-  exit /b 1
-)
+python tools\gen_animations.py || goto :err
+python tools\gen_site.py --json --data-only || goto :err
+node www\build.mjs %* || goto :err
 echo.
-echo [完成] 已生成到 site\ 文件夹。
-echo 打开方式：双击 site\index.html（推荐在浏览器里打开）
+echo [完成] 已生成到 dist\。本地预览：python www\preview.py ，然后打开 http://localhost:8000/hot100-cpp-learning/
 pause
+exit /b 0
+:err
+echo [失败] 构建出错，请查看上面的报错。
+pause
+exit /b 1
